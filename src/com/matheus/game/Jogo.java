@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import com.matheus.entidades.Entidade;
 import com.matheus.entidades.Jogador;
 import com.matheus.graficos.Spritesheet;
 
-public class Jogo extends Canvas implements Runnable {
+public class Jogo extends Canvas implements Runnable,KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	public final int tamanho=16;
@@ -28,16 +30,17 @@ public class Jogo extends Canvas implements Runnable {
 	private BufferedImage background;
 	public List<Entidade> entidades;
 	private Spritesheet spritesheet;
-	
+	private Jogador jogador;
 
 
 	public Jogo() {
+		addKeyListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
 		entidades=new ArrayList<Entidade>();
 		spritesheet=new Spritesheet("/Spritesheet.png");
-		Jogador jogador=new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
+		jogador=new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
 	}
 
@@ -70,7 +73,7 @@ public class Jogo extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = background.getGraphics();
-		g.setColor(new Color(0,0,0));
+		g.setColor(new Color(0,200,0));
 		g.fillRect(0, 0, WIDITH, HEIGHT);
 
 		g.setColor(Color.YELLOW);
@@ -140,6 +143,24 @@ public class Jogo extends Canvas implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode()==KeyEvent.VK_UP) {
+			
+			System.out.println("Parei com 5 minutos");
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
 	}
 
 }
