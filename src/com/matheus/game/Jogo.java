@@ -7,27 +7,38 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
+
+import com.matheus.entidades.Entidade;
+import com.matheus.entidades.Jogador;
+import com.matheus.graficos.Spritesheet;
 
 public class Jogo extends Canvas implements Runnable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	public final int tamanho=16;
 	private Thread thread;
 	private boolean isRunning;
 	public static JFrame frame;
 	private final int WIDITH = 240, HEIGHT = 160, SCALE = 3;
-	private BufferedImage background;
-
 	private int fpsJogo=0;
+	private BufferedImage background;
+	public List<Entidade> entidades;
+	private Spritesheet spritesheet;
+	
 
 
 	public Jogo() {
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
+		entidades=new ArrayList<Entidade>();
+		spritesheet=new Spritesheet("/Spritesheet.png");
+		Jogador jogador=new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
+		entidades.add(jogador);
 	}
 
 	public static void main(String[] args) {
@@ -46,7 +57,10 @@ public class Jogo extends Canvas implements Runnable {
 	}
 
 	public void atualizar() {
-		
+		for(int i=0;i<entidades.size();i++) {
+			Entidade e= entidades.get(i);
+			e.atualizar();
+		}
 	}
 
 	public void renderizar() {
@@ -65,7 +79,10 @@ public class Jogo extends Canvas implements Runnable {
 
 		/* renderização do jogo */
 		//Graphics2D g2 = (Graphics2D) g;
-		
+		for(int i=0;i<entidades.size();i++) {
+			Entidade e= entidades.get(i);
+			e.renderizar(g);
+		}
 		/**/
 
 		g.dispose();// limpar dados da imagem que nao foram usados
