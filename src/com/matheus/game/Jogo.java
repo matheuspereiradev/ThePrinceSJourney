@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import com.matheus.entidades.Entidade;
 import com.matheus.entidades.Jogador;
 import com.matheus.graficos.Spritesheet;
+import com.matheus.mundo.Mundo;
 
 public class Jogo extends Canvas implements Runnable,KeyListener {
 
@@ -31,12 +32,14 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	public List<Entidade> entidades;
 	public static Spritesheet spritesheet;
 	private Jogador jogador;
+	public static Mundo mundo;
 
 
 	public Jogo() {
 		addKeyListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
+		mundo=new Mundo("/mapa.png");
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
 		entidades=new ArrayList<Entidade>();
 		spritesheet=new Spritesheet("/Spritesheet.png");
