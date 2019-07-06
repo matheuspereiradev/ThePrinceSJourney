@@ -21,7 +21,7 @@ import com.matheus.graficos.Spritesheet;
 public class Jogo extends Canvas implements Runnable,KeyListener {
 
 	private static final long serialVersionUID = 1L;
-	public final int tamanho=16;
+	public static final int tamanho=16;
 	private Thread thread;
 	private boolean isRunning;
 	public static JFrame frame;
@@ -29,7 +29,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	private int fpsJogo=0;
 	private BufferedImage background;
 	public List<Entidade> entidades;
-	private Spritesheet spritesheet;
+	public static Spritesheet spritesheet;
 	private Jogador jogador;
 
 
