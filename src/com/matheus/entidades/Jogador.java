@@ -9,8 +9,8 @@ public class Jogador extends Entidade {
 
 	public boolean left, right, up, down;
 	public double speed = 0.7;
-	public int right_dir = 1, left_dir = 0,up_dir=0, down_dir=0;
-	public int ultimoClicado=down_dir;
+	public int right_dir = 1, left_dir = 0,up_dir=2, down_dir=3;
+	public int ultimoClicado=right_dir;
 	private BufferedImage[] rightplayer;
 	private BufferedImage[] leftplayer;
 	private BufferedImage[] upplayer;
@@ -22,13 +22,20 @@ public class Jogador extends Entidade {
 		super(x, y, width, height, sprite);
 		rightplayer = new BufferedImage[3];
 		leftplayer = new BufferedImage[3];
+		upplayer = new BufferedImage[3];
+		downplayer = new BufferedImage[3];
 		for (int i = 0; i < 3; i++) {
 			rightplayer[i] = Jogo.spritesheet.getSprite(48 + (i * Jogo.tamanho), 0, Jogo.tamanho, Jogo.tamanho);
 		}
 		for (int i = 0; i < 3; i++) {
 			leftplayer[i] = Jogo.spritesheet.getSprite(96 + (i * Jogo.tamanho), 0, Jogo.tamanho, Jogo.tamanho);
 		}
-		
+		for (int i = 0; i < 3; i++) {
+			upplayer[i] = Jogo.spritesheet.getSprite(0 + (i * Jogo.tamanho), 16, Jogo.tamanho, Jogo.tamanho);
+		}
+		for (int i = 0; i < 3; i++) {
+			downplayer[i] = Jogo.spritesheet.getSprite(0 + (i * Jogo.tamanho), 0, Jogo.tamanho, Jogo.tamanho);
+		}
 	}
 
 	public void atualizar() {
@@ -72,11 +79,13 @@ public class Jogador extends Entidade {
 		} else if (ultimoClicado==left_dir) {
 			g.drawImage(leftplayer[index], this.getX(), this.getY(), null);
 		}
-		/*if (ultimoClicado==up_dir) {
-			g.drawImage(upplayer[0], this.getX(), this.getY(), null);
+		if (ultimoClicado==up_dir) {
+			g.drawImage(upplayer[index], this.getX(), this.getY(), null);
 		} else if (ultimoClicado==down_dir) {
-			g.drawImage(downplayer[0], this.getX(), this.getY(), null);
-		}*/
+			g.drawImage(downplayer[index], this.getX(), this.getY(), null);
+		}
+		
+		
 	}
 
 }
