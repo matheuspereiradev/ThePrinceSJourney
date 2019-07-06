@@ -4,31 +4,32 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Entidade {
-	
-	private int x,y,width,height;
-	private BufferedImage sprite;
 
-	public Entidade(int x, int y, int width, int height, BufferedImage sprite) {
+	protected int width, height;
+	protected double x, y;
+	protected BufferedImage sprite;
+
+	public Entidade(double x, double y, int width, int height, BufferedImage sprite) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.sprite=sprite;
+		this.sprite = sprite;
 	}
 
 	public int getX() {
-		return x;
+		return (int)this.x;
 	}
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
 	public int getY() {
-		return y;
+		return (int)this.y;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 
@@ -47,9 +48,11 @@ public class Entidade {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-public void atualizar() {
-		
-	}	
+
+	public void atualizar() {
+
+	}
+
 	public void renderizar(Graphics g) {
 		g.drawImage(this.sprite, this.getX(), this.getY(), null);
 	}

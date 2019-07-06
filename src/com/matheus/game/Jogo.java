@@ -148,14 +148,32 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_UP) {
-			
-			System.out.println("Parei com 5 minutos");
+			jogador.up=true;
+		}else if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+			jogador.down=true;
 		}
+		
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+			jogador.right=true;
+		}else if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+			jogador.left=true;
+		}
+		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode()==KeyEvent.VK_UP) {
+			jogador.up=false;
+		}else if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+			jogador.down=false;
+		}
 		
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+			jogador.right=false;
+		}else if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+			jogador.left=false;
+		}
 	}
 	
 	@Override
