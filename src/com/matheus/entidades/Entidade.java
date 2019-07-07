@@ -3,7 +3,15 @@ package com.matheus.entidades;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import com.matheus.game.Jogo;
+
 public class Entidade {
+	
+	public static BufferedImage coracaoVida=Jogo.spritesheet.getSprite(128, 16, 16, 16);
+	public static BufferedImage municaoBalas=Jogo.spritesheet.getSprite(96,16, 16, 16);
+	public static BufferedImage arma=Jogo.spritesheet.getSprite(112, 16, 16, 16);
+	public static BufferedImage inimigoCaveira=Jogo.spritesheet.getSprite(16, 48, 16, 16);
+	
 
 	protected int width, height;
 	protected double x, y;

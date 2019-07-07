@@ -29,9 +29,9 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	private final int WIDITH = 240, HEIGHT = 160, SCALE = 3;
 	private int fpsJogo=0;
 	private BufferedImage background;
-	public List<Entidade> entidades;
+	public static List<Entidade> entidades;
 	public static Spritesheet spritesheet;
-	private Jogador jogador;
+	public static Jogador jogador;
 	public static Mundo mundo;
 
 
@@ -43,9 +43,10 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
 		entidades=new ArrayList<Entidade>();
 		spritesheet=new Spritesheet("/Spritesheet.png");
-		mundo=new Mundo("/mapa.png");
 		jogador=new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
+		mundo=new Mundo("/mapa.png");
+		
 	}
 
 	public static void main(String[] args) {
@@ -101,6 +102,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 
 	@Override
 	public void run() {
+		requestFocus();//FOCO AUTOMATICO NA JANELA
 		long lastTime = System.nanoTime();// ultima vez que foi executada a atualiação
 		double amountOfTicks = 60.0;// quantidade de atualizações por segundo
 		double ns = 1000000000 / amountOfTicks;// "constante" do momento certo do update do jogo para ficar na
