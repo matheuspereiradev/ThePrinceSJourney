@@ -58,8 +58,17 @@ public class Mundo {
 	}
 
 	public void renderizar(Graphics g) {
-		for (int xx = 0; xx < WIDTH_WORD; xx++) {
-			for (int yy = 0; yy < HEIGHT_WORD; yy++) {
+		int xstart= Camera.x>>4;
+		int ystart=Camera.y>>4;
+		
+		int xfinal=xstart+(Jogo.WIDITH>>4);
+		int yfinal=ystart+(Jogo.HEIGHT>>4);
+		
+		for (int xx = xstart; xx <= xfinal; xx++) {
+			for (int yy = ystart; yy <= yfinal; yy++) {
+				if(xx<0||yy<0||xx>=WIDTH_WORD||yy>=HEIGHT_WORD) {
+					continue;
+				}
 				Tile tile = tiles[xx + (yy * WIDTH_WORD)];
 				tile.renderizar(g);
 			}

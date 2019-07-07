@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import com.matheus.game.Jogo;
 import com.matheus.mundo.Camera;
+import com.matheus.mundo.Mundo;
 
 public class Jogador extends Entidade {
 
@@ -72,8 +73,8 @@ public class Jogador extends Entidade {
 			}
 		}
 
-		Camera.x=getX()-(Jogo.WIDITH/2);
-		Camera.y=getY()-(Jogo.HEIGHT/2);
+		Camera.x=Camera.clamp(getX()-(Jogo.WIDITH/2),Mundo.WIDTH_WORD*16-Jogo.WIDITH, 0);
+		Camera.y=Camera.clamp(getY()-(Jogo.HEIGHT/2),Mundo.HEIGHT_WORD*16-Jogo.HEIGHT, 0);
 	}
 
 	public void renderizar(Graphics g) {
