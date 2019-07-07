@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.matheus.game.Jogo;
+import com.matheus.mundo.Camera;
 
 public class Jogador extends Entidade {
 
@@ -71,18 +72,20 @@ public class Jogador extends Entidade {
 			}
 		}
 
+		Camera.x=getX()-(Jogo.WIDITH/2);
+		Camera.y=getY()-(Jogo.HEIGHT/2);
 	}
 
 	public void renderizar(Graphics g) {
 		if (ultimoClicado==right_dir) {
-			g.drawImage(rightplayer[index], this.getX(), this.getY(), null);
+			g.drawImage(rightplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
 		} else if (ultimoClicado==left_dir) {
-			g.drawImage(leftplayer[index], this.getX(), this.getY(), null);
+			g.drawImage(leftplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
 		}
 		if (ultimoClicado==up_dir) {
-			g.drawImage(upplayer[index], this.getX(), this.getY(), null);
+			g.drawImage(upplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
 		} else if (ultimoClicado==down_dir) {
-			g.drawImage(downplayer[index], this.getX(), this.getY(), null);
+			g.drawImage(downplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
 		}
 		
 		

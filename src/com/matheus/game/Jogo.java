@@ -26,7 +26,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	private Thread thread;
 	private boolean isRunning;
 	public static JFrame frame;
-	private final int WIDITH = 240, HEIGHT = 160, SCALE = 3;
+	public static final int WIDITH = 240, HEIGHT = 160, SCALE = 3;
 	private int fpsJogo=0;
 	private BufferedImage background;
 	public static List<Entidade> entidades;
@@ -78,12 +78,8 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 			return;
 		}
 		Graphics g = background.getGraphics();
-		g.setColor(new Color(0,200,0));
+		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, WIDITH, HEIGHT);
-
-		g.setColor(Color.YELLOW);
-		g.setFont(new Font("Arial", Font.PLAIN, 14));
-		g.drawString(String.valueOf(fpsJogo), 0, 10);
 
 		/* renderização do jogo */
 		//Graphics2D g2 = (Graphics2D) g;
@@ -93,6 +89,9 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 			e.renderizar(g);
 		}
 		/**/
+		g.setColor(Color.YELLOW);
+		g.setFont(new Font("Arial", Font.PLAIN, 14));
+		g.drawString(String.valueOf(fpsJogo), 0, 10);
 
 		g.dispose();// limpar dados da imagem que nao foram usados
 		g = bs.getDrawGraphics();

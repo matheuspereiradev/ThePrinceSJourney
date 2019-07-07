@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.matheus.game.Jogo;
+import com.matheus.mundo.Camera;
 
 public class Entidade {
 	
@@ -62,7 +63,7 @@ public class Entidade {
 	}
 
 	public void renderizar(Graphics g) {
-		g.drawImage(this.sprite, this.getX(), this.getY(), null);
+		g.drawImage(this.sprite, this.getX()-Camera.x, this.getY()-Camera.y, null);
 	}
 
 }

@@ -19,6 +19,6 @@ public class Tile {
 	}
 	
 	public void renderizar(Graphics g) {
-		g.drawImage(sprite, x, y, null);
+		g.drawImage(sprite, x-Camera.x, y-Camera.y, null);
 	}
 }
