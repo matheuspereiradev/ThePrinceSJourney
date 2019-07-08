@@ -11,6 +11,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -33,9 +34,11 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
+	public static Random rand;
 
 
 	public Jogo() {
+		rand=new Random();
 		addKeyListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
