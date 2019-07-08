@@ -24,7 +24,7 @@ public class InimigoAlien extends Entidade {
 				//verifica se ele é ele proprio exemplo um aliem semore vai estar colidindo com ele mesmo
 				continue;
 			}
-			Rectangle alienTeste=new Rectangle(inimigo.getX()+maskX, inimigo.getY()+maskY, Jogo.tamanho, Jogo.tamanho);
+			Rectangle alienTeste=new Rectangle(inimigo.getX()+maskX, inimigo.getY()+maskY,  maskW,maskH);
 			if(alienTeste.intersects(alienAtual)) {
 				return true;
 			}
