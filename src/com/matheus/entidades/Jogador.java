@@ -10,7 +10,7 @@ import com.matheus.mundo.Mundo;
 public class Jogador extends Entidade {
 
 	public boolean left, right, up, down;
-	public double speed = 1.4;
+	public double speed = 0.9;
 	public int right_dir = 0, left_dir = 1,up_dir=2, down_dir=3;
 	public int ultimoClicado=down_dir;
 	private BufferedImage[] rightplayer;
