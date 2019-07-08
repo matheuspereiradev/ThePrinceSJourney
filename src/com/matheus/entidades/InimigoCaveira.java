@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import com.matheus.game.Jogo;
 import com.matheus.mundo.Mundo;
 
-public class Inimigo extends Entidade {
+public class InimigoCaveira extends Entidade {
 
-	private double speed = 0.9;
+	private double speed = 0.7;
 
-	public Inimigo(double x, double y, int width, int height, BufferedImage sprite) {
+	public InimigoCaveira(double x, double y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 	}
 

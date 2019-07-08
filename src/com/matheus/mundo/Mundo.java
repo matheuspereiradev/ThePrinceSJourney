@@ -38,9 +38,12 @@ public class Mundo {
 						Jogo.jogador.setY(yy * 16);
 						// Jogador
 					} else if (pixels[atual] == 0xFF00FF21) {
-						Jogo.entidades.add(new Inimigo(xx * 16, yy * 16, 16, 16, Entidade.inimigoCaveira));
-						// inimigo
-					} else if (pixels[atual] == 0xFFFF0000) {
+						Jogo.entidades.add(new InimigoCaveira(xx * 16, yy * 16, 16, 16, Entidade.inimigoCaveira));
+						// inimigo caveira
+					} else if(pixels[atual]==0xFF89FFFD) {
+						Jogo.entidades.add(new InimigoAlien(xx * 16, yy * 16, 16, 16, Entidade.inimigoAlien));
+					} 
+					else if (pixels[atual] == 0xFFFF0000) {
 						Jogo.entidades.add(new CoracaoDeVida(xx * 16, yy * 16, 16, 16, Entidade.coracaoVida));
 						// vida
 					} else if (pixels[atual] == 0xFFFFD800) {
