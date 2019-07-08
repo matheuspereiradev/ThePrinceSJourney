@@ -16,6 +16,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import com.matheus.entidades.Entidade;
+import com.matheus.entidades.InimigoAlien;
 import com.matheus.entidades.Jogador;
 import com.matheus.graficos.Spritesheet;
 import com.matheus.mundo.Mundo;
@@ -31,6 +32,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	private int fpsJogo=0;
 	private BufferedImage background;
 	public static List<Entidade> entidades;
+	public static List<InimigoAlien> aliens;
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
@@ -45,6 +47,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
 		entidades=new ArrayList<Entidade>();
+		aliens=new ArrayList<InimigoAlien>();
 		spritesheet=new Spritesheet("/Spritesheet.png");
 		jogador=new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);

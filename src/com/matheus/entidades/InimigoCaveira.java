@@ -7,7 +7,7 @@ import com.matheus.mundo.Mundo;
 
 public class InimigoCaveira extends Entidade {
 
-	private double speed = 0.7;
+	private double speed = 0.9;
 
 	public InimigoCaveira(double x, double y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);

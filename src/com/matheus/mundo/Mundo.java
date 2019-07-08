@@ -37,11 +37,18 @@ public class Mundo {
 						Jogo.jogador.setX(xx * 16);
 						Jogo.jogador.setY(yy * 16);
 						// Jogador
-					} else if (pixels[atual] == 0xFF00FF21) {
+					}else if(pixels[atual]==0xFFBC7BF2) {
+						tiles[atual] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR_TERRA);
+					}
+					
+					else if (pixels[atual] == 0xFF00FF21) {
 						Jogo.entidades.add(new InimigoCaveira(xx * 16, yy * 16, 16, 16, Entidade.inimigoCaveira));
 						// inimigo caveira
 					} else if(pixels[atual]==0xFF89FFFD) {
-						Jogo.entidades.add(new InimigoAlien(xx * 16, yy * 16, 16, 16, Entidade.inimigoAlien));
+						InimigoAlien alien=new InimigoAlien(xx * 16, yy * 16, 16, 16, Entidade.inimigoAlien);
+						
+						Jogo.entidades.add(alien);
+						Jogo.aliens.add(alien);
 					} 
 					else if (pixels[atual] == 0xFFFF0000) {
 						Jogo.entidades.add(new CoracaoDeVida(xx * 16, yy * 16, 16, 16, Entidade.coracaoVida));
