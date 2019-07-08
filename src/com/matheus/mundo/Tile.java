@@ -7,6 +7,7 @@ import com.matheus.game.Jogo;
 
 public class Tile {
 	public static BufferedImage TILE_FLOOR = Jogo.spritesheet.getSprite(144, 0, 16, 16);
+	public static BufferedImage TILE_FLOOR_TERRA = Jogo.spritesheet.getSprite(144, 48, 16, 16);
 	public static BufferedImage TILE_WALL = Jogo.spritesheet.getSprite(144, 16, 16, 16);
 
 	private BufferedImage sprite;

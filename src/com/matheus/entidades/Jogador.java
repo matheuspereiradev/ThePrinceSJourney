@@ -10,7 +10,7 @@ import com.matheus.mundo.Mundo;
 public class Jogador extends Entidade {
 
 	public boolean left, right, up, down;
-	public double speed = 0.5;
+	public double speed = 1.4;
 	public int right_dir = 0, left_dir = 1,up_dir=2, down_dir=3;
 	public int ultimoClicado=down_dir;
 	private BufferedImage[] rightplayer;
@@ -42,20 +42,20 @@ public class Jogador extends Entidade {
 
 	public void atualizar() {
 		movimentando=false;
-		if (up) {
+		if (up && Mundo.isFree(getX(),(int)(y-speed))) {
 			movimentando=true;
 			ultimoClicado=up_dir;
 			y -= speed;
-		} else if (down) {
+		} else if (down && Mundo.isFree(getX(),(int)(y+speed))) {
 			movimentando=true;
 			ultimoClicado=down_dir;
 			y += speed;
 		}
-		if (left) {
+		if (left && Mundo.isFree((int)(x-speed),getY())) {
 			movimentando=true;
 			ultimoClicado=left_dir;
 			x -= speed;
-		} else if (right) {
+		} else if (right && Mundo.isFree((int)(x+speed),getY())) {
 			movimentando=true;
 			ultimoClicado=right_dir;
 			x += speed;
