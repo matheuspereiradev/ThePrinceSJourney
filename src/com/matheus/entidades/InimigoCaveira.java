@@ -40,7 +40,7 @@ public class InimigoCaveira extends Inimigo {
 				}
 			}
 		}else {
-			testarAtaqueNoPlayer(5,2);//aqui chama o metodo e passa a probabilidade de o ataque dele acertar e o maximo de dano que o ataque pode tirar
+			testarAtaqueNoPlayer(5);//aqui chama o metodo e passa a probabilidade de o ataque dele acertar
 		}
 
 		frames++;

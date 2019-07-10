@@ -87,6 +87,8 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, WIDITH, HEIGHT);
 
+		
+		
 		/* renderização do jogo */
 		//Graphics2D g2 = (Graphics2D) g;
 		mundo.renderizar(g);
@@ -98,6 +100,10 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		g.setColor(Color.YELLOW);
 		g.setFont(new Font("Arial", Font.PLAIN, 14));
 		g.drawString(String.valueOf(fpsJogo), 0, 10);
+		
+		g.setFont(new Font("Arial",Font.BOLD,12));
+		g.setColor(new Color(127, 0, 0));;
+		g.drawString("Vida: "+jogador.vida, 3, HEIGHT);
 
 		g.dispose();// limpar dados da imagem que nao foram usados
 		g = bs.getDrawGraphics();

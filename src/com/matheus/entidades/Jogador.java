@@ -1,5 +1,7 @@
 package com.matheus.entidades;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -80,7 +82,6 @@ public class Jogador extends Entidade {
 	}
 
 	public void renderizar(Graphics g) {
-		g.drawString(String.valueOf(this.vida), 58, 65);
 		
 		if (ultimoClicado==right_dir) {
 			g.drawImage(rightplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);

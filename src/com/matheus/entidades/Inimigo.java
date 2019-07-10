@@ -25,10 +25,10 @@ public class Inimigo extends Entidade {
 		return inimigoAtual.intersects(jogador);
 	}
 	
-	public void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem, int forcaAtaque) {
+	public void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem) {
 		if (Jogo.jogador.vida >= 0) {
 			if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
-				Jogo.jogador.vida-=Jogo.rand.nextInt(forcaAtaque);
+				Jogo.jogador.vida--;
 			}
 		}else {
 			System.exit(0);

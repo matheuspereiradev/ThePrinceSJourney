@@ -92,7 +92,7 @@ public class InimigoAlien extends Inimigo {
 			}
 
 		} else {
-			testarAtaqueNoPlayer(20,1);//aqui chama o metodo e passa a probabilidade de o ataque dele acertar e o maximo de dano que o ataque pode tirar
+			testarAtaqueNoPlayer(50);//aqui chama o metodo e passa a probabilidade de o ataque dele acertar
 		}
 
 		if (movendo) {
