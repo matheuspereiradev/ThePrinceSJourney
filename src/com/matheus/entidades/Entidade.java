@@ -8,11 +8,11 @@ import com.matheus.mundo.Camera;
 
 public class Entidade {
 	
-	public static BufferedImage coracaoVida=Jogo.spritesheet.getSprite(128, 16, 16, 16);
-	public static BufferedImage municaoBalas=Jogo.spritesheet.getSprite(96,16, 16, 16);
-	public static BufferedImage arma=Jogo.spritesheet.getSprite(112, 16, 16, 16);
-	public static BufferedImage inimigoCaveira=Jogo.spritesheet.getSprite(16, 48, 16, 16);
-	public static BufferedImage inimigoAlien=Jogo.spritesheet.getSprite(48, 16, 16, 16);
+	public static BufferedImage coracaoVida=Jogo.spritesheet.getSprite(128, 16, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage municaoBalas=Jogo.spritesheet.getSprite(96,16, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage arma=Jogo.spritesheet.getSprite(128, 48, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage inimigoCaveira=Jogo.spritesheet.getSprite(16, 48, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage inimigoAlien=Jogo.spritesheet.getSprite(48, 16, Jogo.tamanho, Jogo.tamanho);
 	
 
 	protected int width, height;

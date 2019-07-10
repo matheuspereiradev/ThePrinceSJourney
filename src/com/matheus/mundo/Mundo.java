@@ -25,39 +25,38 @@ public class Mundo {
 			for (int xx = 0; xx < WIDTH_WORD; xx++) {
 				for (int yy = 0; yy < HEIGHT_WORD; yy++) {
 					int atual = xx + (yy * WIDTH_WORD);
-					tiles[atual] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR);// padrão é ser chão
+					tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);// padrão é ser chão
 					if (pixels[atual] == 0xFF000000) {
-						tiles[atual] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR);
+						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
 						// chao
 					}
 					else if (pixels[atual] == 0xFFFFFFFF) {
-						tiles[atual] = new WallTile(xx * 16, yy * 16, Tile.TILE_WALL);
+						tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
 						// parede
 					} else if (pixels[atual] == 0xFF2A00FF) {
-						Jogo.jogador.setX(xx * 16);
-						Jogo.jogador.setY(yy * 16);
+						Jogo.jogador.setX(xx * Jogo.tamanho);
+						Jogo.jogador.setY(yy * Jogo.tamanho);
 						// Jogador
 					}else if(pixels[atual]==0xFFBC7BF2) {
-						tiles[atual] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR_TERRA);
+						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA);
 					}
 					
 					else if (pixels[atual] == 0xFF00FF21) {
-						Jogo.entidades.add(new InimigoCaveira(xx * 16, yy * 16, 16, 16, Entidade.inimigoCaveira));
+						Jogo.entidades.add(new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.inimigoCaveira));
 						// inimigo caveira
 					} else if(pixels[atual]==0xFF89FFFD) {
-						InimigoAlien alien=new InimigoAlien(xx * 16, yy * 16, 16, 16, Entidade.inimigoAlien);
-						
+						InimigoAlien alien=new InimigoAlien(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.inimigoAlien);
 						Jogo.entidades.add(alien);
 						Jogo.aliens.add(alien);
 					} 
 					else if (pixels[atual] == 0xFFFF0000) {
-						Jogo.entidades.add(new CoracaoDeVida(xx * 16, yy * 16, 16, 16, Entidade.coracaoVida));
+						Jogo.entidades.add(new CoracaoDeVida(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.coracaoVida));
 						// vida
 					} else if (pixels[atual] == 0xFFFFD800) {
-						Jogo.entidades.add(new Arma(xx * 16, yy * 16, 16, 16, Entidade.arma));
+						Jogo.entidades.add(new Arma(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.arma));
 						// arma
 					} else if (pixels[atual] == 0xFFFF00DC) {
-						Jogo.entidades.add(new Municao(xx * 16, yy * 16, 16, 16, Entidade.municaoBalas));
+						Jogo.entidades.add(new Municao(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.municaoBalas));
 						// munição
 					}
 				}
@@ -91,11 +90,12 @@ public class Mundo {
 	}
 
 	public void renderizar(Graphics g) {
-		int xstart = Camera.x >> 4;
-		int ystart = Camera.y >> 4;
+		//int xstart = Camera.x >> 4;Jogo.tamanho
+		int xstart = Camera.x/Jogo.tamanho;
+		int ystart = Camera.y/Jogo.tamanho;
 
-		int xfinal = xstart + (Jogo.WIDITH >> 4);
-		int yfinal = ystart + (Jogo.HEIGHT >> 4);
+		int xfinal = xstart + (Jogo.WIDITH/Jogo.tamanho);
+		int yfinal = ystart + (Jogo.HEIGHT/Jogo.tamanho);
 
 		for (int xx = xstart; xx <= xfinal; xx++) {
 			for (int yy = ystart; yy <= yfinal; yy++) {

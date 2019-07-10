@@ -67,18 +67,15 @@ public class InimigoAlien extends Entidade {
 		movendo = false;
 		if ((int) x < Jogo.jogador.getX() && Mundo.isFree((int) (x + speed), this.getY())
 				&& !isColidindo((int) (x + speed), this.getY())) {
-
 			movendo = true;
 			direcao = dir_right;
 			x += speed;
 		} else if ((int) x > Jogo.jogador.getX() && Mundo.isFree((int) (x - speed), this.getY())
 				&& !isColidindo((int) (x - speed), this.getY())) {
-
 			movendo = true;
 			direcao = dir_left;
 			x -= speed;
 		}
-
 		if ((int) y < Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y + speed))
 				&& !isColidindo(this.getX(), (int) (y + speed))) {
 			movendo = true;

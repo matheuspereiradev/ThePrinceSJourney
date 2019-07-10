@@ -73,8 +73,8 @@ public class Jogador extends Entidade {
 			}
 		}
 
-		Camera.x=Camera.clamp(getX()-(Jogo.WIDITH/2),Mundo.WIDTH_WORD*16-Jogo.WIDITH, 0);
-		Camera.y=Camera.clamp(getY()-(Jogo.HEIGHT/2),Mundo.HEIGHT_WORD*16-Jogo.HEIGHT, 0);
+		Camera.x=Camera.clamp(getX()-(Jogo.WIDITH/2),Mundo.WIDTH_WORD*Jogo.tamanho-Jogo.WIDITH, 0);
+		Camera.y=Camera.clamp(getY()-(Jogo.HEIGHT/2),Mundo.HEIGHT_WORD*Jogo.tamanho-Jogo.HEIGHT, 0);
 	}
 
 	public void renderizar(Graphics g) {
