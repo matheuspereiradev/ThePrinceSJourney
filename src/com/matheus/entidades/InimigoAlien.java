@@ -3,13 +3,12 @@ package com.matheus.entidades;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import com.matheus.game.Jogo;
 import com.matheus.mundo.Camera;
 import com.matheus.mundo.Mundo;
 
-public class InimigoAlien extends Entidade {
+public class InimigoAlien extends Inimigo {
 
 	private double speed = 0.9;
 	private int maskX = 8, maskY = 8, maskW = 10, maskH = 10;
@@ -45,13 +44,6 @@ public class InimigoAlien extends Entidade {
 
 	}
 
-	public static boolean colisaoComJogador(int x, int y, int mascaraX, int mascaraY, int mascaraWidth,
-			int mascaraHeight) {
-		Rectangle alienAtual = new Rectangle(x + mascaraX, y + mascaraY, mascaraWidth, mascaraHeight);
-		Rectangle jogador = new Rectangle(Jogo.jogador.getX(), Jogo.jogador.getY(), Jogo.tamanho, Jogo.tamanho);
-		return alienAtual.intersects(jogador);
-	}
-
 	public boolean isColidindo(int xnext, int ynext) {
 		Rectangle alienAtual = new Rectangle(xnext + maskX, ynext + maskX, maskW, maskH);
 		for (int i = 0; i < Jogo.aliens.size(); i++) {
@@ -73,36 +65,34 @@ public class InimigoAlien extends Entidade {
 
 	public void atualizar() {
 		movendo = false;
-		
-		if(!colisaoComJogador(this.getX(), this.getY(), this.maskX, this.maskY, this.maskW, this.maskH)) {
-		
-		if ((int) x < Jogo.jogador.getX() && Mundo.isFree((int) (x + speed), this.getY())
-				&& !isColidindo((int) (x + speed), this.getY())) {
-			movendo = true;
-			direcao = dir_right;
-			x += speed;
-		} else if ((int) x > Jogo.jogador.getX() && Mundo.isFree((int) (x - speed), this.getY())
-				&& !isColidindo((int) (x - speed), this.getY())) {
-			movendo = true;
-			direcao = dir_left;
-			x -= speed;
-		}
-		if ((int) y < Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y + speed))
-				&& !isColidindo(this.getX(), (int) (y + speed))) {
-			movendo = true;
-			direcao = dir_down;
-			y += speed;
-		} else if ((int) y > Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y - speed))
-				&& !isColidindo(this.getX(), (int) (y - speed))) {
-			movendo = true;
-			direcao = dir_up;
-			y -= speed;
-		}
-		
-		}else {
-			if(Jogo.rand.nextInt(100)<10) {
-				Jogo.jogador.vida--;
+
+		if (!colisaoComJogador(this.getX(), this.getY(), this.maskX, this.maskY, this.maskW, this.maskH)) {
+
+			if ((int) x < Jogo.jogador.getX() && Mundo.isFree((int) (x + speed), this.getY())
+					&& !isColidindo((int) (x + speed), this.getY())) {
+				movendo = true;
+				direcao = dir_right;
+				x += speed;
+			} else if ((int) x > Jogo.jogador.getX() && Mundo.isFree((int) (x - speed), this.getY())
+					&& !isColidindo((int) (x - speed), this.getY())) {
+				movendo = true;
+				direcao = dir_left;
+				x -= speed;
 			}
+			if ((int) y < Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y + speed))
+					&& !isColidindo(this.getX(), (int) (y + speed))) {
+				movendo = true;
+				direcao = dir_down;
+				y += speed;
+			} else if ((int) y > Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y - speed))
+					&& !isColidindo(this.getX(), (int) (y - speed))) {
+				movendo = true;
+				direcao = dir_up;
+				y -= speed;
+			}
+
+		} else {
+			testarAtaqueNoPlayer(20,1);//aqui chama o metodo e passa a probabilidade de o ataque dele acertar e o maximo de dano que o ataque pode tirar
 		}
 
 		if (movendo) {
