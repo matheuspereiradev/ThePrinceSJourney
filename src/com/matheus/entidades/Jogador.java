@@ -19,6 +19,8 @@ public class Jogador extends Entidade {
 	private BufferedImage[] downplayer;
 	private int index=0, frames=0,maxFrames=10,maxIndex=2;
 	private boolean movimentando;
+	
+	public int vida=100;
 
 	public Jogador(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -78,6 +80,8 @@ public class Jogador extends Entidade {
 	}
 
 	public void renderizar(Graphics g) {
+		g.drawString(String.valueOf(this.vida), 58, 65);
+		
 		if (ultimoClicado==right_dir) {
 			g.drawImage(rightplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
 		} else if (ultimoClicado==left_dir) {
