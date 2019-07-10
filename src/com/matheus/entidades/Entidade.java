@@ -60,7 +60,7 @@ public class Entidade {
 	}
 
 	public void atualizar() {
-
+		
 	}
 
 	public void renderizar(Graphics g) {

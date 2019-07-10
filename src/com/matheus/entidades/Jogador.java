@@ -26,7 +26,7 @@ public class Jogador extends Entidade {
 		leftplayer = new BufferedImage[3];
 		upplayer = new BufferedImage[3];
 		downplayer = new BufferedImage[3];
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < rightplayer.length; i++) {
 			rightplayer[i] = Jogo.spritesheet.getSprite(48 + (i * Jogo.tamanho), 0, Jogo.tamanho, Jogo.tamanho);
 		}
 		for (int i = 0; i < 3; i++) {
