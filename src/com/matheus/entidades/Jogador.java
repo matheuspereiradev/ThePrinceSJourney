@@ -1,7 +1,5 @@
 package com.matheus.entidades;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -22,7 +20,8 @@ public class Jogador extends Entidade {
 	private int index=0, frames=0,maxFrames=10,maxIndex=2;
 	private boolean movimentando;
 	
-	public int vida=100;
+	public static double vida=100;
+	public static final int MAX_LIFE=100;
 
 	public Jogador(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);

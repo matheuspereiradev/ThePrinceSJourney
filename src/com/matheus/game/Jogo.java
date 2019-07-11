@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import com.matheus.entidades.Entidade;
 import com.matheus.entidades.InimigoAlien;
 import com.matheus.entidades.Jogador;
+import com.matheus.entidades.UI;
 import com.matheus.graficos.Spritesheet;
 import com.matheus.mundo.Mundo;
 
@@ -37,6 +38,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	public static Jogador jogador;
 	public static Mundo mundo;
 	public static Random rand;
+	public UI ui;
 
 
 	public Jogo() {
@@ -52,6 +54,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		jogador=new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
 		mundo=new Mundo("/mapa.png");
+		ui=new UI();
 		
 	}
 
@@ -61,7 +64,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	}
 
 	public void iniciarFrame() {
-		frame = new JFrame("The Prince's Journey");
+		frame = new JFrame("The Prince's Journey v.1.0 by matheuslimadev.com");
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
@@ -98,13 +101,23 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		}
 		/**/
 		g.setColor(Color.YELLOW);
-		g.setFont(new Font("Arial", Font.PLAIN, 14));
-		g.drawString(String.valueOf(fpsJogo), 0, 10);
+		g.setFont(new Font("Arial", Font.PLAIN, 10));
+		g.drawString("FPS: "+String.valueOf(fpsJogo), 0, 10);
 		
+		
+		ui.renderizar(g);
+		/*if(jogador.vida<25) {
+			g.setColor(new Color(127, 0, 0));
+		}else if(jogador.vida<50) {
+			g.setColor(new Color(255, 255, 0));
+		}else {
+			g.setColor(new Color(0, 255, 0));
+		}
 		g.setFont(new Font("Arial",Font.BOLD,12));
-		g.setColor(new Color(127, 0, 0));;
+		
 		g.drawString("Vida: "+jogador.vida, 3, HEIGHT);
-
+*/
+		
 		g.dispose();// limpar dados da imagem que nao foram usados
 		g = bs.getDrawGraphics();
 		g.drawImage(background, 0, 0, WIDITH * SCALE, HEIGHT * SCALE, null);
