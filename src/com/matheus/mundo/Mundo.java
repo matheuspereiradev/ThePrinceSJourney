@@ -50,7 +50,10 @@ public class Mundo {
 						Jogo.aliens.add(alien);
 					} 
 					else if (pixels[atual] == 0xFFFF0000) {
-						Jogo.entidades.add(new CoracaoDeVida(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.coracaoVida));
+						CoracaoDeVida pack=new CoracaoDeVida(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.coracaoVida);
+						//pack.setMask(maskX, maskY, maskW, maskH); SE QUISER COLOCAR MASCARA
+						Jogo.entidades.add(pack);
+						Jogo.lifePack.add(pack);
 						// vida
 					} else if (pixels[atual] == 0xFFFFD800) {
 						Jogo.entidades.add(new Arma(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.arma));

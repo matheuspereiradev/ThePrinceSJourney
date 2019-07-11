@@ -24,7 +24,7 @@ public class InimigoCaveira extends Inimigo {
 
 	public void atualizar() {
 		// movimentação
-		if (!colisaoComJogador(this.getX(), this.getY(), 16, 16)) {
+		if (!colisaoComJogador(this.getX(), this.getY(), 16, 16,16,16)) {
 			if (Jogo.rand.nextInt(100) < 30) {
 
 				if (((int) x < Jogo.jogador.getX()) && (Mundo.isFree((int) (x + speed), this.getY()))) {

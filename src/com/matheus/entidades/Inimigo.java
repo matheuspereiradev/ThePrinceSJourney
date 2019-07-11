@@ -17,14 +17,7 @@ public class Inimigo extends Entidade {
 		Rectangle jogador = new Rectangle(Jogo.jogador.getX(), Jogo.jogador.getY(), Jogo.tamanho, Jogo.tamanho);
 		return inimigoAtual.intersects(jogador);
 	}
-	
-	public static boolean colisaoComJogador(int x, int y, int mascaraWidth,
-			int mascaraHeight) {
-		Rectangle inimigoAtual = new Rectangle(x , y, mascaraWidth, mascaraHeight);
-		Rectangle jogador = new Rectangle(Jogo.jogador.getX(), Jogo.jogador.getY(), Jogo.tamanho, Jogo.tamanho);
-		return inimigoAtual.intersects(jogador);
-	}
-	
+
 	public void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem) {
 		if (Jogo.jogador.vida >= 0) {
 			if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {

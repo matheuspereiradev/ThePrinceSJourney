@@ -11,17 +11,17 @@ public class Jogador extends Entidade {
 
 	public boolean left, right, up, down;
 	public double speed = 1.2;
-	public int right_dir = 0, left_dir = 1,up_dir=2, down_dir=3;
-	public int ultimoClicado=down_dir;
+	public int right_dir = 0, left_dir = 1, up_dir = 2, down_dir = 3;
+	public int ultimoClicado = down_dir;
 	private BufferedImage[] rightplayer;
 	private BufferedImage[] leftplayer;
 	private BufferedImage[] upplayer;
 	private BufferedImage[] downplayer;
-	private int index=0, frames=0,maxFrames=10,maxIndex=2;
+	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2;
 	private boolean movimentando;
-	
-	public static double vida=100;
-	public static final int MAX_LIFE=100;
+
+	public static double vida = 100;
+	public static final int MAX_LIFE = 100;
 
 	public Jogador(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -44,56 +44,73 @@ public class Jogador extends Entidade {
 	}
 
 	public void atualizar() {
-		movimentando=false;
-		if (up && Mundo.isFree(getX(),(int)(y-speed))) {
-			movimentando=true;
-			ultimoClicado=up_dir;
+		movimentando = false;
+		if (up && Mundo.isFree(getX(), (int) (y - speed))) {
+			movimentando = true;
+			ultimoClicado = up_dir;
 			y -= speed;
-		} else if (down && Mundo.isFree(getX(),(int)(y+speed))) {
-			movimentando=true;
-			ultimoClicado=down_dir;
+		} else if (down && Mundo.isFree(getX(), (int) (y + speed))) {
+			movimentando = true;
+			ultimoClicado = down_dir;
 			y += speed;
 		}
-		if (left && Mundo.isFree((int)(x-speed),getY())) {
-			movimentando=true;
-			ultimoClicado=left_dir;
+		if (left && Mundo.isFree((int) (x - speed), getY())) {
+			movimentando = true;
+			ultimoClicado = left_dir;
 			x -= speed;
-		} else if (right && Mundo.isFree((int)(x+speed),getY())) {
-			movimentando=true;
-			ultimoClicado=right_dir;
+		} else if (right && Mundo.isFree((int) (x + speed), getY())) {
+			movimentando = true;
+			ultimoClicado = right_dir;
 			x += speed;
 		}
-		//animar
-		
-		if(movimentando) {
+		// animar
+
+		if (movimentando) {
 			frames++;
-			if(frames==maxFrames) {
-				frames=0;
+			if (frames == maxFrames) {
+				frames = 0;
 				index++;
-				if(index>maxIndex) {
-					index=0;
+				if (index > maxIndex) {
+					index = 0;
 				}
 			}
 		}
+		verificarColisaoComPackDeVida();
 
-		Camera.x=Camera.clamp(getX()-(Jogo.WIDITH/2),Mundo.WIDTH_WORD*Jogo.tamanho-Jogo.WIDITH, 0);
-		Camera.y=Camera.clamp(getY()-(Jogo.HEIGHT/2),Mundo.HEIGHT_WORD*Jogo.tamanho-Jogo.HEIGHT, 0);
+		Camera.x = Camera.clamp(getX() - (Jogo.WIDITH / 2), Mundo.WIDTH_WORD * Jogo.tamanho - Jogo.WIDITH, 0);
+		Camera.y = Camera.clamp(getY() - (Jogo.HEIGHT / 2), Mundo.HEIGHT_WORD * Jogo.tamanho - Jogo.HEIGHT, 0);
 	}
 
 	public void renderizar(Graphics g) {
-		
-		if (ultimoClicado==right_dir) {
-			g.drawImage(rightplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
-		} else if (ultimoClicado==left_dir) {
-			g.drawImage(leftplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
+		if (ultimoClicado == right_dir) {
+			g.drawImage(rightplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		} else if (ultimoClicado == left_dir) {
+			g.drawImage(leftplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
-		if (ultimoClicado==up_dir) {
-			g.drawImage(upplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
-		} else if (ultimoClicado==down_dir) {
-			g.drawImage(downplayer[index], this.getX()-Camera.x, this.getY()-Camera.y, null);
+		if (ultimoClicado == up_dir) {
+			g.drawImage(upplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		} else if (ultimoClicado == down_dir) {
+			g.drawImage(downplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
-		
-		
+	}
+
+	public void verificarColisaoComPackDeVida() {
+		for (int i = 0; i < Jogo.lifePack.size(); i++) {// depois melhor criar uma lista somente para life pack
+			Entidade atual = Jogo.lifePack.get(i);
+			if (atual instanceof CoracaoDeVida) {
+				if (Entidade.isColidding(this, atual)) {
+					if (Jogador.vida <= 90) {
+						Jogador.vida += 10;
+						Jogo.entidades.remove(atual);
+						Jogo.lifePack.remove(atual);
+					} else if (Jogador.vida < 100) {
+						Jogador.vida = 100;
+						Jogo.entidades.remove(atual);
+						Jogo.lifePack.remove(atual);
+					}
+				}
+			}
+		}
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.matheus.entidades;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.matheus.game.Jogo;
@@ -18,6 +19,8 @@ public class Entidade {
 	protected int width, height;
 	protected double x, y;
 	protected BufferedImage sprite;
+	
+	private int maskX,maskY,maskW,maskH;
 
 	public Entidade(double x, double y, int width, int height, BufferedImage sprite) {
 		this.x = x;
@@ -25,6 +28,19 @@ public class Entidade {
 		this.width = width;
 		this.height = height;
 		this.sprite = sprite;
+		
+		this.maskX=0;
+		this.maskY=0;
+		//por padrão a mascara é do tamanho inteiro do jogador passado ao criar uma entidade
+		this.maskW=width;
+		this.maskH=height;
+	}
+	
+	public void setMask(int maskX, int maskY, int maskW, int maskH) {
+		this.maskX=maskX;
+		this.maskY=maskY;
+		this.maskW=maskW;
+		this.maskH=maskH;
 	}
 
 	public int getX() {
@@ -57,6 +73,12 @@ public class Entidade {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	
+	public static boolean isColidding(Entidade e1,Entidade e2) {
+		Rectangle mask1 = new Rectangle(e1.getX() + e1.maskX, e1.getY() + e1.maskY, e1.maskW, e1.maskH);
+		Rectangle mask2 = new Rectangle(e2.getX() + e2.maskX, e2.getY() + e2.maskY, e2.maskW, e2.maskH);
+		return mask1.intersects(mask2);
 	}
 
 	public void atualizar() {
