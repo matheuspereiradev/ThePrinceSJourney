@@ -20,7 +20,7 @@ public class Entidade {
 	protected double x, y;
 	protected BufferedImage sprite;
 	
-	private int maskX,maskY,maskW,maskH;
+	protected int maskX,maskY,maskW,maskH;
 
 	public Entidade(double x, double y, int width, int height, BufferedImage sprite) {
 		this.x = x;

@@ -20,6 +20,7 @@ public class Jogador extends Entidade {
 	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2;
 	private boolean movimentando;
 
+	public int municao=0;
 	public static double vida = 100;
 	public static final int MAX_LIFE = 100;
 

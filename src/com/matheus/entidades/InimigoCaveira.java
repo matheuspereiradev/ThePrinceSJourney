@@ -10,6 +10,7 @@ import com.matheus.mundo.Mundo;
 public class InimigoCaveira extends Inimigo {
 
 	private double speed = 1.2;
+	
 	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2;
 	private BufferedImage[] inimigoCaveira;
 
@@ -24,7 +25,7 @@ public class InimigoCaveira extends Inimigo {
 
 	public void atualizar() {
 		// movimentação
-		if (!colisaoComJogador(this.getX(), this.getY(), 16, 16,16,16)) {
+		if (!Inimigo.colisaoComJogador(this.getX(), this.getY(), this.maskX, this.maskY, this.maskW, this.maskH)) {
 			if (Jogo.rand.nextInt(100) < 30) {
 
 				if (((int) x < Jogo.jogador.getX()) && (Mundo.isFree((int) (x + speed), this.getY()))) {
@@ -40,7 +41,7 @@ public class InimigoCaveira extends Inimigo {
 				}
 			}
 		}else {
-			testarAtaqueNoPlayer(5);//aqui chama o metodo e passa a probabilidade de o ataque dele acertar
+			Inimigo.testarAtaqueNoPlayer(5);//aqui chama o metodo e passa a probabilidade de o ataque dele acertar
 		}
 
 		frames++;

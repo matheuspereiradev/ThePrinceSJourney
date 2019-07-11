@@ -2,7 +2,6 @@ package com.matheus.entidades;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
 import com.matheus.game.Jogo;
 
 public class Inimigo extends Entidade {
@@ -18,10 +17,10 @@ public class Inimigo extends Entidade {
 		return inimigoAtual.intersects(jogador);
 	}
 
-	public void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem) {
-		if (Jogo.jogador.vida >= 0) {
+	public static void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem) {
+		if (Jogador.vida >= 0) {
 			if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
-				Jogo.jogador.vida--;
+				Jogador.vida--;
 			}
 		}else {
 			System.exit(0);
