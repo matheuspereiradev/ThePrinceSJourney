@@ -10,7 +10,7 @@ import com.matheus.mundo.Mundo;
 public class InimigoCaveira extends Inimigo {
 
 	private double speed = 1.2;
-	
+
 	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2;
 	private BufferedImage[] inimigoCaveira;
 
@@ -40,8 +40,8 @@ public class InimigoCaveira extends Inimigo {
 					y -= speed;
 				}
 			}
-		}else {
-			Inimigo.testarAtaqueNoPlayer(5);//aqui chama o metodo e passa a probabilidade de o ataque dele acertar
+		} else {
+			Inimigo.testarAtaqueNoPlayer(5);// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
 		}
 
 		frames++;

@@ -9,21 +9,20 @@ public class Inimigo extends Entidade {
 	public Inimigo(double x, double y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 	}
-	
-	public static boolean colisaoComJogador(int x, int y, int mascaraX, int mascaraY, int width,
-			int height) {
+
+	public static boolean colisaoComJogador(int x, int y, int mascaraX, int mascaraY, int width, int height) {
 		Rectangle inimigoAtual = new Rectangle(x + mascaraX, y + mascaraY, width, height);
 		Rectangle jogador = new Rectangle(Jogo.jogador.getX(), Jogo.jogador.getY(), Jogo.tamanho, Jogo.tamanho);
 		return inimigoAtual.intersects(jogador);
 	}
 
 	public static void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem) {
-		
-			if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
-				Jogo.jogador.vida--;
-				Jogo.jogador.sofrendoDano=true;
-			}
-		
+
+		if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
+			Jogo.jogador.vida--;
+			Jogo.jogador.sofrendoDano = true;
+		}
+
 	}
 
 }

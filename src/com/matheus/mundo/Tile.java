@@ -11,15 +11,15 @@ public class Tile {
 	public static BufferedImage TILE_WALL = Jogo.spritesheet.getSprite(144, 16, Jogo.tamanho, Jogo.tamanho);
 
 	private BufferedImage sprite;
-	private int x,y;
-	
-	public Tile(int x,int y,BufferedImage sprite) {
-		this.x=x;
-		this.y=y;
-		this.sprite=sprite;
+	private int x, y;
+
+	public Tile(int x, int y, BufferedImage sprite) {
+		this.x = x;
+		this.y = y;
+		this.sprite = sprite;
 	}
-	
+
 	public void renderizar(Graphics g) {
-		g.drawImage(sprite, x-Camera.x, y-Camera.y, null);
+		g.drawImage(sprite, x - Camera.x, y - Camera.y, null);
 	}
 }

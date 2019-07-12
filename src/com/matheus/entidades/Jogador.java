@@ -2,10 +2,7 @@ package com.matheus.entidades;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 import com.matheus.game.Jogo;
-import com.matheus.graficos.Spritesheet;
 import com.matheus.mundo.Camera;
 import com.matheus.mundo.Mundo;
 
@@ -23,11 +20,12 @@ public class Jogador extends Entidade {
 	private boolean movimentando;
 	private BufferedImage jogadorAtingido;
 	public boolean sofrendoDano = false;
-	public int sofrendoDanoFrames=0;
+	public int sofrendoDanoFrames = 0;
 
 	public int numeroDeBalas = 0;
 	public double vida = 100;
 	public static final int MAX_LIFE = 100;
+	public boolean armado = false;
 
 	public Jogador(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -51,23 +49,16 @@ public class Jogador extends Entidade {
 	}
 
 	public void atualizar() {
-		
-		if(vida<=0) {
+
+		if (vida <= 0) {
 			Jogo.entidades.clear();
 			Jogo.inimigo.clear();
 			Jogo.lifePack.clear();
 			Jogo.municao.clear();
-			Jogo.entidades=new ArrayList<Entidade>();
-			Jogo.inimigo=new ArrayList<Inimigo>();
-			Jogo.lifePack=new ArrayList<CoracaoDeVida>();
-			Jogo.municao=new ArrayList<Municao>();
-			Jogo.spritesheet=new Spritesheet("/Spritesheet.png");
-			Jogo.jogador=new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho, Jogo.spritesheet.getSprite(0, 0, Jogo.tamanho, Jogo.tamanho));
-			Jogo.entidades.add(Jogo.jogador);
-			Jogo.mundo=new Mundo("/mapa.png");
+			Jogo.iniciarJogo();
 			return;
 		}
-		
+
 		movimentando = false;
 		if (up && Mundo.isFree(getX(), (int) (y - speed))) {
 			movimentando = true;
@@ -99,16 +90,17 @@ public class Jogador extends Entidade {
 				}
 			}
 		}
-		
-		if(sofrendoDano) {
+
+		if (sofrendoDano) {
 			sofrendoDanoFrames++;
-			if(sofrendoDanoFrames==8) {
-				sofrendoDanoFrames=0;
-				sofrendoDano=false;
+			if (sofrendoDanoFrames == 8) {
+				sofrendoDanoFrames = 0;
+				sofrendoDano = false;
 			}
 		}
 		verificarColisaoComPackDeVida();
 		verificarColisaoMunicao();
+		verificarColisaoArma();
 
 		Camera.x = Camera.clamp(getX() - (Jogo.WIDITH / 2), Mundo.WIDTH_WORD * Jogo.tamanho - Jogo.WIDITH, 0);
 		Camera.y = Camera.clamp(getY() - (Jogo.HEIGHT / 2), Mundo.HEIGHT_WORD * Jogo.tamanho - Jogo.HEIGHT, 0);
@@ -118,17 +110,35 @@ public class Jogador extends Entidade {
 		if (!sofrendoDano) {
 			if (ultimoClicado == right_dir) {
 				g.drawImage(rightplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+				if (armado) {
+					g.drawImage(Entidade.armaRight, (this.getX() - Camera.x) + 8, (this.getY() - Camera.y) + 3, null);
+				}
+
 			} else if (ultimoClicado == left_dir) {
 				g.drawImage(leftplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+				if (armado) {
+					g.drawImage(Entidade.armaLeft, (this.getX() - Camera.x) - 8, (this.getY() - Camera.y) + 3, null);
+				}
 			}
 			if (ultimoClicado == up_dir) {
 				g.drawImage(upplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 			} else if (ultimoClicado == down_dir) {
 				g.drawImage(downplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+				if (armado) {
+					g.drawImage(Entidade.armaDown, (this.getX() - Camera.x) - 4, (this.getY() - Camera.y) + 6, null);
+				}
 			}
-		}else {
+		} else {
 			g.drawImage(jogadorAtingido, this.getX() - Camera.x, this.getY() - Camera.y, null);
+			if (armado) {
+				g.drawImage(Entidade.armaDown, (this.getX() - Camera.x) - 4, (this.getY() - Camera.y) + 6, null);
+			}
 		}
+		/*
+		 * super.renderizar(g); g.setColor(Color.BLUE);
+		 * g.fillRect(this.getX()+maskX-Camera.x, this.getY()+maskY-Camera.y,
+		 * maskW,maskH);
+		 */
 	}
 
 	public void verificarColisaoComPackDeVida() {
@@ -158,6 +168,20 @@ public class Jogador extends Entidade {
 					Jogo.jogador.numeroDeBalas += 15;
 					Jogo.entidades.remove(atual);
 					Jogo.municao.remove(atual);
+				}
+			}
+		}
+	}
+
+	public void verificarColisaoArma() {
+		for (int i = 0; i < Jogo.arma.size(); i++) {// depois melhor criar uma lista somente para life pack
+			Entidade atual = Jogo.arma.get(i);
+			if (atual instanceof Arma) {
+				if (Entidade.isColidding(this, atual)) {
+					System.out.println("Coletou a arma");
+					Jogo.jogador.armado = true;
+					Jogo.entidades.remove(atual);
+					Jogo.arma.remove(atual);
 				}
 			}
 		}
