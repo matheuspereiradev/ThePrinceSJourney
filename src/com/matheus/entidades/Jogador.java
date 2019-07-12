@@ -26,6 +26,7 @@ public class Jogador extends Entidade {
 	public double vida = 100;
 	public static final int MAX_LIFE = 100;
 	public boolean armado = false;
+	public boolean atirando = false;
 
 	public Jogador(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -96,6 +97,34 @@ public class Jogador extends Entidade {
 			if (sofrendoDanoFrames == 8) {
 				sofrendoDanoFrames = 0;
 				sofrendoDano = false;
+			}
+		}
+
+		if (atirando) {
+			// criar a bala
+			atirando = false;
+			if (armado && numeroDeBalas > 0) {
+				numeroDeBalas--;
+				int dx = 0, dy = 0, px = 0, py = 0;
+				if (ultimoClicado == right_dir) {
+					px = 18;
+					py = 9;
+					dx = 1;
+				} else if (ultimoClicado == left_dir) {
+					px = -6;
+					py = 9;
+					dx = -1;
+				}
+				if (ultimoClicado == up_dir) {
+					px = -1;
+					py = 8;
+					dy = -1;
+				} else if (ultimoClicado == down_dir) {
+					px = 1;
+					py = 13;
+					dy = 1;
+				}
+				Jogo.balas.add(new AtirarMunicao(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy));
 			}
 		}
 		verificarColisaoComPackDeVida();
@@ -178,7 +207,6 @@ public class Jogador extends Entidade {
 			Entidade atual = Jogo.arma.get(i);
 			if (atual instanceof Arma) {
 				if (Entidade.isColidding(this, atual)) {
-					System.out.println("Coletou a arma");
 					Jogo.jogador.armado = true;
 					Jogo.entidades.remove(atual);
 					Jogo.arma.remove(atual);

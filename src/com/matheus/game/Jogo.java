@@ -33,6 +33,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public static List<CoracaoDeVida> lifePack;
 	public static List<Municao> municao;
 	public static List<Arma> arma;
+	public static List<AtirarMunicao> balas;
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
@@ -61,6 +62,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		lifePack = new ArrayList<CoracaoDeVida>();
 		municao = new ArrayList<Municao>();
 		arma = new ArrayList<Arma>();
+		balas = new ArrayList<AtirarMunicao>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
@@ -82,6 +84,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 			Entidade e = entidades.get(i);
 			e.atualizar();
 		}
+		// renderizar as balas na tela pq elas nao esta em entidades
+		for (int i = 0; i < balas.size(); i++) {
+			balas.get(i).atualizar();
+		}
 	}
 
 	public void renderizar() {
@@ -100,6 +106,9 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < entidades.size(); i++) {
 			Entidade e = entidades.get(i);
 			e.renderizar(g);
+		}
+		for (int i = 0; i < balas.size(); i++) {
+			balas.get(i).renderizar(g);
 		}
 		/**/
 		g.setColor(Color.YELLOW);
@@ -185,6 +194,9 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			jogador.left = true;
 		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			jogador.atirando = true;
+		}
 
 	}
 
@@ -201,6 +213,8 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			jogador.left = false;
 		}
+
+		
 	}
 
 	@Override
