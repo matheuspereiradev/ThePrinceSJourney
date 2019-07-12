@@ -47,7 +47,7 @@ public class Mundo {
 					} else if(pixels[atual]==0xFF89FFFD) {
 						InimigoAlien alien=new InimigoAlien(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.inimigoAlien);
 						Jogo.entidades.add(alien);
-						Jogo.aliens.add(alien);
+						Jogo.inimigo.add(alien);
 					} 
 					else if (pixels[atual] == 0xFFFF0000) {
 						CoracaoDeVida pack=new CoracaoDeVida(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.coracaoVida);
@@ -59,7 +59,9 @@ public class Mundo {
 						Jogo.entidades.add(new Arma(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.arma));
 						// arma
 					} else if (pixels[atual] == 0xFFFF00DC) {
-						Jogo.entidades.add(new Municao(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.municaoBalas));
+						Municao balas=new Municao(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho, Entidade.municaoBalas);
+						Jogo.entidades.add(balas);
+						Jogo.municao.add(balas);
 						// munição
 					}
 				}

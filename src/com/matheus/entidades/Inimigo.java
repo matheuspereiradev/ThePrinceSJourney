@@ -18,13 +18,12 @@ public class Inimigo extends Entidade {
 	}
 
 	public static void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem) {
-		if (Jogador.vida >= 0) {
+		
 			if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
-				Jogador.vida--;
+				Jogo.jogador.vida--;
+				Jogo.jogador.sofrendoDano=true;
 			}
-		}else {
-			System.exit(0);
-		}
+		
 	}
 
 }

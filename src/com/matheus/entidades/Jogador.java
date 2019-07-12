@@ -2,8 +2,10 @@ package com.matheus.entidades;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import com.matheus.game.Jogo;
+import com.matheus.graficos.Spritesheet;
 import com.matheus.mundo.Camera;
 import com.matheus.mundo.Mundo;
 
@@ -19,9 +21,12 @@ public class Jogador extends Entidade {
 	private BufferedImage[] downplayer;
 	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2;
 	private boolean movimentando;
+	private BufferedImage jogadorAtingido;
+	public boolean sofrendoDano = false;
+	public int sofrendoDanoFrames=0;
 
-	public int municao=0;
-	public static double vida = 100;
+	public int numeroDeBalas = 0;
+	public double vida = 100;
 	public static final int MAX_LIFE = 100;
 
 	public Jogador(int x, int y, int width, int height, BufferedImage sprite) {
@@ -30,6 +35,7 @@ public class Jogador extends Entidade {
 		leftplayer = new BufferedImage[3];
 		upplayer = new BufferedImage[3];
 		downplayer = new BufferedImage[3];
+		jogadorAtingido = Jogo.spritesheet.getSprite(64, 48, Jogo.tamanho, Jogo.tamanho);
 		for (int i = 0; i < rightplayer.length; i++) {
 			rightplayer[i] = Jogo.spritesheet.getSprite(48 + (i * Jogo.tamanho), 0, Jogo.tamanho, Jogo.tamanho);
 		}
@@ -45,6 +51,23 @@ public class Jogador extends Entidade {
 	}
 
 	public void atualizar() {
+		
+		if(vida<=0) {
+			Jogo.entidades.clear();
+			Jogo.inimigo.clear();
+			Jogo.lifePack.clear();
+			Jogo.municao.clear();
+			Jogo.entidades=new ArrayList<Entidade>();
+			Jogo.inimigo=new ArrayList<Inimigo>();
+			Jogo.lifePack=new ArrayList<CoracaoDeVida>();
+			Jogo.municao=new ArrayList<Municao>();
+			Jogo.spritesheet=new Spritesheet("/Spritesheet.png");
+			Jogo.jogador=new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho, Jogo.spritesheet.getSprite(0, 0, Jogo.tamanho, Jogo.tamanho));
+			Jogo.entidades.add(Jogo.jogador);
+			Jogo.mundo=new Mundo("/mapa.png");
+			return;
+		}
+		
 		movimentando = false;
 		if (up && Mundo.isFree(getX(), (int) (y - speed))) {
 			movimentando = true;
@@ -76,22 +99,35 @@ public class Jogador extends Entidade {
 				}
 			}
 		}
+		
+		if(sofrendoDano) {
+			sofrendoDanoFrames++;
+			if(sofrendoDanoFrames==8) {
+				sofrendoDanoFrames=0;
+				sofrendoDano=false;
+			}
+		}
 		verificarColisaoComPackDeVida();
+		verificarColisaoMunicao();
 
 		Camera.x = Camera.clamp(getX() - (Jogo.WIDITH / 2), Mundo.WIDTH_WORD * Jogo.tamanho - Jogo.WIDITH, 0);
 		Camera.y = Camera.clamp(getY() - (Jogo.HEIGHT / 2), Mundo.HEIGHT_WORD * Jogo.tamanho - Jogo.HEIGHT, 0);
 	}
 
 	public void renderizar(Graphics g) {
-		if (ultimoClicado == right_dir) {
-			g.drawImage(rightplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-		} else if (ultimoClicado == left_dir) {
-			g.drawImage(leftplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-		}
-		if (ultimoClicado == up_dir) {
-			g.drawImage(upplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-		} else if (ultimoClicado == down_dir) {
-			g.drawImage(downplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		if (!sofrendoDano) {
+			if (ultimoClicado == right_dir) {
+				g.drawImage(rightplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			} else if (ultimoClicado == left_dir) {
+				g.drawImage(leftplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			}
+			if (ultimoClicado == up_dir) {
+				g.drawImage(upplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			} else if (ultimoClicado == down_dir) {
+				g.drawImage(downplayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			}
+		}else {
+			g.drawImage(jogadorAtingido, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 	}
 
@@ -100,15 +136,28 @@ public class Jogador extends Entidade {
 			Entidade atual = Jogo.lifePack.get(i);
 			if (atual instanceof CoracaoDeVida) {
 				if (Entidade.isColidding(this, atual)) {
-					if (Jogador.vida <= 90) {
-						Jogador.vida += 10;
+					if (Jogo.jogador.vida <= 90) {
+						Jogo.jogador.vida += 10;
 						Jogo.entidades.remove(atual);
 						Jogo.lifePack.remove(atual);
-					} else if (Jogador.vida < 100) {
-						Jogador.vida = 100;
+					} else if (Jogo.jogador.vida < 100) {
+						Jogo.jogador.vida = 100;
 						Jogo.entidades.remove(atual);
 						Jogo.lifePack.remove(atual);
 					}
+				}
+			}
+		}
+	}
+
+	public void verificarColisaoMunicao() {
+		for (int i = 0; i < Jogo.municao.size(); i++) {// depois melhor criar uma lista somente para life pack
+			Entidade atual = Jogo.municao.get(i);
+			if (atual instanceof Municao) {
+				if (Entidade.isColidding(this, atual)) {
+					Jogo.jogador.numeroDeBalas += 15;
+					Jogo.entidades.remove(atual);
+					Jogo.municao.remove(atual);
 				}
 			}
 		}

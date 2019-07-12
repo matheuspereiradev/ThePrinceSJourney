@@ -12,13 +12,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import javax.swing.JFrame;
-
 import com.matheus.entidades.CoracaoDeVida;
 import com.matheus.entidades.Entidade;
-import com.matheus.entidades.InimigoAlien;
+import com.matheus.entidades.Inimigo;
 import com.matheus.entidades.Jogador;
+import com.matheus.entidades.Municao;
 import com.matheus.entidades.UI;
 import com.matheus.graficos.Spritesheet;
 import com.matheus.mundo.Mundo;
@@ -34,8 +33,9 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 	private int fpsJogo=0;
 	private BufferedImage background;
 	public static List<Entidade> entidades;
-	public static List<InimigoAlien> aliens;
+	public static List<Inimigo> inimigo;
 	public static List<CoracaoDeVida>lifePack;
+	public static List<Municao> municao;
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
@@ -51,8 +51,9 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
 		entidades=new ArrayList<Entidade>();
-		aliens=new ArrayList<InimigoAlien>();
+		inimigo=new ArrayList<Inimigo>();
 		lifePack=new ArrayList<CoracaoDeVida>();
+		municao=new ArrayList<Municao>();
 		spritesheet=new Spritesheet("/Spritesheet.png");
 		jogador=new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
@@ -105,7 +106,7 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		/**/
 		g.setColor(Color.YELLOW);
 		g.setFont(new Font("Arial", Font.PLAIN, 10));
-		g.drawString("FPS: "+String.valueOf(fpsJogo), 0, 10);
+		g.drawString(String.valueOf(fpsJogo), 225, 10);
 		
 		
 		ui.renderizar(g);
@@ -124,6 +125,12 @@ public class Jogo extends Canvas implements Runnable,KeyListener {
 		g.dispose();// limpar dados da imagem que nao foram usados
 		g = bs.getDrawGraphics();
 		g.drawImage(background, 0, 0, WIDITH * SCALE, HEIGHT * SCALE, null);
+		//aqui para ficar em cima da imagem de background
+		g.setFont(new Font("Arial", Font.BOLD,25));
+		g.setColor(Color.WHITE);
+		g.drawString("Munição: "+Jogo.jogador.numeroDeBalas, 36, 70);
+		g.drawString((int)Jogo.jogador.vida+"/"+Jogador.MAX_LIFE, 120, 40);
+		
 		bs.show();
 	}
 

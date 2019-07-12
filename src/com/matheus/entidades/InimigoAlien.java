@@ -46,8 +46,8 @@ public class InimigoAlien extends Inimigo {
 
 	public boolean isColidindo(int xnext, int ynext) {
 		Rectangle alienAtual = new Rectangle(xnext + maskX, ynext + maskX, maskW, maskH);
-		for (int i = 0; i < Jogo.aliens.size(); i++) {
-			InimigoAlien inimigo = Jogo.aliens.get(i);
+		for (int i = 0; i < Jogo.inimigo.size(); i++) {
+			Inimigo inimigo = Jogo.inimigo.get(i);
 			if (inimigo == this) {
 				// verifica se ele é ele proprio exemplo um aliem semore vai estar colidindo com
 				// ele mesmo
