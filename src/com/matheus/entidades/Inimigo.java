@@ -6,7 +6,9 @@ import com.matheus.game.Jogo;
 
 public class Inimigo extends Entidade {
 
-	protected int vida = 10;
+	protected int vida;
+	protected int danoFrames=10,currentDano=0;
+	protected boolean sofrendoDano=false;
 
 	public Inimigo(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, sprite);
@@ -32,6 +34,7 @@ public class Inimigo extends Entidade {
 			if (e instanceof AtirarMunicao) {
 				if (isColidding(e, this)) {
 					vida--;
+					sofrendoDano=true;
 					Jogo.balas.remove(e);
 					return;
 				}
@@ -41,7 +44,6 @@ public class Inimigo extends Entidade {
 	}
 
 	public static void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem) {
-
 		if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
 			Jogo.jogador.vida--;
 			Jogo.jogador.sofrendoDano = true;

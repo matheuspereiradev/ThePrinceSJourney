@@ -127,6 +127,7 @@ public class Jogador extends Entidade {
 				Jogo.balas.add(new AtirarMunicao(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy));
 			}
 		}
+		
 		verificarColisaoComPackDeVida();
 		verificarColisaoMunicao();
 		verificarColisaoArma();

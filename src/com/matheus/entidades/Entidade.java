@@ -3,7 +3,6 @@ package com.matheus.entidades;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
 import com.matheus.game.Jogo;
 import com.matheus.mundo.Camera;
 
@@ -13,7 +12,9 @@ public class Entidade {
 	public static BufferedImage municaoBalas = Jogo.spritesheet.getSprite(96, 16, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage arma = Jogo.spritesheet.getSprite(128, 48, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage inimigoCaveira = Jogo.spritesheet.getSprite(16, 48, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage inimigoCaveiraDano = Jogo.spritesheet.getSprite(16, 64, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage inimigoAlien = Jogo.spritesheet.getSprite(48, 16, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage inimigoAlienDano = Jogo.spritesheet.getSprite(0, 64, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage armaRight = Jogo.spritesheet.getSprite(96, 48, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage armaLeft = Jogo.spritesheet.getSprite(80, 48, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage armaDown = Jogo.spritesheet.getSprite(112, 48, Jogo.tamanho, Jogo.tamanho);

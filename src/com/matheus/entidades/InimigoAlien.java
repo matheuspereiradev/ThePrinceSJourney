@@ -23,7 +23,7 @@ public class InimigoAlien extends Inimigo {
 	private BufferedImage[] downAlien;
 
 	public InimigoAlien(double x, double y, int width, int height, BufferedImage sprite, int vida) {
-		super(x, y, width, height, sprite,vida);
+		super(x, y, width, height, sprite, vida);
 		rightAlien = new BufferedImage[tamanhoArray];
 		leftAlien = new BufferedImage[tamanhoArray];
 		upAlien = new BufferedImage[tamanhoArray];
@@ -107,19 +107,30 @@ public class InimigoAlien extends Inimigo {
 		}
 		colisaoComBala();
 		verificarVida();
+		if(sofrendoDano) {
+			currentDano++;
+			if(currentDano==danoFrames) {
+				currentDano=0;
+				sofrendoDano=false;
+			}
+		}
 	}
 
 	public void renderizar(Graphics g) {
 
-		if (direcao == dir_right) {
-			g.drawImage(rightAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-		} else if (direcao == dir_left) {
-			g.drawImage(leftAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-		}
-		if (direcao == dir_up) {
-			g.drawImage(upAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-		} else if (direcao == dir_down) {
-			g.drawImage(downAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		if (!sofrendoDano) {
+			if (direcao == dir_right) {
+				g.drawImage(rightAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			} else if (direcao == dir_left) {
+				g.drawImage(leftAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			}
+			if (direcao == dir_up) {
+				g.drawImage(upAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			} else if (direcao == dir_down) {
+				g.drawImage(downAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			}
+		}else {
+			g.drawImage(Entidade.inimigoAlienDano,this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		// para vizualizar melhor oq esta acontecdo descomenta
 		// super.renderizar(g);

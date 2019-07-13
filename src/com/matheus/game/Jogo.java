@@ -63,7 +63,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		municao = new ArrayList<Municao>();
 		arma = new ArrayList<Arma>();
 		balas = new ArrayList<AtirarMunicao>();
-		spritesheet = new Spritesheet("/Spritesheet.png");
+		spritesheet = new Spritesheet("/Spritesheet2.png");
 		jogador = new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
 		mundo = new Mundo("/mapa.png");
