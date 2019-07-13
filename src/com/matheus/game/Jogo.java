@@ -26,7 +26,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	private Thread thread;
 	private boolean isRunning;
 	public static JFrame frame;
-	public static final int WIDITH = 240, HEIGHT = 160, SCALE = 3;
+	public static final int WIDITH = 300, HEIGHT = 220, SCALE = 3;
 	private int fpsJogo = 0;
 	private BufferedImage background;
 	public static List<Entidade> entidades;

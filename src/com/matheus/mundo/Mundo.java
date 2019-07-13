@@ -126,8 +126,8 @@ public class Mundo {
 		int xstart = Camera.x / Jogo.tamanho;
 		int ystart = Camera.y / Jogo.tamanho;
 
-		int xfinal = xstart + (Jogo.WIDITH / Jogo.tamanho);
-		int yfinal = ystart + (Jogo.HEIGHT / Jogo.tamanho);
+		int xfinal = xstart + (Jogo.WIDITH / Jogo.tamanho)+1;
+		int yfinal = ystart + (Jogo.HEIGHT / Jogo.tamanho)+1 ;
 
 		for (int xx = xstart; xx <= xfinal; xx++) {
 			for (int yy = ystart; yy <= yfinal; yy++) {
