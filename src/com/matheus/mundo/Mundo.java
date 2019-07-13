@@ -104,7 +104,7 @@ public class Mundo {
 
 	}
 	
-	public static void carregarFase(String level) {
+	public static void carregarFase(int level) {
 		Jogo.entidades.clear();
 		Jogo.inimigo.clear();
 		Jogo.lifePack.clear();
@@ -118,7 +118,7 @@ public class Mundo {
 		Jogo.spritesheet = new Spritesheet("/Spritesheet.png");
 		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho, Jogo.spritesheet.getSprite(0, 0, Jogo.tamanho, Jogo.tamanho));
 		Jogo.entidades.add(Jogo.jogador);
-		Jogo.mundo = new Mundo("/"+level);
+		Jogo.mundo = new Mundo("/nivel" + level +".png");
 	}
 
 	public void renderizar(Graphics g) {

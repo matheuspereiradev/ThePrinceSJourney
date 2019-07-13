@@ -57,6 +57,7 @@ public class Jogador extends Entidade {
 			Jogo.lifePack.clear();
 			Jogo.municao.clear();
 			Jogo.iniciarJogo();*/
+			vida=0;
 			Jogo.status="GAME_OVER";
 		}
 

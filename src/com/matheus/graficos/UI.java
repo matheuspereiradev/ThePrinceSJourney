@@ -1,8 +1,9 @@
-package com.matheus.entidades;
+package com.matheus.graficos;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.matheus.entidades.Jogador;
 import com.matheus.game.Jogo;
 
 public class UI {

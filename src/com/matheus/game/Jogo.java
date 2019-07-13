@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 
 import com.matheus.entidades.*;
 import com.matheus.graficos.Spritesheet;
+import com.matheus.graficos.UI;
 import com.matheus.mundo.Mundo;
 
 public class Jogo extends Canvas implements Runnable, KeyListener {
@@ -40,7 +41,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public static Mundo mundo;
 	public static Random rand;
 	private int fase = 1, maxFases = 3;
-	public static String status = "NORMAL";
+	public static String status = "MENU";
+	public boolean exibirMensagemGameOver=false;
+	private int framesGameOver=0,maxGameOver=20;
+	private boolean restartJogo=false;
 	public UI ui;
 
 	public Jogo() {
@@ -85,6 +89,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 
 	public void atualizar() {
 		if (status.equals("NORMAL")) {
+			restartJogo=false;
 			for (int i = 0; i < entidades.size(); i++) {
 				Entidade e = entidades.get(i);
 				e.atualizar();
@@ -98,11 +103,22 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 				if (fase > maxFases) {
 					System.exit(0);
 				}
-				String faseCarregar = "nivel" + fase + ".png";
-				Mundo.carregarFase(faseCarregar);
+				
+				Mundo.carregarFase(fase);
 			}
 		}else if(status.equals("GAME_OVER")) {
-			System.out.println("Game over");
+			framesGameOver++;
+			if(framesGameOver==maxGameOver) {
+				framesGameOver=0;
+				exibirMensagemGameOver=!exibirMensagemGameOver;
+				
+			}
+			if(restartJogo) {
+				restartJogo=false;
+				fase=1;
+				Mundo.carregarFase(fase);
+				status="NORMAL";
+			}
 		}
 	}
 
@@ -148,8 +164,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 			g2.setColor(new Color(255,255,255,255));
 			g2.setFont(new Font("arial",Font.BOLD,50));
 			g2.drawString("Game over", 230, (HEIGHT*SCALE)/2);
+			if(exibirMensagemGameOver) {
 			g2.setFont(new Font("arial",Font.PLAIN,25));
 			g2.drawString("Pressione a tecla R para reiniciar", 190, ((HEIGHT*SCALE)/2)+50);
+			}
 		}
 		bs.show();
 	}
@@ -221,6 +239,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			jogador.atirando = true;
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_R) {
+			restartJogo = true;
 		}
 
 	}
