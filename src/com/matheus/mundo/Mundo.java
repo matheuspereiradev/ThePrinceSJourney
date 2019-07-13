@@ -3,10 +3,13 @@ package com.matheus.mundo;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 
 import com.matheus.entidades.*;
 import com.matheus.game.Jogo;
+import com.matheus.graficos.Spritesheet;
 
 public class Mundo {
 
@@ -43,8 +46,10 @@ public class Mundo {
 					}
 
 					else if (pixels[atual] == 0xFF00FF21) {
-						Jogo.entidades.add(new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.inimigoCaveira,3));
+						InimigoCaveira caveira = new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+								Jogo.tamanho, Entidade.inimigoCaveira,3);
+						Jogo.entidades.add(caveira);
+						Jogo.inimigo.add(caveira);
 						// inimigo caveira
 					} else if (pixels[atual] == 0xFF89FFFD) {
 						InimigoAlien alien = new InimigoAlien(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
@@ -97,6 +102,19 @@ public class Mundo {
 				|| (tiles[x3 + y3 * Mundo.WIDTH_WORD] instanceof WallTile)
 				|| (tiles[x4 + y4 * Mundo.WIDTH_WORD] instanceof WallTile));
 
+	}
+	
+	public static void carregarFase(String level) {
+		Jogo.entidades = new ArrayList<Entidade>();
+		Jogo.inimigo = new ArrayList<Inimigo>();
+		Jogo.lifePack = new ArrayList<CoracaoDeVida>();
+		Jogo.municao = new ArrayList<Municao>();
+		Jogo.arma = new ArrayList<Arma>();
+		Jogo.balas = new ArrayList<AtirarMunicao>();
+		Jogo.spritesheet = new Spritesheet("/Spritesheet.png");
+		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho, Jogo.spritesheet.getSprite(0, 0, Jogo.tamanho, Jogo.tamanho));
+		Jogo.entidades.add(Jogo.jogador);
+		Jogo.mundo = new Mundo("/"+level);
 	}
 
 	public void renderizar(Graphics g) {

@@ -21,7 +21,7 @@ public class InimigoCaveira extends Inimigo {
 		inimigoCaveira[1] = Jogo.spritesheet.getSprite(32, 48, Jogo.tamanho, Jogo.tamanho);
 		inimigoCaveira[2] = Jogo.spritesheet.getSprite(48, 48, Jogo.tamanho, Jogo.tamanho);
 		this.vida = vida;
-		maxFrames=90;
+		
 	}
 
 	public void atualizar() {

@@ -38,6 +38,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public static Jogador jogador;
 	public static Mundo mundo;
 	public static Random rand;
+	private int fase=1,maxFases=3;
 	public UI ui;
 
 	public Jogo() {
@@ -63,10 +64,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		municao = new ArrayList<Municao>();
 		arma = new ArrayList<Arma>();
 		balas = new ArrayList<AtirarMunicao>();
-		spritesheet = new Spritesheet("/Spritesheet2.png");
+		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
-		mundo = new Mundo("/mapa.png");
+		mundo = new Mundo("/nivel1.png");
 	}
 
 	public void iniciarFrame() {
@@ -87,6 +88,14 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		// renderizar as balas na tela pq elas nao esta em entidades
 		for (int i = 0; i < balas.size(); i++) {
 			balas.get(i).atualizar();
+		}
+		if(inimigo.isEmpty()) {
+			fase++;
+			if(fase>maxFases) {
+				System.exit(0);
+			}
+			String faseCarregar="nivel"+fase+".png";
+			Mundo.carregarFase(faseCarregar);
 		}
 	}
 
