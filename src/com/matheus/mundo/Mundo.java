@@ -44,11 +44,11 @@ public class Mundo {
 
 					else if (pixels[atual] == 0xFF00FF21) {
 						Jogo.entidades.add(new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.inimigoCaveira));
+								Jogo.tamanho, Entidade.inimigoCaveira,6));
 						// inimigo caveira
 					} else if (pixels[atual] == 0xFF89FFFD) {
 						InimigoAlien alien = new InimigoAlien(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.inimigoAlien);
+								Jogo.tamanho, Entidade.inimigoAlien,11);
 						Jogo.entidades.add(alien);
 						Jogo.inimigo.add(alien);
 					} else if (pixels[atual] == 0xFFFF0000) {

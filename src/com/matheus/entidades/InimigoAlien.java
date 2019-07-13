@@ -22,8 +22,8 @@ public class InimigoAlien extends Inimigo {
 	private BufferedImage[] upAlien;
 	private BufferedImage[] downAlien;
 
-	public InimigoAlien(double x, double y, int width, int height, BufferedImage sprite) {
-		super(x, y, width, height, sprite);
+	public InimigoAlien(double x, double y, int width, int height, BufferedImage sprite, int vida) {
+		super(x, y, width, height, sprite,vida);
 		rightAlien = new BufferedImage[tamanhoArray];
 		leftAlien = new BufferedImage[tamanhoArray];
 		upAlien = new BufferedImage[tamanhoArray];
@@ -105,6 +105,8 @@ public class InimigoAlien extends Inimigo {
 				}
 			}
 		}
+		colisaoComBala();
+		verificarVida();
 	}
 
 	public void renderizar(Graphics g) {
