@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
@@ -38,7 +39,8 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public static Jogador jogador;
 	public static Mundo mundo;
 	public static Random rand;
-	private int fase=1,maxFases=3;
+	private int fase = 1, maxFases = 3;
+	public static String status = "NORMAL";
 	public UI ui;
 
 	public Jogo() {
@@ -68,6 +70,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		jogador = new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
 		mundo = new Mundo("/nivel1.png");
+
 	}
 
 	public void iniciarFrame() {
@@ -81,21 +84,25 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	}
 
 	public void atualizar() {
-		for (int i = 0; i < entidades.size(); i++) {
-			Entidade e = entidades.get(i);
-			e.atualizar();
-		}
-		// renderizar as balas na tela pq elas nao esta em entidades
-		for (int i = 0; i < balas.size(); i++) {
-			balas.get(i).atualizar();
-		}
-		if(inimigo.isEmpty()) {
-			fase++;
-			if(fase>maxFases) {
-				System.exit(0);
+		if (status.equals("NORMAL")) {
+			for (int i = 0; i < entidades.size(); i++) {
+				Entidade e = entidades.get(i);
+				e.atualizar();
 			}
-			String faseCarregar="nivel"+fase+".png";
-			Mundo.carregarFase(faseCarregar);
+			// renderizar as balas na tela pq elas nao esta em entidades
+			for (int i = 0; i < balas.size(); i++) {
+				balas.get(i).atualizar();
+			}
+			if (inimigo.isEmpty()) {
+				fase++;
+				if (fase > maxFases) {
+					System.exit(0);
+				}
+				String faseCarregar = "nivel" + fase + ".png";
+				Mundo.carregarFase(faseCarregar);
+			}
+		}else if(status.equals("GAME_OVER")) {
+			System.out.println("Game over");
 		}
 	}
 
@@ -134,7 +141,16 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		g.setColor(Color.WHITE);
 		g.drawString("Munição: " + Jogo.jogador.numeroDeBalas, 36, 70);
 		g.drawString((int) Jogo.jogador.vida + "/" + Jogador.MAX_LIFE, 120, 40);
-
+		if(status=="GAME_OVER") {
+			Graphics2D g2=(Graphics2D) g;
+			g2.setColor(new Color(0,0,0,100));
+			g2.fillRect(0, 0, WIDITH*SCALE, HEIGHT*SCALE);
+			g2.setColor(new Color(255,255,255,255));
+			g2.setFont(new Font("arial",Font.BOLD,50));
+			g2.drawString("Game over", 230, (HEIGHT*SCALE)/2);
+			g2.setFont(new Font("arial",Font.PLAIN,25));
+			g2.drawString("Pressione a tecla R para reiniciar", 190, ((HEIGHT*SCALE)/2)+50);
+		}
 		bs.show();
 	}
 
@@ -223,7 +239,6 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 			jogador.left = false;
 		}
 
-		
 	}
 
 	@Override

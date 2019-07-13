@@ -52,12 +52,12 @@ public class Jogador extends Entidade {
 	public void atualizar() {
 
 		if (vida <= 0) {
-			Jogo.entidades.clear();
+			/*Jogo.entidades.clear();
 			Jogo.inimigo.clear();
 			Jogo.lifePack.clear();
 			Jogo.municao.clear();
-			Jogo.iniciarJogo();
-			return;
+			Jogo.iniciarJogo();*/
+			Jogo.status="GAME_OVER";
 		}
 
 		movimentando = false;

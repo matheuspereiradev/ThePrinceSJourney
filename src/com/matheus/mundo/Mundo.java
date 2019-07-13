@@ -105,6 +105,10 @@ public class Mundo {
 	}
 	
 	public static void carregarFase(String level) {
+		Jogo.entidades.clear();
+		Jogo.inimigo.clear();
+		Jogo.lifePack.clear();
+		Jogo.municao.clear();
 		Jogo.entidades = new ArrayList<Entidade>();
 		Jogo.inimigo = new ArrayList<Inimigo>();
 		Jogo.lifePack = new ArrayList<CoracaoDeVida>();
