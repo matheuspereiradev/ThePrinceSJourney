@@ -41,7 +41,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public static Mundo mundo;
 	public static Random rand;
 	private int fase = 1, maxFases = 3;
-	public static String status = "MENU";
+	public static String status = "NORMAL";
 	public boolean exibirMensagemGameOver=false;
 	private int framesGameOver=0,maxGameOver=20;
 	private boolean restartJogo=false;
@@ -94,6 +94,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 				Entidade e = entidades.get(i);
 				e.atualizar();
 			}
+			ui.atualizar();
 			// renderizar as balas na tela pq elas nao esta em entidades
 			for (int i = 0; i < balas.size(); i++) {
 				balas.get(i).atualizar();
@@ -155,8 +156,8 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		// aqui para ficar em cima da imagem de background
 		g.setFont(new Font("Arial", Font.BOLD, 25));
 		g.setColor(Color.WHITE);
-		g.drawString("Munição: " + Jogo.jogador.numeroDeBalas, 36, 70);
-		g.drawString((int) Jogo.jogador.vida + "/" + Jogador.MAX_LIFE, 120, 40);
+		g.drawString("Munição: " + Jogo.jogador.numeroDeBalas, 36, 72);
+		g.drawString("Vida:"+(int)Jogo.jogador.vida + "/" + Jogador.MAX_LIFE, 200, 72);
 		if(status=="GAME_OVER") {
 			Graphics2D g2=(Graphics2D) g;
 			g2.setColor(new Color(0,0,0,100));

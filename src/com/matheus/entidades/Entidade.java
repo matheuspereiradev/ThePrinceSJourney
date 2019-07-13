@@ -18,7 +18,9 @@ public class Entidade {
 	public static BufferedImage armaRight = Jogo.spritesheet.getSprite(96, 48, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage armaLeft = Jogo.spritesheet.getSprite(80, 48, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage armaDown = Jogo.spritesheet.getSprite(112, 48, Jogo.tamanho, Jogo.tamanho);
-
+	public static BufferedImage coracao = Jogo.spritesheet.getSprite(32, 64, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage coracao_2 = Jogo.spritesheet.getSprite(48, 64, Jogo.tamanho, Jogo.tamanho);
+	
 	protected int width, height;
 	protected double x, y;
 	protected BufferedImage sprite;

@@ -43,17 +43,18 @@ public class Mundo {
 						// Jogador
 					} else if (pixels[atual] == 0xFFBC7BF2) {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA);
+						//areia
 					}
 
 					else if (pixels[atual] == 0xFF00FF21) {
 						InimigoCaveira caveira = new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.inimigoCaveira,3);
+								Jogo.tamanho, Entidade.inimigoCaveira, 3);
 						Jogo.entidades.add(caveira);
 						Jogo.inimigo.add(caveira);
 						// inimigo caveira
 					} else if (pixels[atual] == 0xFF89FFFD) {
 						InimigoAlien alien = new InimigoAlien(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.inimigoAlien,6);
+								Jogo.tamanho, Entidade.inimigoAlien, 6);
 						Jogo.entidades.add(alien);
 						Jogo.inimigo.add(alien);
 					} else if (pixels[atual] == 0xFFFF0000) {
@@ -103,7 +104,7 @@ public class Mundo {
 				|| (tiles[x4 + y4 * Mundo.WIDTH_WORD] instanceof WallTile));
 
 	}
-	
+
 	public static void carregarFase(int level) {
 		Jogo.entidades.clear();
 		Jogo.inimigo.clear();
@@ -116,9 +117,10 @@ public class Mundo {
 		Jogo.arma = new ArrayList<Arma>();
 		Jogo.balas = new ArrayList<AtirarMunicao>();
 		Jogo.spritesheet = new Spritesheet("/Spritesheet.png");
-		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho, Jogo.spritesheet.getSprite(0, 0, Jogo.tamanho, Jogo.tamanho));
+		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho,
+				Jogo.spritesheet.getSprite(0, 0, Jogo.tamanho, Jogo.tamanho));
 		Jogo.entidades.add(Jogo.jogador);
-		Jogo.mundo = new Mundo("/nivel" + level +".png");
+		Jogo.mundo = new Mundo("/nivel" + level + ".png");
 	}
 
 	public void renderizar(Graphics g) {
@@ -126,8 +128,8 @@ public class Mundo {
 		int xstart = Camera.x / Jogo.tamanho;
 		int ystart = Camera.y / Jogo.tamanho;
 
-		int xfinal = xstart + (Jogo.WIDITH / Jogo.tamanho)+1;
-		int yfinal = ystart + (Jogo.HEIGHT / Jogo.tamanho)+1 ;
+		int xfinal = xstart + (Jogo.WIDITH / Jogo.tamanho) + 1;
+		int yfinal = ystart + (Jogo.HEIGHT / Jogo.tamanho) + 1;
 
 		for (int xx = xstart; xx <= xfinal; xx++) {
 			for (int yy = ystart; yy <= yfinal; yy++) {
