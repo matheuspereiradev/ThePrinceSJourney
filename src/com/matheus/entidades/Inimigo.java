@@ -3,6 +3,7 @@ package com.matheus.entidades;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import com.matheus.game.Jogo;
+import com.matheus.game.Sons;
 
 public class Inimigo extends Entidade {
 
@@ -47,6 +48,7 @@ public class Inimigo extends Entidade {
 		if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
 			Jogo.jogador.vida--;
 			Jogo.jogador.sofrendoDano = true;
+			Sons.danoSong.play();
 		}
 
 	}

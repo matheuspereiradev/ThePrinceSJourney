@@ -66,6 +66,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	}
 
 	public static void iniciarJogo() {
+		Sons.musica.loop();
 		entidades = new ArrayList<Entidade>();
 		inimigo = new ArrayList<Inimigo>();
 		lifePack = new ArrayList<CoracaoDeVida>();

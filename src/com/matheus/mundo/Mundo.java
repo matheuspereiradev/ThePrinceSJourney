@@ -29,7 +29,11 @@ public class Mundo {
 				for (int yy = 0; yy < HEIGHT_WORD; yy++) {
 					int atual = xx + (yy * WIDTH_WORD);
 
+					if(Jogo.rand.nextInt(10)<4) {
+					tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_2);
+					}else {
 					tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
+					}
 					//padrão é ser grama
 
 					if (pixels[atual] == 0xFF000000) {

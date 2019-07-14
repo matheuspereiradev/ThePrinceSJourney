@@ -9,7 +9,7 @@ public class Tile {
 	public static BufferedImage TILE_FLOOR = Jogo.spritesheet.getSprite(144, 0, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage TILE_FLOOR_TERRA = Jogo.spritesheet.getSprite(144, 48, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage TILE_WALL = Jogo.spritesheet.getSprite(144, 16, Jogo.tamanho, Jogo.tamanho);
-	public static BufferedImage TILE_FLOOR_GRAMA = Jogo.spritesheet.getSprite(176, 0, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage TILE_FLOOR_2 = Jogo.spritesheet.getSprite(176, 0, Jogo.tamanho, Jogo.tamanho);
 	
 	
 	private BufferedImage sprite;

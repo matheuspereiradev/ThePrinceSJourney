@@ -84,6 +84,7 @@ public class Menu {
 		if (opcoes[currentOpcao] == "Novo jogo") {
 			g.drawString(">", 360, 250);
 		} else if (opcoes[currentOpcao] == "Carregar jogo") {
+			g.setColor(Color.darkGray);
 			 g.drawString(">", 340, 300);
 			
 		} else {
