@@ -238,21 +238,21 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
+		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
 			if (status.equals("NORMAL"))
 				jogador.up = true;
 			else
 				menu.up = true;
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			if (status.equals("NORMAL"))
 				jogador.down = true;
 			else
 				menu.down = true;
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			jogador.right = true;
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			jogador.left = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -262,6 +262,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_R) {
 			restartJogo = true;
 		}
+		
 
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			menu.enter = true;
@@ -274,15 +275,15 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
+		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
 			jogador.up = false;
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			jogador.down = false;
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			jogador.right = false;
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			jogador.left = false;
 		}
 

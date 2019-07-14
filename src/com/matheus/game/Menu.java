@@ -63,7 +63,11 @@ public class Menu {
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Sons") {
 				Jogo.mute = !Jogo.mute;
-				
+				if (Jogo.mute)
+					Sons.musica.stop();
+				else
+					Sons.musica.play();
+
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Sair") {
 				System.exit(0);

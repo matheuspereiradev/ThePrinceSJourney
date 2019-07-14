@@ -15,6 +15,7 @@ public class Sons {
 	public static final Sons tiroSong=new Sons("/tiro.wav");
 	public static final Sons naoPodeSong=new Sons("/nao_pode.wav");
 	public static final Sons proxFase=new Sons("/nextLevel.wav");
+	
 
 	public Sons(String path) {
 		try {
@@ -48,11 +49,16 @@ public class Sons {
 		}
 	}
 	
-	public void stop(Thread thread) {
+	public void stop() {
 		try {
-			thread.interrupt();
+			new Thread() {
+				public void run() {
+					song.stop();;
+				}
+			}.start();
 		} catch (Throwable e) {
 			System.out.println(e);
 		}
 	}
+	
 }
