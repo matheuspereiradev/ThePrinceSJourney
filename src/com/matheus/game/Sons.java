@@ -50,15 +50,7 @@ public class Sons {
 	}
 	
 	public void stop() {
-		try {
-			new Thread() {
-				public void run() {
-					song.stop();;
-				}
-			}.start();
-		} catch (Throwable e) {
-			System.out.println(e);
-		}
+		song.stop();
 	}
 	
 }
