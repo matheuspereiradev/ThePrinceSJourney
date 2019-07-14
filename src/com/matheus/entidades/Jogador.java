@@ -3,6 +3,7 @@ package com.matheus.entidades;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import com.matheus.game.Jogo;
+import com.matheus.game.Sons;
 import com.matheus.mundo.Camera;
 import com.matheus.mundo.Mundo;
 
@@ -52,13 +53,12 @@ public class Jogador extends Entidade {
 	public void atualizar() {
 
 		if (vida <= 0) {
-			/*Jogo.entidades.clear();
-			Jogo.inimigo.clear();
-			Jogo.lifePack.clear();
-			Jogo.municao.clear();
-			Jogo.iniciarJogo();*/
-			vida=0;
-			Jogo.status="GAME_OVER";
+			/*
+			 * Jogo.entidades.clear(); Jogo.inimigo.clear(); Jogo.lifePack.clear();
+			 * Jogo.municao.clear(); Jogo.iniciarJogo();
+			 */
+			vida = 0;
+			Jogo.status = "GAME_OVER";
 		}
 
 		movimentando = false;
@@ -103,8 +103,12 @@ public class Jogador extends Entidade {
 
 		if (atirando) {
 			// criar a bala
+
 			atirando = false;
 			if (armado && numeroDeBalas > 0) {
+				if (!Jogo.mute) {
+					Sons.tiroSong.play();
+				}
 				numeroDeBalas--;
 				int dx = 0, dy = 0, px = 0, py = 0;
 				if (ultimoClicado == right_dir) {
@@ -128,7 +132,7 @@ public class Jogador extends Entidade {
 				Jogo.balas.add(new AtirarMunicao(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy));
 			}
 		}
-		
+
 		verificarColisaoComPackDeVida();
 		verificarColisaoMunicao();
 		verificarColisaoArma();
@@ -181,10 +185,16 @@ public class Jogador extends Entidade {
 						Jogo.jogador.vida += 10;
 						Jogo.entidades.remove(atual);
 						Jogo.lifePack.remove(atual);
+						if (!Jogo.mute) {
+							Sons.vidaSong.play();
+						}
 					} else if (Jogo.jogador.vida < 100) {
 						Jogo.jogador.vida = 100;
 						Jogo.entidades.remove(atual);
 						Jogo.lifePack.remove(atual);
+						if (!Jogo.mute) {
+							Sons.vidaSong.play();
+						}
 					}
 				}
 			}

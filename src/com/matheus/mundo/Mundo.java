@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import com.matheus.entidades.*;
 import com.matheus.game.Jogo;
+import com.matheus.game.Sons;
 import com.matheus.graficos.Spritesheet;
 
 public class Mundo {
@@ -112,6 +113,7 @@ public class Mundo {
 	}
 
 	public static void carregarFase(int level) {
+		Sons.proxFase.play();
 		Jogo.entidades.clear();
 		Jogo.inimigo.clear();
 		Jogo.lifePack.clear();

@@ -45,10 +45,14 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public boolean exibirMensagemGameOver = false;
 	private int framesGameOver = 0, maxGameOver = 20;
 	private boolean restartJogo = false;
+	public static boolean mute = false;
 	public Menu menu;
 	public UI ui;
 
 	public Jogo() {
+		if (!mute) {
+			Sons.musica.loop();
+		}
 		rand = new Random();
 		addKeyListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
@@ -66,7 +70,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	}
 
 	public static void iniciarJogo() {
-		Sons.musica.loop();
+		
 		entidades = new ArrayList<Entidade>();
 		inimigo = new ArrayList<Inimigo>();
 		lifePack = new ArrayList<CoracaoDeVida>();
@@ -258,13 +262,13 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_R) {
 			restartJogo = true;
 		}
-		
-		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			menu.enter=true;
+
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			menu.enter = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			menu.pausa=true;
-			status="MENU";
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			menu.pausa = true;
+			status = "MENU";
 		}
 	}
 
@@ -282,7 +286,6 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 			jogador.left = false;
 		}
 
-		
 	}
 
 	@Override

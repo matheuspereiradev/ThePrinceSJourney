@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 
 public class Menu {
 
-	public String[] opcoes = { "Novo jogo", "Carregar jogo", "Sair" };
+	public String[] opcoes = { "Novo jogo", "Carregar jogo", "Sons", "Sair" };
 
 	public int currentOpcao = 0;
 	public int maxOpcoes = opcoes.length - 1;
@@ -30,6 +30,9 @@ public class Menu {
 	public void atualizar() {
 
 		if (up) {
+			if (!Jogo.mute) {
+				Sons.bipMenu.play();
+			}
 			up = false;
 			currentOpcao--;
 			if (currentOpcao < 0) {
@@ -38,6 +41,9 @@ public class Menu {
 
 		}
 		if (down) {
+			if (!Jogo.mute) {
+				Sons.bipMenu.play();
+			}
 			down = false;
 			currentOpcao++;
 			if (currentOpcao > maxOpcoes) {
@@ -51,7 +57,13 @@ public class Menu {
 				pausa = false;
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Carregar jogo") {
-
+				if (!Jogo.mute) {
+					Sons.naoPodeSong.play();
+				}
+				enter = false;
+			} else if (opcoes[currentOpcao] == "Sons") {
+				Jogo.mute = !Jogo.mute;
+				
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Sair") {
 				System.exit(0);
@@ -77,18 +89,24 @@ public class Menu {
 			g.drawString("Continuar", 380, 250);
 		}
 		g.setColor(Color.darkGray);
-		g.drawString("Voltar ao menu", 360, 300);
+		g.drawString("Carregar jogo", 350, 300);
 		g.setColor(Color.WHITE);
-		g.drawString(opcoes[2], 410, 350);
+		if (Jogo.mute) {
+			g.drawString("Efeitos: off", 380, 350);
+		} else {
+			g.drawString("Efeitos: on", 380, 350);
+		}
+		g.drawString("Sair", 410, 400);
 
 		if (opcoes[currentOpcao] == "Novo jogo") {
 			g.drawString(">", 360, 250);
 		} else if (opcoes[currentOpcao] == "Carregar jogo") {
 			g.setColor(Color.darkGray);
-			 g.drawString(">", 340, 300);
-			
+			g.drawString(">", 330, 300);
+		} else if (opcoes[currentOpcao] == "Sons") {
+			g.drawString(">", 360, 350);
 		} else {
-			g.drawString(">", 390, 350);
+			g.drawString(">", 390, 400);
 		}
 
 	}

@@ -8,8 +8,8 @@ import com.matheus.game.Sons;
 public class Inimigo extends Entidade {
 
 	protected int vida;
-	protected int danoFrames=10,currentDano=0;
-	protected boolean sofrendoDano=false;
+	protected int danoFrames = 10, currentDano = 0;
+	protected boolean sofrendoDano = false;
 
 	public Inimigo(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, sprite);
@@ -34,8 +34,11 @@ public class Inimigo extends Entidade {
 			Entidade e = Jogo.balas.get(i);
 			if (e instanceof AtirarMunicao) {
 				if (isColidding(e, this)) {
+					if (!Jogo.mute) {
+						Sons.danoInimigoSong.play();
+					}
 					vida--;
-					sofrendoDano=true;
+					sofrendoDano = true;
 					Jogo.balas.remove(e);
 					return;
 				}
@@ -48,7 +51,9 @@ public class Inimigo extends Entidade {
 		if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
 			Jogo.jogador.vida--;
 			Jogo.jogador.sofrendoDano = true;
-			Sons.danoSong.play();
+			if (!Jogo.mute) {
+				Sons.danoSong.play();
+			}
 		}
 
 	}
