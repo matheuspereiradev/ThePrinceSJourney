@@ -41,10 +41,11 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public static Mundo mundo;
 	public static Random rand;
 	private int fase = 1, maxFases = 3;
-	public static String status = "NORMAL";
-	public boolean exibirMensagemGameOver=false;
-	private int framesGameOver=0,maxGameOver=20;
-	private boolean restartJogo=false;
+	public static String status = "MENU";
+	public boolean exibirMensagemGameOver = false;
+	private int framesGameOver = 0, maxGameOver = 20;
+	private boolean restartJogo = false;
+	public Menu menu;
 	public UI ui;
 
 	public Jogo() {
@@ -55,6 +56,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		ui = new UI();
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
 		iniciarJogo();
+		menu = new Menu("/Banner.png");
 
 	}
 
@@ -89,7 +91,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 
 	public void atualizar() {
 		if (status.equals("NORMAL")) {
-			restartJogo=false;
+			restartJogo = false;
 			for (int i = 0; i < entidades.size(); i++) {
 				Entidade e = entidades.get(i);
 				e.atualizar();
@@ -104,22 +106,24 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 				if (fase > maxFases) {
 					System.exit(0);
 				}
-				
+
 				Mundo.carregarFase(fase);
 			}
-		}else if(status.equals("GAME_OVER")) {
+		} else if (status.equals("GAME_OVER")) {
 			framesGameOver++;
-			if(framesGameOver==maxGameOver) {
-				framesGameOver=0;
-				exibirMensagemGameOver=!exibirMensagemGameOver;
-				
+			if (framesGameOver == maxGameOver) {
+				framesGameOver = 0;
+				exibirMensagemGameOver = !exibirMensagemGameOver;
+
 			}
-			if(restartJogo) {
-				restartJogo=false;
-				fase=1;
+			if (restartJogo) {
+				restartJogo = false;
+				fase = 1;
 				Mundo.carregarFase(fase);
-				status="NORMAL";
+				status = "NORMAL";
 			}
+		} else if (status.equals("MENU")) {
+			menu.atualizar();
 		}
 	}
 
@@ -157,18 +161,20 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		g.setFont(new Font("Arial", Font.BOLD, 25));
 		g.setColor(Color.WHITE);
 		g.drawString("Munição: " + Jogo.jogador.numeroDeBalas, 36, 72);
-		g.drawString("Vida:"+(int)Jogo.jogador.vida + "/" + Jogador.MAX_LIFE, 200, 72);
-		if(status=="GAME_OVER") {
-			Graphics2D g2=(Graphics2D) g;
-			g2.setColor(new Color(0,0,0,100));
-			g2.fillRect(0, 0, WIDITH*SCALE, HEIGHT*SCALE);
-			g2.setColor(new Color(255,255,255,255));
-			g2.setFont(new Font("arial",Font.BOLD,50));
-			g2.drawString("Game over", 230, (HEIGHT*SCALE)/2);
-			if(exibirMensagemGameOver) {
-			g2.setFont(new Font("arial",Font.PLAIN,25));
-			g2.drawString("Pressione a tecla R para reiniciar", 190, ((HEIGHT*SCALE)/2)+50);
+		g.drawString("Vida:" + (int) Jogo.jogador.vida + "/" + Jogador.MAX_LIFE, 200, 72);
+		if (status == "GAME_OVER") {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setColor(new Color(0, 0, 0, 100));
+			g2.fillRect(0, 0, WIDITH * SCALE, HEIGHT * SCALE);
+			g2.setColor(new Color(255, 255, 255, 255));
+			g2.setFont(new Font("arial", Font.BOLD, 50));
+			g2.drawString("Game over", 230, (HEIGHT * SCALE) / 2);
+			if (exibirMensagemGameOver) {
+				g2.setFont(new Font("arial", Font.PLAIN, 25));
+				g2.drawString("Pressione a tecla R para reiniciar", 190, ((HEIGHT * SCALE) / 2) + 50);
 			}
+		} else if (status.equals("MENU")) {
+			menu.renderizar(g);
 		}
 		bs.show();
 	}
@@ -228,9 +234,15 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			jogador.up = true;
+			if (status.equals("NORMAL"))
+				jogador.up = true;
+			else
+				menu.up = true;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			jogador.down = true;
+			if (status.equals("NORMAL"))
+				jogador.down = true;
+			else
+				menu.down = true;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -241,11 +253,18 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			jogador.atirando = true;
 		}
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_R) {
 			restartJogo = true;
 		}
-
+		
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			menu.enter=true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			menu.pausa=true;
+			status="MENU";
+		}
 	}
 
 	@Override
@@ -262,6 +281,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 			jogador.left = false;
 		}
 
+		
 	}
 
 	@Override

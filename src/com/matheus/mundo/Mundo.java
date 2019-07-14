@@ -28,8 +28,10 @@ public class Mundo {
 			for (int xx = 0; xx < WIDTH_WORD; xx++) {
 				for (int yy = 0; yy < HEIGHT_WORD; yy++) {
 					int atual = xx + (yy * WIDTH_WORD);
-					tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);// padrão é ser
-																										// chão
+
+					tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
+					//padrão é ser grama
+
 					if (pixels[atual] == 0xFF000000) {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
 						// chao
@@ -43,7 +45,7 @@ public class Mundo {
 						// Jogador
 					} else if (pixels[atual] == 0xFFBC7BF2) {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA);
-						//areia
+						// areia
 					}
 
 					else if (pixels[atual] == 0xFF00FF21) {
