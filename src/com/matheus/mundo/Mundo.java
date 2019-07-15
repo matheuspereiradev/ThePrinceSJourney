@@ -4,9 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-
 import com.matheus.entidades.*;
 import com.matheus.game.Jogo;
 import com.matheus.game.Sons;
@@ -113,11 +111,15 @@ public class Mundo {
 	}
 
 	public static void carregarFase(int level) {
+		if(!Jogo.mute)
 		Sons.proxFase.play();
+		
 		Jogo.entidades.clear();
 		Jogo.inimigo.clear();
 		Jogo.lifePack.clear();
 		Jogo.municao.clear();
+		Jogo.arma.clear();
+		Jogo.balas.clear();
 		Jogo.entidades = new ArrayList<Entidade>();
 		Jogo.inimigo = new ArrayList<Inimigo>();
 		Jogo.lifePack = new ArrayList<CoracaoDeVida>();

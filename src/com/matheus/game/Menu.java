@@ -96,9 +96,9 @@ public class Menu {
 		g.drawString("Carregar jogo", 350, 300);
 		g.setColor(Color.WHITE);
 		if (Jogo.mute) {
-			g.drawString("Efeitos: off", 380, 350);
+			g.drawString("Sons: off", 380, 350);
 		} else {
-			g.drawString("Efeitos: on", 380, 350);
+			g.drawString("Sons: on", 380, 350);
 		}
 		g.drawString("Sair", 410, 400);
 

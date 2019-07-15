@@ -45,7 +45,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public boolean exibirMensagemGameOver = false;
 	private int framesGameOver = 0, maxGameOver = 20;
 	private boolean restartJogo = false;
-	public static boolean mute = false;
+	public static boolean mute = true;
 	public Menu menu;
 	public UI ui;
 
