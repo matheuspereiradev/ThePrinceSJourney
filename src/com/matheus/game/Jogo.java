@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import com.matheus.entidades.*;
 import com.matheus.graficos.Spritesheet;
 import com.matheus.graficos.UI;
-import com.matheus.mundo.Mundo;
+import com.matheus.mundo.*;
 
 public class Jogo extends Canvas implements Runnable, KeyListener {
 
@@ -36,6 +36,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public static List<Municao> municao;
 	public static List<Arma> arma;
 	public static List<AtirarMunicao> balas;
+	public static List<BlocoDeDano> lava;
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
@@ -46,6 +47,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	private int framesGameOver = 0, maxGameOver = 20;
 	private boolean restartJogo = false;
 	public static boolean mute = true;
+	public boolean saveGame=false;
 	public Menu menu;
 	public UI ui;
 
@@ -77,6 +79,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		municao = new ArrayList<Municao>();
 		arma = new ArrayList<Arma>();
 		balas = new ArrayList<AtirarMunicao>();
+		lava=new ArrayList<BlocoDeDano>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
@@ -96,6 +99,15 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 
 	public void atualizar() {
 		if (status.equals("NORMAL")) {
+			
+			if(this.saveGame) {
+				this.saveGame=false;
+				String [] opt1= {"level"};
+				int []opt2= {this.fase};
+				Salvar.salvarJogo(opt1, opt2, 19);
+				System.out.println("Salvo");
+			}
+			
 			restartJogo = false;
 			for (int i = 0; i < entidades.size(); i++) {
 				Entidade e = entidades.get(i);
@@ -268,8 +280,12 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 			menu.enter = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			menu.pausa = true;
+			Menu.pausa = true;
 			status = "MENU";
+		}
+		if(e.getKeyCode()==KeyEvent.VK_Z) {
+			if(status=="NORMAL")
+			this.saveGame=true;
 		}
 	}
 

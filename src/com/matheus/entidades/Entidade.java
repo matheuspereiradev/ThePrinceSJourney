@@ -51,6 +51,38 @@ public class Entidade {
 		this.maskH = maskH;
 	}
 
+	public int getMaskX() {
+		return maskX;
+	}
+
+	public void setMaskX(int maskX) {
+		this.maskX = maskX;
+	}
+
+	public int getMaskY() {
+		return maskY;
+	}
+
+	public void setMaskY(int maskY) {
+		this.maskY = maskY;
+	}
+
+	public int getMaskW() {
+		return maskW;
+	}
+
+	public void setMaskW(int maskW) {
+		this.maskW = maskW;
+	}
+
+	public int getMaskH() {
+		return maskH;
+	}
+
+	public void setMaskH(int maskH) {
+		this.maskH = maskH;
+	}
+
 	public int getX() {
 		return (int) this.x;
 	}

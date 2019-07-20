@@ -4,8 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import com.matheus.game.Jogo;
 import com.matheus.game.Sons;
-import com.matheus.mundo.Camera;
-import com.matheus.mundo.Mundo;
+import com.matheus.mundo.*;
 
 public class Jogador extends Entidade {
 
@@ -136,6 +135,7 @@ public class Jogador extends Entidade {
 		verificarColisaoComPackDeVida();
 		verificarColisaoMunicao();
 		verificarColisaoArma();
+		verificarColisaoLava();
 
 		Camera.x = Camera.clamp(getX() - (Jogo.WIDITH / 2), Mundo.WIDTH_WORD * Jogo.tamanho - Jogo.WIDITH, 0);
 		Camera.y = Camera.clamp(getY() - (Jogo.HEIGHT / 2), Mundo.HEIGHT_WORD * Jogo.tamanho - Jogo.HEIGHT, 0);
@@ -222,6 +222,18 @@ public class Jogador extends Entidade {
 					Jogo.jogador.armado = true;
 					Jogo.entidades.remove(atual);
 					Jogo.arma.remove(atual);
+				}
+			}
+		}
+	}
+	
+	public void verificarColisaoLava() {
+		for (int i = 0; i < Jogo.lava.size(); i++) {// depois melhor criar uma lista somente para life pack
+			BlocoDeDano atual = Jogo.lava.get(i);
+			if (atual instanceof BlocoDeDano) {
+				if (BlocoDeDano.isColiddingTileEntidade(Jogo.jogador, atual)) {
+					//BlocoDeDano.danoNaLava();
+					Sons.lava.play();
 				}
 			}
 		}

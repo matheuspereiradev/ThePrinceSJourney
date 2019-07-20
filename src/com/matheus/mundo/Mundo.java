@@ -28,12 +28,21 @@ public class Mundo {
 				for (int yy = 0; yy < HEIGHT_WORD; yy++) {
 					int atual = xx + (yy * WIDTH_WORD);
 
-					if(Jogo.rand.nextInt(10)<4) {
-					tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_2);
-					}else {
-					tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
+					if (Jogo.rand.nextInt(10) < 4) {
+						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_2);
+					} else {
+						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
 					}
-					//padrão é ser grama
+					// padrão é ser grama
+					
+				/*	switch (pixels[atual]) {
+					case value:
+						
+						break;
+
+					default:
+						break;
+					}*/
 
 					if (pixels[atual] == 0xFF000000) {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
@@ -41,6 +50,12 @@ public class Mundo {
 					} else if (pixels[atual] == 0xFFFFFFFF) {
 						tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
 						// parede
+					} else if (pixels[atual] == 0xFF004A7F) {
+						BlocoDeDano lavaBloco=new BlocoDeDano(xx*Jogo.tamanho,  yy * Jogo.tamanho, Tile.TILE_LAVA);
+						
+						tiles[atual]=lavaBloco;
+						Jogo.lava.add(lavaBloco);
+						// lava
 					} else if (pixels[atual] == 0xFF2A00FF) {
 						Jogo.jogador.setX(xx * Jogo.tamanho);
 						Jogo.jogador.setY(yy * Jogo.tamanho);
@@ -69,7 +84,7 @@ public class Mundo {
 						Jogo.entidades.add(pack);
 						Jogo.lifePack.add(pack);
 						// vida
-					} else if (pixels[atual] == 0xFFFFD800) {
+					}else if (pixels[atual] == 0xFFFFD800) {
 						Arma arma = new Arma(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho,
 								Entidade.arma);
 						Jogo.entidades.add(arma);
@@ -111,15 +126,16 @@ public class Mundo {
 	}
 
 	public static void carregarFase(int level) {
-		if(!Jogo.mute)
-		Sons.proxFase.play();
-		
+		if (!Jogo.mute)
+			Sons.proxFase.play();
+
 		Jogo.entidades.clear();
 		Jogo.inimigo.clear();
 		Jogo.lifePack.clear();
 		Jogo.municao.clear();
 		Jogo.arma.clear();
 		Jogo.balas.clear();
+		Jogo.lava.clear();
 		Jogo.entidades = new ArrayList<Entidade>();
 		Jogo.inimigo = new ArrayList<Inimigo>();
 		Jogo.lifePack = new ArrayList<CoracaoDeVida>();

@@ -8,7 +8,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.matheus.mundo.Mundo;
+
 public class Salvar {
+	
+	public static boolean saveExists=false, saveGame=false;
+	
 	
 	public static void salvarJogo(String []val1,int []val2,int encode) {
 		BufferedWriter bufferedwriter=null;
@@ -74,6 +79,23 @@ public class Salvar {
 			
 		}
 		return linha;
+	}
+	
+	public static void applySave(String string) {
+		String []str=string.split("/");
+		for(int i=0;i<str.length;i++) {
+			String[]str2=str[i].split(":");
+			switch (str2[0]) {
+			case "level":
+				Mundo.carregarFase(Integer.parseInt(str2[1]));
+				Jogo.status="NORMAL";
+				Menu.pausa=false;
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 
 }

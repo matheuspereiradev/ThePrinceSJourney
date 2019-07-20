@@ -15,6 +15,7 @@ public class Sons {
 	public static final Sons tiroSong=new Sons("/songs/tiro.wav");
 	public static final Sons naoPodeSong=new Sons("/songs/nao_pode.wav");
 	public static final Sons proxFase=new Sons("/songs/nextLevel.wav");
+	public static final Sons lava=new Sons("/songs/lava.wav");
 	
 
 	public Sons(String path) {

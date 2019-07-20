@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -16,8 +17,10 @@ public class Menu {
 	public int currentOpcao = 0;
 	public int maxOpcoes = opcoes.length - 1;
 	public BufferedImage banner;
-	public boolean up, down, enter, pausa = false;
-
+	public boolean up, down, enter;
+	public static boolean pausa = false;
+	
+	
 	public Menu(String path) {
 		try {
 			banner = ImageIO.read(getClass().getResource(path));
@@ -28,6 +31,13 @@ public class Menu {
 	}
 
 	public void atualizar() {
+		File file=new File("save.txt");
+		if(file.exists()) {
+			Salvar.saveExists=true;
+		}else {
+			Salvar.saveExists=false;
+		}
+		
 
 		if (up) {
 			if (!Jogo.mute) {
@@ -57,8 +67,10 @@ public class Menu {
 				pausa = false;
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Carregar jogo") {
-				if (!Jogo.mute) {
-					Sons.naoPodeSong.play();
+				file=new File("save.txt");
+				if(file.exists()) {
+					String saver=Salvar.carregarJogo(19);
+					Salvar.applySave(saver);
 				}
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Sons") {
