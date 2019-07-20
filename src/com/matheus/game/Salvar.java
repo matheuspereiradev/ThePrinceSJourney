@@ -92,6 +92,9 @@ public class Salvar {
 				Jogo.status="NORMAL";
 				Menu.pausa=false;
 				break;
+			case "vida":
+				Jogo.jogador.vida=Integer.parseInt(str2[1]);
+				break;
 			default:
 				break;
 			}

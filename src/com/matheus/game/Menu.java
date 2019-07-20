@@ -109,9 +109,9 @@ public class Menu {
 			g.drawString("Pressione Z para salvar", 320, 600);
 			g.setColor(Color.WHITE);
 		}
-		File arq= new File("save.txt");
 		
-		if(!arq.exists()) {
+		
+		if(!Salvar.saveExists) {
 			g.setColor(Color.DARK_GRAY);
 			g.drawString("Carregar jogo", 350, 300);
 			g.setColor(Color.WHITE);
@@ -132,7 +132,14 @@ public class Menu {
 		if (opcoes[currentOpcao] == "Novo jogo") {
 			g.drawString(">", 360, 250);
 		} else if (opcoes[currentOpcao] == "Carregar jogo") {
-			g.drawString(">", 330, 300);
+			if(!Salvar.saveExists) {
+				g.setColor(Color.DARK_GRAY);
+				g.drawString(">", 330, 300);
+				g.setColor(Color.WHITE);
+			}else {
+				g.drawString(">", 330, 300);
+			}
+			
 		} else if (opcoes[currentOpcao] == "Sons") {
 			g.drawString(">", 360, 350);
 		} else {

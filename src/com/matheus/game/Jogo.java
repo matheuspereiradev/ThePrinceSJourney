@@ -102,8 +102,8 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 			
 			if(this.saveGame) {
 				this.saveGame=false;
-				String [] opt1= {"level"};
-				int []opt2= {fase};
+				String [] opt1= {"level","vida"};
+				int []opt2= {fase,(int)jogador.vida};
 				Salvar.salvarJogo(opt1, opt2, 19);
 				System.out.println("Salvo");
 			}
