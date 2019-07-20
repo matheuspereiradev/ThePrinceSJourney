@@ -18,8 +18,8 @@ public class BlocoDeDano extends Tile{
 	}
 	
 	public static void danoNaLava() {
-		if (Jogo.rand.nextInt(100) < 30) {
-			Jogo.jogador.vida--;
+		if (Jogo.rand.nextInt(100) < 20) {
+			Jogo.jogador.vida-=15;
 			Jogo.jogador.sofrendoDano = true;
 			if (!Jogo.mute) {
 				Sons.lava.play();

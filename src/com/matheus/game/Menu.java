@@ -63,6 +63,8 @@ public class Menu {
 
 		if (enter) {
 			if (opcoes[currentOpcao] == "Novo jogo") {
+				File arq= new File("save.txt");
+				arq.delete();
 				Jogo.status = "NORMAL";
 				pausa = false;
 				enter = false;
@@ -107,7 +109,16 @@ public class Menu {
 			g.drawString("Pressione Z para salvar", 320, 600);
 			g.setColor(Color.WHITE);
 		}
-		g.drawString("Carregar jogo", 350, 300);
+		File arq= new File("save.txt");
+		
+		if(!arq.exists()) {
+			g.setColor(Color.DARK_GRAY);
+			g.drawString("Carregar jogo", 350, 300);
+			g.setColor(Color.WHITE);
+		}else {
+			g.drawString("Carregar jogo", 350, 300);
+		}
+		
 		if (Jogo.mute) {
 			g.drawString("Sons: off", 380, 350);
 		} else {
