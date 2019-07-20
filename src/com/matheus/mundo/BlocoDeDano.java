@@ -1,8 +1,6 @@
 package com.matheus.mundo;
-
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
 import com.matheus.entidades.Entidade;
 import com.matheus.game.Jogo;
 import com.matheus.game.Sons;
@@ -24,7 +22,7 @@ public class BlocoDeDano extends Tile{
 			Jogo.jogador.vida--;
 			Jogo.jogador.sofrendoDano = true;
 			if (!Jogo.mute) {
-				Sons.danoSong.play();
+				Sons.lava.play();
 			}
 		}
 	}

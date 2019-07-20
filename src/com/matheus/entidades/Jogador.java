@@ -232,8 +232,8 @@ public class Jogador extends Entidade {
 			BlocoDeDano atual = Jogo.lava.get(i);
 			if (atual instanceof BlocoDeDano) {
 				if (BlocoDeDano.isColiddingTileEntidade(Jogo.jogador, atual)) {
-					//BlocoDeDano.danoNaLava();
-					Sons.lava.play();
+					BlocoDeDano.danoNaLava();
+					
 				}
 			}
 		}

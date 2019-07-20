@@ -34,15 +34,14 @@ public class Mundo {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
 					}
 					// padrão é ser grama
-					
-				/*	switch (pixels[atual]) {
-					case value:
-						
-						break;
 
-					default:
-						break;
-					}*/
+					/*
+					 * switch (pixels[atual]) { case value:
+					 * 
+					 * break;
+					 * 
+					 * default: break; }
+					 */
 
 					if (pixels[atual] == 0xFF000000) {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
@@ -51,9 +50,8 @@ public class Mundo {
 						tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
 						// parede
 					} else if (pixels[atual] == 0xFF004A7F) {
-						BlocoDeDano lavaBloco=new BlocoDeDano(xx*Jogo.tamanho,  yy * Jogo.tamanho, Tile.TILE_LAVA);
-						
-						tiles[atual]=lavaBloco;
+						BlocoDeDano lavaBloco = new BlocoDeDano(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_LAVA);
+						tiles[atual] = lavaBloco;
 						Jogo.lava.add(lavaBloco);
 						// lava
 					} else if (pixels[atual] == 0xFF2A00FF) {
@@ -84,7 +82,7 @@ public class Mundo {
 						Jogo.entidades.add(pack);
 						Jogo.lifePack.add(pack);
 						// vida
-					}else if (pixels[atual] == 0xFFFFD800) {
+					} else if (pixels[atual] == 0xFFFFD800) {
 						Arma arma = new Arma(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho,
 								Entidade.arma);
 						Jogo.entidades.add(arma);
