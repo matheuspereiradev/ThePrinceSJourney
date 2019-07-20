@@ -88,10 +88,10 @@ public class Salvar {
 			switch (str2[0]) {
 			case "level":
 				Mundo.carregarFase(Integer.parseInt(str2[1]));
+				//Jogo.fase=Integer.parseInt(str2[1]);
 				Jogo.status="NORMAL";
 				Menu.pausa=false;
 				break;
-
 			default:
 				break;
 			}

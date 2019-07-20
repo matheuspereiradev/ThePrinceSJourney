@@ -103,21 +103,24 @@ public class Menu {
 			g.drawString("Novo jogo", 380, 250);
 		} else {
 			g.drawString("Continuar", 380, 250);
+			g.setColor(Color.YELLOW);
+			g.drawString("Pressione Z para salvar", 320, 600);
+			g.setColor(Color.WHITE);
 		}
-		g.setColor(Color.darkGray);
 		g.drawString("Carregar jogo", 350, 300);
-		g.setColor(Color.WHITE);
 		if (Jogo.mute) {
 			g.drawString("Sons: off", 380, 350);
 		} else {
 			g.drawString("Sons: on", 380, 350);
 		}
+		
 		g.drawString("Sair", 410, 400);
+		
+		
 
 		if (opcoes[currentOpcao] == "Novo jogo") {
 			g.drawString(">", 360, 250);
 		} else if (opcoes[currentOpcao] == "Carregar jogo") {
-			g.setColor(Color.darkGray);
 			g.drawString(">", 330, 300);
 		} else if (opcoes[currentOpcao] == "Sons") {
 			g.drawString(">", 360, 350);

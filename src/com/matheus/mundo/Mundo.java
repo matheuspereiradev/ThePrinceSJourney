@@ -35,13 +35,7 @@ public class Mundo {
 					}
 					// padrão é ser grama
 
-					/*
-					 * switch (pixels[atual]) { case value:
-					 * 
-					 * break;
-					 * 
-					 * default: break; }
-					 */
+					
 
 					if (pixels[atual] == 0xFF000000) {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);

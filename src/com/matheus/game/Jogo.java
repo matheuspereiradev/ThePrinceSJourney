@@ -41,12 +41,12 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	public static Jogador jogador;
 	public static Mundo mundo;
 	public static Random rand;
-	private int fase = 1, maxFases = 3;
+	public static int fase = 1, maxFases = 3;
 	public static String status = "MENU";
 	public boolean exibirMensagemGameOver = false;
 	private int framesGameOver = 0, maxGameOver = 20;
 	private boolean restartJogo = false;
-	public static boolean mute = true;
+	public static boolean mute = false;
 	public boolean saveGame=false;
 	public Menu menu;
 	public UI ui;

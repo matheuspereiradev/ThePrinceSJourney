@@ -219,21 +219,25 @@ public class Jogador extends Entidade {
 			Entidade atual = Jogo.arma.get(i);
 			if (atual instanceof Arma) {
 				if (Entidade.isColidding(this, atual)) {
-					Jogo.jogador.armado = true;
+					if (Jogo.jogador.armado) {
+						Jogo.jogador.numeroDeBalas += 5;
+					} else {
+						Jogo.jogador.armado = true;
+					}
 					Jogo.entidades.remove(atual);
 					Jogo.arma.remove(atual);
 				}
 			}
 		}
 	}
-	
+
 	public void verificarColisaoLava() {
 		for (int i = 0; i < Jogo.lava.size(); i++) {// depois melhor criar uma lista somente para life pack
 			BlocoDeDano atual = Jogo.lava.get(i);
 			if (atual instanceof BlocoDeDano) {
 				if (BlocoDeDano.isColiddingTileEntidade(Jogo.jogador, atual)) {
 					BlocoDeDano.danoNaLava();
-					
+
 				}
 			}
 		}
