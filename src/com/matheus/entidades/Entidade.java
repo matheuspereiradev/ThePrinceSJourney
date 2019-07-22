@@ -118,7 +118,9 @@ public class Entidade {
 	public static boolean isColidding(Entidade e1, Entidade e2) {
 		Rectangle mask1 = new Rectangle(e1.getX() + e1.maskX, e1.getY() + e1.maskY, e1.maskW, e1.maskH);
 		Rectangle mask2 = new Rectangle(e2.getX() + e2.maskX, e2.getY() + e2.maskY, e2.maskW, e2.maskH);
-		return mask1.intersects(mask2);
+		
+			return mask1.intersects(mask2);
+		
 	}
 
 	public void atualizar() {

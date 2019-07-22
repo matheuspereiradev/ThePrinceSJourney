@@ -65,34 +65,38 @@ public class InimigoAlien extends Inimigo {
 
 	public void atualizar() {
 		movendo = false;
+		if (calcularDistancia(this.getX(), Jogo.jogador.getX(), this.getY(), Jogo.jogador.getY()) < 100) {
+			if (!colisaoComJogador(this.getX(), this.getY(), this.maskX, this.maskY, this.maskW, this.maskH)) {
 
-		if (!colisaoComJogador(this.getX(), this.getY(), this.maskX, this.maskY, this.maskW, this.maskH)) {
+				if ((int) x < Jogo.jogador.getX() && Mundo.isFree((int) (x + speed), this.getY())
+						&& !isColidindo((int) (x + speed), this.getY())) {
+					movendo = true;
+					direcao = dir_right;
+					x += speed;
+				} else if ((int) x > Jogo.jogador.getX() && Mundo.isFree((int) (x - speed), this.getY())
+						&& !isColidindo((int) (x - speed), this.getY())) {
+					movendo = true;
+					direcao = dir_left;
+					x -= speed;
+				}
+				if ((int) y < Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y + speed))
+						&& !isColidindo(this.getX(), (int) (y + speed))) {
+					movendo = true;
+					direcao = dir_down;
+					y += speed;
+				} else if ((int) y > Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y - speed))
+						&& !isColidindo(this.getX(), (int) (y - speed))) {
+					movendo = true;
+					direcao = dir_up;
+					y -= speed;
+				}
 
-			if ((int) x < Jogo.jogador.getX() && Mundo.isFree((int) (x + speed), this.getY())
-					&& !isColidindo((int) (x + speed), this.getY())) {
-				movendo = true;
-				direcao = dir_right;
-				x += speed;
-			} else if ((int) x > Jogo.jogador.getX() && Mundo.isFree((int) (x - speed), this.getY())
-					&& !isColidindo((int) (x - speed), this.getY())) {
-				movendo = true;
-				direcao = dir_left;
-				x -= speed;
+			} else {
+				testarAtaqueNoPlayer(10);// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
 			}
-			if ((int) y < Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y + speed))
-					&& !isColidindo(this.getX(), (int) (y + speed))) {
-				movendo = true;
-				direcao = dir_down;
-				y += speed;
-			} else if ((int) y > Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y - speed))
-					&& !isColidindo(this.getX(), (int) (y - speed))) {
-				movendo = true;
-				direcao = dir_up;
-				y -= speed;
-			}
-
-		} else {
-			testarAtaqueNoPlayer(10);// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
+		}else {
+			//direção maior q x
+			
 		}
 
 		if (movendo) {
@@ -107,11 +111,11 @@ public class InimigoAlien extends Inimigo {
 		}
 		colisaoComBala();
 		verificarVida();
-		if(sofrendoDano) {
+		if (sofrendoDano) {
 			currentDano++;
-			if(currentDano==danoFrames) {
-				currentDano=0;
-				sofrendoDano=false;
+			if (currentDano == danoFrames) {
+				currentDano = 0;
+				sofrendoDano = false;
 			}
 		}
 	}
@@ -129,8 +133,8 @@ public class InimigoAlien extends Inimigo {
 			} else if (direcao == dir_down) {
 				g.drawImage(downAlien[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 			}
-		}else {
-			g.drawImage(Entidade.inimigoAlienDano,this.getX() - Camera.x, this.getY() - Camera.y, null);
+		} else {
+			g.drawImage(Entidade.inimigoAlienDano, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		// para vizualizar melhor oq esta acontecdo descomenta
 		// super.renderizar(g);

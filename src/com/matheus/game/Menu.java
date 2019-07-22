@@ -73,6 +73,8 @@ public class Menu {
 				if(file.exists()) {
 					String saver=Salvar.carregarJogo(19);
 					Salvar.applySave(saver);
+				}else {
+					Sons.naoPodeSong.play();
 				}
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Sons") {
