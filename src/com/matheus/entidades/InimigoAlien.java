@@ -16,6 +16,11 @@ public class InimigoAlien extends Inimigo {
 	private int direcao = dir_down;
 	private boolean movendo = false;
 	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2, tamanhoArray = 3;
+	private int distanciaDeAlcanceDoAtaque = 20;
+
+	int sortearDirecao = Jogo.rand.nextInt(4);
+	int tempoDirecao = 0, maxTempoDirecao = 40;
+	boolean direcaoDisponivel = false;
 
 	private BufferedImage[] rightAlien;
 	private BufferedImage[] leftAlien;
@@ -65,7 +70,8 @@ public class InimigoAlien extends Inimigo {
 
 	public void atualizar() {
 		movendo = false;
-		if (calcularDistancia(this.getX(), Jogo.jogador.getX(), this.getY(), Jogo.jogador.getY()) < 100) {
+		if (calcularDistancia(this.getX(), Jogo.jogador.getX(), this.getY(),
+				Jogo.jogador.getY()) < distanciaDeAlcanceDoAtaque) {
 			if (!colisaoComJogador(this.getX(), this.getY(), this.maskX, this.maskY, this.maskW, this.maskH)) {
 
 				if ((int) x < Jogo.jogador.getX() && Mundo.isFree((int) (x + speed), this.getY())
@@ -94,9 +100,42 @@ public class InimigoAlien extends Inimigo {
 			} else {
 				testarAtaqueNoPlayer(10);// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
 			}
-		}else {
-			//direção maior q x
-			
+		} else {
+			// direção maior q distanciaDeAlcanceDoAtaque
+
+			if (tempoDirecao == maxTempoDirecao) {
+				tempoDirecao = 0;
+				sortearDirecao=Jogo.rand.nextInt(4);
+			} else {
+				tempoDirecao++;
+			}
+
+			if (sortearDirecao == 0 && Mundo.isFree((int) (x + speed), this.getY())
+					&& !isColidindo((int) (x + speed), this.getY())) {
+				movendo = true;
+				direcao = dir_right;
+				x += speed;
+			} else if (sortearDirecao == 1 && Mundo.isFree((int) (x - speed), this.getY())
+					&& !isColidindo((int) (x - speed), this.getY())) {
+				movendo = true;
+				direcao = dir_left;
+				x -= speed;
+			}
+
+			else if (sortearDirecao == 2 && Mundo.isFree(this.getX(), (int) (y + speed))
+					&& !isColidindo(this.getX(), (int) (y + speed))) {
+				movendo = true;
+				direcao = dir_down;
+				y += speed;
+			} else if (sortearDirecao == 3 && Mundo.isFree(this.getX(), (int) (y - speed))
+					&& !isColidindo(this.getX(), (int) (y - speed))) {
+				movendo = true;
+				direcao = dir_up;
+				y -= speed;
+			}
+
+			// fim da direçao
+
 		}
 
 		if (movendo) {

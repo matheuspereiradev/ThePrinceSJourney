@@ -19,8 +19,9 @@ public class Menu {
 	public BufferedImage banner;
 	public boolean up, down, enter;
 	public static boolean pausa = false;
-	
-	
+	public boolean clickDoMouse = false;
+	public int mouseX, mouseY;
+
 	public Menu(String path) {
 		try {
 			banner = ImageIO.read(getClass().getResource(path));
@@ -31,13 +32,42 @@ public class Menu {
 	}
 
 	public void atualizar() {
-		File file=new File("save.txt");
-		if(file.exists()) {
-			Salvar.saveExists=true;
-		}else {
-			Salvar.saveExists=false;
+		File file = new File("save.txt");
+		if (file.exists()) {
+			Salvar.saveExists = true;
+		} else {
+			Salvar.saveExists = false;
 		}
-		
+
+		if (clickDoMouse) {
+			clickDoMouse = false;
+			if (mouseX > 350 && mouseX < 550) {// verifica se o clique foi dentro do menu
+				// verifica a opção
+				if (mouseY > 215 && mouseY < 255) {
+					File arq = new File("save.txt");
+					arq.delete();
+					Jogo.status = "NORMAL";
+					pausa = false;
+				} else if (mouseY > 270 && mouseY < 310) {
+					file = new File("save.txt");
+					if (file.exists()) {
+						String saver = Salvar.carregarJogo(19);
+						Salvar.applySave(saver);
+					} else {
+						Sons.naoPodeSong.play();
+					}
+				} else if (mouseY > 320 && mouseY < 360) {
+					Jogo.mute = !Jogo.mute;
+					if (Jogo.mute)
+						Sons.musica.stop();
+					else
+						Sons.musica.play();
+
+				} else if (mouseY > 370 && mouseY < 410) {
+					System.exit(0);
+				}
+			}
+		}
 
 		if (up) {
 			if (!Jogo.mute) {
@@ -63,17 +93,17 @@ public class Menu {
 
 		if (enter) {
 			if (opcoes[currentOpcao] == "Novo jogo") {
-				File arq= new File("save.txt");
+				File arq = new File("save.txt");
 				arq.delete();
 				Jogo.status = "NORMAL";
 				pausa = false;
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Carregar jogo") {
-				file=new File("save.txt");
-				if(file.exists()) {
-					String saver=Salvar.carregarJogo(19);
+				file = new File("save.txt");
+				if (file.exists()) {
+					String saver = Salvar.carregarJogo(19);
 					Salvar.applySave(saver);
-				}else {
+				} else {
 					Sons.naoPodeSong.play();
 				}
 				enter = false;
@@ -105,43 +135,41 @@ public class Menu {
 		g.setFont(new Font("arial", Font.BOLD, 30));
 		if (!pausa) {
 			g.drawString("Novo jogo", 380, 250);
+
 		} else {
 			g.drawString("Continuar", 380, 250);
 			g.setColor(Color.YELLOW);
 			g.drawString("Pressione Z para salvar", 320, 600);
 			g.setColor(Color.WHITE);
 		}
-		
-		
-		if(!Salvar.saveExists) {
+
+		if (!Salvar.saveExists) {
 			g.setColor(Color.DARK_GRAY);
 			g.drawString("Carregar jogo", 350, 300);
 			g.setColor(Color.WHITE);
-		}else {
+		} else {
 			g.drawString("Carregar jogo", 350, 300);
 		}
-		
+
 		if (Jogo.mute) {
 			g.drawString("Sons: off", 380, 350);
 		} else {
 			g.drawString("Sons: on", 380, 350);
 		}
-		
+
 		g.drawString("Sair", 410, 400);
-		
-		
 
 		if (opcoes[currentOpcao] == "Novo jogo") {
 			g.drawString(">", 360, 250);
 		} else if (opcoes[currentOpcao] == "Carregar jogo") {
-			if(!Salvar.saveExists) {
+			if (!Salvar.saveExists) {
 				g.setColor(Color.DARK_GRAY);
 				g.drawString(">", 330, 300);
 				g.setColor(Color.WHITE);
-			}else {
+			} else {
 				g.drawString(">", 330, 300);
 			}
-			
+
 		} else if (opcoes[currentOpcao] == "Sons") {
 			g.drawString(">", 360, 350);
 		} else {

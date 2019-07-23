@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import com.matheus.graficos.Spritesheet;
 import com.matheus.graficos.UI;
 import com.matheus.mundo.*;
 
-public class Jogo extends Canvas implements Runnable, KeyListener {
+public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	public static final int tamanho = 16;
@@ -57,6 +59,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 		}
 		rand = new Random();
 		addKeyListener(this);
+		addMouseListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
 		ui = new UI();
@@ -308,6 +311,38 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		menu.clickDoMouse=true;
+		menu.mouseX=e.getX();
+		menu.mouseY=e.getY();
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
