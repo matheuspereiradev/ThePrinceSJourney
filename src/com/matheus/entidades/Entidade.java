@@ -14,6 +14,8 @@ public class Entidade {
 	public static BufferedImage inimigoCaveira = Jogo.spritesheet.getSprite(16, 48, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage inimigoCaveiraDano = Jogo.spritesheet.getSprite(16, 64, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage inimigoAlien = Jogo.spritesheet.getSprite(48, 16, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage inimigoMorte = Jogo.spritesheet.getSprite(176,16, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage inimigoMorteDano = Jogo.spritesheet.getSprite(192,32, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage inimigoAlienDano = Jogo.spritesheet.getSprite(0, 64, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage armaRight = Jogo.spritesheet.getSprite(96, 48, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage armaLeft = Jogo.spritesheet.getSprite(80, 48, Jogo.tamanho, Jogo.tamanho);

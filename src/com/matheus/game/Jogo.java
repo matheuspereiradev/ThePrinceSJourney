@@ -13,13 +13,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javax.swing.JFrame;
 
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import com.matheus.entidades.*;
 import com.matheus.graficos.Spritesheet;
 import com.matheus.graficos.UI;
@@ -27,7 +29,7 @@ import com.matheus.mundo.*;
 
 public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener {
 
-	public InputStream steam=ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/celticmd.ttf");
+	
 	public static Font fontCelticMd;
 	
 	private static final long serialVersionUID = 1L;
@@ -45,6 +47,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static List<Arma> arma;
 	public static List<AtirarMunicao> balas;
 	public static List<BlocoDeDano> lava;
+	public static List<InimigoMorte> morte;
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
@@ -58,6 +61,9 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public boolean saveGame=false;
 	public Menu menu;
 	public UI ui;
+	public int [] pixels, luzPixels;
+	public BufferedImage luz;
+	
 
 	public Jogo() {
 		if (!mute) {
@@ -68,9 +74,24 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		addMouseListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
-		iniciarFont();
+		InputStream steam=ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/oldengl.ttf");
+		iniciarFont(steam);
 		ui = new UI();
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
+		
+		//luz
+		try {
+			luz=ImageIO.read(getClass().getResource("/luz.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		luzPixels=new int[luz.getWidth()*luz.getHeight()];
+		luz.getRGB(0, 0, luz.getWidth(),luz.getHeight(), luzPixels,0,luz.getWidth());
+		
+		//fim da luz
+		
+		pixels=((DataBufferInt)background.getRaster().getDataBuffer()).getData();
 		iniciarJogo();
 		menu = new Menu("/Banner.png");
 		
@@ -81,9 +102,9 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		jogo.iniciar();
 	}
 
-	public void iniciarFont() {
+	public void iniciarFont(InputStream inputsteam) {
 		try {
-			fontCelticMd=Font.createFont(Font.TRUETYPE_FONT, steam).deriveFont(Font.PLAIN, 20);
+			fontCelticMd=Font.createFont(Font.TRUETYPE_FONT, inputsteam).deriveFont(30f);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -100,6 +121,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		arma = new ArrayList<Arma>();
 		balas = new ArrayList<AtirarMunicao>();
 		lava=new ArrayList<BlocoDeDano>();
+		morte=new ArrayList<InimigoMorte>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
@@ -108,7 +130,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	}
 
 	public void iniciarFrame() {
-		frame = new JFrame("The Prince's Journey v.1.0 by matheuslimadev.com");
+		frame = new JFrame("The Prince's Journey v.2.0 by matheuslimadev.com");
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
@@ -189,10 +211,14 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		g.setFont(new Font("Arial", Font.PLAIN, 10));
 		g.drawString(String.valueOf(fpsJogo), 225, 10);
 
+		//aplicarLuz();
+		
 		ui.renderizar(g);
 
 		g.dispose();// limpar dados da imagem que nao foram usados
 		g = bs.getDrawGraphics();
+		//desenharRetangulo(40,40);
+		
 		g.drawImage(background, 0, 0, WIDITH * SCALE, HEIGHT * SCALE, null);
 		// aqui para ficar em cima da imagem de background
 		g.setFont(new Font("Arial", Font.BOLD, 25));
@@ -214,6 +240,27 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			menu.renderizar(g);
 		}
 		bs.show();
+	}
+	public void desenharRetangulo(int xOff,int yOff) {
+		for(int xx=0;xx<32;xx++) {
+			for(int yy=0;yy<32;yy++) {
+				int offX=xx+xOff;
+				int offY=yy+yOff;
+				if(offX<0||offY<0||offX>WIDITH||offY>HEIGHT)
+					continue;
+				pixels[offX+(offY*WIDITH)]=0xFFFF0000;
+			}
+		}
+	}
+	
+	public void aplicarLuz() {
+		for(int xx=0;xx<Jogo.WIDITH;xx++) {
+			for(int yy=0;yy<Jogo.HEIGHT;yy++) {
+				if(luzPixels[xx+(yy*WIDITH)]==0xFFFFFFFF) {
+					pixels[xx+(yy*WIDITH)]=0xFF000000;
+				}
+			}
+		}
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class Jogador extends Entidade {
 	public boolean sofrendoDano = false;
 	public int sofrendoDanoFrames = 0;
 
-	public int velDisparo = 15, ultDisparo = 0;
+	public int velDisparo = 10, ultDisparo = 0;
 	public boolean podeAtirar = true;
 
 	public int numeroDeBalas = 0;

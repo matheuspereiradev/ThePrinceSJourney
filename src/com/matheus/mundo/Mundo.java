@@ -58,6 +58,13 @@ public class Mundo {
 						// areia
 					}
 
+					else if(pixels[atual] == 0xFFFF6A00) {
+						InimigoMorte morte=new InimigoMorte(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+								Jogo.tamanho, Entidade.inimigoMorte, 9);
+						Jogo.entidades.add(morte);
+						Jogo.inimigo.add(morte);
+						//inimigo morte
+					}
 					else if (pixels[atual] == 0xFF00FF21) {
 						InimigoCaveira caveira = new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
 								Jogo.tamanho, Entidade.inimigoCaveira, 3);
@@ -128,12 +135,17 @@ public class Mundo {
 		Jogo.arma.clear();
 		Jogo.balas.clear();
 		Jogo.lava.clear();
+		Jogo.morte.clear();
+		
 		Jogo.entidades = new ArrayList<Entidade>();
 		Jogo.inimigo = new ArrayList<Inimigo>();
 		Jogo.lifePack = new ArrayList<CoracaoDeVida>();
 		Jogo.municao = new ArrayList<Municao>();
 		Jogo.arma = new ArrayList<Arma>();
 		Jogo.balas = new ArrayList<AtirarMunicao>();
+		Jogo.lava=new ArrayList<BlocoDeDano>();
+		Jogo.morte=new ArrayList<InimigoMorte>();
+		
 		Jogo.spritesheet = new Spritesheet("/Spritesheet.png");
 		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho,
 				Jogo.spritesheet.getSprite(0, 0, Jogo.tamanho, Jogo.tamanho));
