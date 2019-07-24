@@ -54,6 +54,7 @@ public class Menu {
 						String saver = Salvar.carregarJogo(19);
 						Salvar.applySave(saver);
 					} else {
+						if (!Jogo.mute)
 						Sons.naoPodeSong.play();
 					}
 				} else if (mouseY > 320 && mouseY < 360) {
@@ -104,6 +105,7 @@ public class Menu {
 					String saver = Salvar.carregarJogo(19);
 					Salvar.applySave(saver);
 				} else {
+					if (!Jogo.mute)
 					Sons.naoPodeSong.play();
 				}
 				enter = false;
@@ -132,7 +134,7 @@ public class Menu {
 
 		// opcoes do menu
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("arial", Font.BOLD, 30));
+		g.setFont(Jogo.fontCelticMd);
 		if (!pausa) {
 			g.drawString("Novo jogo", 380, 250);
 
@@ -158,6 +160,8 @@ public class Menu {
 		}
 
 		g.drawString("Sair", 410, 400);
+		
+		g.setFont(new Font("arial", Font.BOLD, 30));
 
 		if (opcoes[currentOpcao] == "Novo jogo") {
 			g.drawString(">", 360, 250);

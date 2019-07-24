@@ -22,6 +22,9 @@ public class Jogador extends Entidade {
 	public boolean sofrendoDano = false;
 	public int sofrendoDanoFrames = 0;
 
+	public int velDisparo = 15, ultDisparo = 0;
+	public boolean podeAtirar = true;
+
 	public int numeroDeBalas = 0;
 	public double vida = 100;
 	public static final int MAX_LIFE = 100;
@@ -56,8 +59,16 @@ public class Jogador extends Entidade {
 			 * Jogo.entidades.clear(); Jogo.inimigo.clear(); Jogo.lifePack.clear();
 			 * Jogo.municao.clear(); Jogo.iniciarJogo();
 			 */
-			Jogo.jogador.vida=0.0;
+			Jogo.jogador.vida = 0.0;
 			Jogo.status = "GAME_OVER";
+		}
+
+		if (!podeAtirar) {
+			ultDisparo++;
+			if (ultDisparo == velDisparo) {
+				podeAtirar = true;
+				ultDisparo=0;
+			}
 		}
 
 		movimentando = false;
@@ -102,33 +113,35 @@ public class Jogador extends Entidade {
 
 		if (atirando) {
 			// criar a bala
-
 			atirando = false;
-			if (armado && numeroDeBalas > 0) {
-				if (!Jogo.mute) {
-					Sons.tiroSong.play();
+			if (podeAtirar) {
+				if (armado && numeroDeBalas > 0) {
+					podeAtirar=false;
+					if (!Jogo.mute) {
+						Sons.tiroSong.play();
+					}
+					numeroDeBalas--;
+					int dx = 0, dy = 0, px = 0, py = 0;
+					if (ultimoClicado == right_dir) {
+						px = 18;
+						py = 9;
+						dx = 1;
+					} else if (ultimoClicado == left_dir) {
+						px = -6;
+						py = 9;
+						dx = -1;
+					}
+					if (ultimoClicado == up_dir) {
+						px = -1;
+						py = 8;
+						dy = -1;
+					} else if (ultimoClicado == down_dir) {
+						px = 1;
+						py = 13;
+						dy = 1;
+					}
+					Jogo.balas.add(new AtirarMunicao(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy));
 				}
-				numeroDeBalas--;
-				int dx = 0, dy = 0, px = 0, py = 0;
-				if (ultimoClicado == right_dir) {
-					px = 18;
-					py = 9;
-					dx = 1;
-				} else if (ultimoClicado == left_dir) {
-					px = -6;
-					py = 9;
-					dx = -1;
-				}
-				if (ultimoClicado == up_dir) {
-					px = -1;
-					py = 8;
-					dy = -1;
-				} else if (ultimoClicado == down_dir) {
-					px = 1;
-					py = 13;
-					dy = 1;
-				}
-				Jogo.balas.add(new AtirarMunicao(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy));
 			}
 		}
 

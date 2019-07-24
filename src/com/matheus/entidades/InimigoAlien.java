@@ -16,7 +16,7 @@ public class InimigoAlien extends Inimigo {
 	private int direcao = dir_down;
 	private boolean movendo = false;
 	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2, tamanhoArray = 3;
-	private int distanciaDeAlcanceDoAtaque = 20;
+	private int distanciaDeAlcanceDoAtaque = 60;
 
 	int sortearDirecao = Jogo.rand.nextInt(4);
 	int tempoDirecao = 0, maxTempoDirecao = 40;
