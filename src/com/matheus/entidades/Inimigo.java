@@ -10,6 +10,7 @@ public class Inimigo extends Entidade {
 	protected int vida;
 	protected int danoFrames = 10, currentDano = 0;
 	protected boolean sofrendoDano = false;
+	protected boolean movendo=false;
 	
 	public Inimigo(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, sprite);

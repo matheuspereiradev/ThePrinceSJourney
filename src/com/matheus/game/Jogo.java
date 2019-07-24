@@ -57,7 +57,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public boolean exibirMensagemGameOver = false;
 	private int framesGameOver = 0, maxGameOver = 20;
 	private boolean restartJogo = false;
-	public static boolean mute = false;
+	public static boolean mute = true;
 	public boolean saveGame=false;
 	public Menu menu;
 	public UI ui;
@@ -74,7 +74,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		addMouseListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
-		InputStream steam=ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/oldengl.ttf");
+		InputStream steam=ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/coolpbl.ttf");
 		iniciarFont(steam);
 		ui = new UI();
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
