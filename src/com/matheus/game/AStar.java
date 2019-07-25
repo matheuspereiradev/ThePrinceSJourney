@@ -2,7 +2,7 @@ package com.matheus.game;
 
 import java.util.*;
 
-import com.matheus.mundo.Mundo;
+import com.matheus.mundo.*;
 
 public class AStar {
 
@@ -76,9 +76,49 @@ public class AStar {
 			for (int i = 0; i < 9; i++) {// 9 pq são nove posicoes para cima para baixo direita esquerda e as 4 diagoais
 				if (i == 4)
 					continue;//pq é a propria posição
-
+				int x= atual.tile.x;
+				int y= atual.tile.y;
+				int xi=(i%3)-1;
+				int yi=(i/3)-1;
+				Tile tile=Mundo.tiles[x+xi+((y+yi)*Mundo.WIDTH_WORD)];
+				if(tile==null) continue;
+				if(tile instanceof WallTile)continue;
+				
+				if(i==0) {
+					Tile teste=Mundo.tiles[x+xi+1+((y+yi)*Mundo.WIDTH_WORD)];
+					Tile teste2=Mundo.tiles[x+xi+1+((y+yi)*Mundo.WIDTH_WORD)];
+					if(teste instanceof WallTile || teste2 instanceof WallTile) continue;
+					
+				}else if(i==2) {
+					Tile teste=Mundo.tiles[x+xi+1+((y+yi)*Mundo.WIDTH_WORD)];
+					Tile teste2=Mundo.tiles[x+xi+((y+yi)*Mundo.WIDTH_WORD)];
+					if(teste instanceof WallTile || teste2 instanceof WallTile) continue;
+				}else if(i==6) {
+					Tile teste=Mundo.tiles[x+xi+((y+yi-1)*Mundo.WIDTH_WORD)];
+					Tile teste2=Mundo.tiles[x+xi+1+((y+yi)*Mundo.WIDTH_WORD)];
+					if(teste instanceof WallTile || teste2 instanceof WallTile) continue;
+				}else if(i==8) {
+					Tile teste=Mundo.tiles[x+xi+((y+yi-1)*Mundo.WIDTH_WORD)];
+					Tile teste2=Mundo.tiles[x+xi-1+((y+yi)*Mundo.WIDTH_WORD)];
+					if(teste instanceof WallTile || teste2 instanceof WallTile) continue;
+				}
+				
+				Vector2i vector=new Vector2i(x+xi, y+yi);
+				double gCost=atual.gCost+getDistancia(atual.tile, vector);
+				double hCost=getDistancia(vector, end);
+				
+				Node node=new Node(vector,atual,gCost,hCost);
+				if(vetInList(closeList, vector)&&gCost>=atual.gCost) continue;
+				
+				if(!vetInList(openList, vector)) {
+					openList.add(node);
+				}else if(gCost<atual.gCost) {
+					openList.remove(atual);
+					openList.add(node);
+				}
 			}
 		}
-
+		closeList.clear();
+		return null;
 	}
 }
