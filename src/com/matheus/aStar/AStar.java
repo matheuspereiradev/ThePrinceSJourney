@@ -1,4 +1,4 @@
-package com.matheus.game;
+package com.matheus.aStar;
 
 import java.util.*;
 

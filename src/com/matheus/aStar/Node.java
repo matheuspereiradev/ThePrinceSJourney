@@ -1,4 +1,4 @@
-package com.matheus.game;
+package com.matheus.aStar;
 
 
 public class Node {
