@@ -16,6 +16,8 @@ public class InimigoCaveira extends Inimigo {
 
 	public InimigoCaveira(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, null, vida);
+		this.power=5;
+		
 		inimigoCaveira = new BufferedImage[3];
 		inimigoCaveira[0] = Jogo.spritesheet.getSprite(16, 48, Jogo.tamanho, Jogo.tamanho);
 		inimigoCaveira[1] = Jogo.spritesheet.getSprite(32, 48, Jogo.tamanho, Jogo.tamanho);
@@ -42,7 +44,7 @@ public class InimigoCaveira extends Inimigo {
 				}
 			}
 		} else {
-			Inimigo.testarAtaqueNoPlayer(5);// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
+			testarAtaqueNoPlayer();// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
 		}
 
 		frames++;

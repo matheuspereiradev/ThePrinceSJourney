@@ -52,7 +52,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static Jogador jogador;
 	public static Mundo mundo;
 	public static Random rand;
-	public static int fase = 1, maxFases = 3;
+	public static int fase = 1, maxFases = 4;
 	public static String status = "MENU";
 	public boolean exibirMensagemGameOver = false;
 	private int framesGameOver = 0, maxGameOver = 20;
@@ -74,7 +74,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		addMouseListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
-		InputStream steam=ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/coolpbl.ttf");
+		InputStream steam=ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/dragoncaps.ttf");
 		iniciarFont(steam);
 		ui = new UI();
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
@@ -83,7 +83,6 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		try {
 			luz=ImageIO.read(getClass().getResource("/luz.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		luzPixels=new int[luz.getWidth()*luz.getHeight()];
@@ -104,7 +103,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public void iniciarFont(InputStream inputsteam) {
 		try {
-			fontCelticMd=Font.createFont(Font.TRUETYPE_FONT, inputsteam).deriveFont(30f);
+			fontCelticMd=Font.createFont(Font.TRUETYPE_FONT, inputsteam).deriveFont(20f);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -387,25 +386,21 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

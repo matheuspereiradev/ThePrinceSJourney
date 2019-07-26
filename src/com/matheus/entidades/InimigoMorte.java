@@ -2,14 +2,16 @@ package com.matheus.entidades;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
+import com.matheus.aStar.AStar;
+import com.matheus.aStar.Node;
+import com.matheus.aStar.Vector2i;
 import com.matheus.game.Jogo;
 import com.matheus.mundo.Camera;
-import com.matheus.mundo.Mundo;
 
 public class InimigoMorte extends Inimigo {
 
-	private double speed = 1.8;
 	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2;
 	private BufferedImage[] inimigoMorteLeft, inimigoMorteRight, inimigoMorteUp, inimigoMorteDown;
 	private int dir_up = 1, dir_right = 0, dir_down = 2, dir_left = 3;
@@ -17,6 +19,8 @@ public class InimigoMorte extends Inimigo {
 
 	public InimigoMorte(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, sprite, vida);
+		super.speed = 1;
+		this.power=15;
 		inimigoMorteLeft = new BufferedImage[3];
 		inimigoMorteRight = new BufferedImage[3];
 		inimigoMorteUp = new BufferedImage[3];
@@ -37,33 +41,16 @@ public class InimigoMorte extends Inimigo {
 
 	public void atualizar() {
 		movendo = false;
-		// movimentação
-		if (!Inimigo.colisaoComJogador(this.getX(), this.getY(), this.maskX, this.maskY, this.maskW, this.maskH)) {
-			if (Jogo.rand.nextInt(100) < 30) {
-
-				if ((int) x < Jogo.jogador.getX() && Mundo.isFree((int) (x + speed), this.getY())) {
-					movendo = true;
-					direcao = dir_right;
-					x += speed;
-				} else if ((int) x > Jogo.jogador.getX() && Mundo.isFree((int) (x - speed), this.getY())) {
-					movendo = true;
-					direcao = dir_left;
-					x -= speed;
-				}
-				if ((int) y < Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y + speed))) {
-					movendo = true;
-					direcao = dir_down;
-					y += speed;
-				} else if ((int) y > Jogo.jogador.getY() && Mundo.isFree(this.getX(), (int) (y - speed))) {
-					movendo = true;
-					direcao = dir_up;
-					y -= speed;
-				}
+		if (!colisaoComJogador(this.getX(), this.getY(), this.maskX, this.maskY, this.maskW, this.maskH)) {
+			if (caminho == null || caminho.size() == 0) {
+				Vector2i start = new Vector2i((int) (x / 16), (int) (y / 16));
+				Vector2i end = new Vector2i((int) (Jogo.jogador.x / 16), (int) (Jogo.jogador.y / 16));
+				caminho = AStar.acharCaminho(Jogo.mundo, start, end);
 			}
+			this.findPath(caminho);
 		} else {
-			Inimigo.testarAtaqueNoPlayer(5);// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
+			testarAtaqueNoPlayer();
 		}
-
 		if (movendo) {
 			frames++;
 			if (frames == maxFrames) {
@@ -72,6 +59,7 @@ public class InimigoMorte extends Inimigo {
 				if (index > maxIndex) {
 					index = 0;
 				}
+
 			}
 		}
 		colisaoComBala();
@@ -101,6 +89,42 @@ public class InimigoMorte extends Inimigo {
 			g.drawImage(inimigoMorteDano, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 
+	}
+
+	@Override
+	public void findPath(List<Node> caminho) {
+		if (caminho != null) {
+			if (caminho.size() > 0) {
+				Vector2i target = caminho.get(caminho.size() - 1).tile;
+
+				if (x < target.x * 16) {
+					x += speed;
+					movendo = true;
+					direcao = dir_right;
+
+				} else if (x > target.x * 16) {
+					x -= speed;
+					movendo = true;
+					direcao = dir_left;
+
+				}
+
+				if (y < target.y * 16) {
+					y += speed;
+					movendo = true;
+					direcao = dir_down;
+				} else if (y > target.y * 16) {
+					y -= speed;
+					movendo = true;
+					direcao = dir_up;
+
+				}
+
+				if (x == target.x * 16 && y == target.y * 16) {
+					caminho.remove(caminho.size() - 1);
+				}
+			}
+		}
 	}
 
 }

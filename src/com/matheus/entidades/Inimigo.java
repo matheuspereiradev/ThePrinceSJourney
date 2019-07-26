@@ -2,6 +2,10 @@ package com.matheus.entidades;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.List;
+
+import com.matheus.aStar.Node;
+import com.matheus.aStar.Vector2i;
 import com.matheus.game.Jogo;
 import com.matheus.game.Sons;
 
@@ -11,12 +15,43 @@ public class Inimigo extends Entidade {
 	protected int danoFrames = 10, currentDano = 0;
 	protected boolean sofrendoDano = false;
 	protected boolean movendo=false;
+	protected double speed;
+	protected List<Node> caminho;
+	protected int power;
 	
 	public Inimigo(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, sprite);
 		this.vida = vida;
 	}
 
+	public void findPath(List<Node> caminho) {
+		if(caminho!=null) {
+			if(caminho.size()>0) {
+				Vector2i target=caminho.get(caminho.size()-1).tile;
+				//int xprev;
+				//int yprev;
+				if(x<target.x*16) {
+					x++;
+					movendo=true;
+				}else if(x>target.x*16) {
+					x--;
+					movendo=true;
+				}
+				
+				if(y<target.y*16) {
+					y++;
+					movendo=true;
+				}else if(y>target.y*16) {
+					y--;
+					movendo=true;
+				}
+				
+				if(x==target.x*16 && y==target.y*16) {
+					caminho.remove(caminho.size()-1);
+				}
+			}
+		}
+	}
 	
 	public static boolean colisaoComJogador(int x, int y, int mascaraX, int mascaraY, int width, int height) {
 		Rectangle inimigoAtual = new Rectangle(x + mascaraX, y + mascaraY, width, height);
@@ -53,8 +88,8 @@ public class Inimigo extends Entidade {
 		}
 	}
 
-	public static void testarAtaqueNoPlayer(int probabilidadeEmPorcentagem) {
-		if (Jogo.rand.nextInt(100) < probabilidadeEmPorcentagem) {
+	public void testarAtaqueNoPlayer() {
+		if (Jogo.rand.nextInt(100) < power) {
 			Jogo.jogador.vida--;
 			Jogo.jogador.sofrendoDano = true;
 			if (!Jogo.mute) {

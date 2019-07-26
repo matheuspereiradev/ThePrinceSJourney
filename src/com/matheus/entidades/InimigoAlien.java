@@ -28,6 +28,7 @@ public class InimigoAlien extends Inimigo {
 
 	public InimigoAlien(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, sprite, vida);
+		this.power=10;
 		rightAlien = new BufferedImage[tamanhoArray];
 		leftAlien = new BufferedImage[tamanhoArray];
 		upAlien = new BufferedImage[tamanhoArray];
@@ -97,7 +98,7 @@ public class InimigoAlien extends Inimigo {
 				}
 
 			} else {
-				testarAtaqueNoPlayer(10);// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
+				testarAtaqueNoPlayer();// aqui chama o metodo e passa a probabilidade de o ataque dele acertar
 			}
 		} else {
 			// direção maior q distanciaDeAlcanceDoAtaque
