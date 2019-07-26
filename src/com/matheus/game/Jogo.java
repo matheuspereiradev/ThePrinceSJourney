@@ -52,7 +52,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static Jogador jogador;
 	public static Mundo mundo;
 	public static Random rand;
-	public static int fase = 1, maxFases = 4;
+	public static int fase = 1, maxFases = 5;
 	public static String status = "MENU";
 	public boolean exibirMensagemGameOver = false;
 	private int framesGameOver = 0, maxGameOver = 20;

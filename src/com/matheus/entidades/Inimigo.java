@@ -87,6 +87,7 @@ public class Inimigo extends Entidade {
 			}
 		}
 	}
+	
 
 	public void testarAtaqueNoPlayer() {
 		if (Jogo.rand.nextInt(100) < power) {

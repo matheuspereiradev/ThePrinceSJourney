@@ -86,12 +86,12 @@ public class AStar {
 				
 				if(i==0) {
 					Tile teste=Mundo.tiles[x+xi+1+((y+yi)*Mundo.WIDTH_WORD)];
-					Tile teste2=Mundo.tiles[x+xi+1+((y+yi)*Mundo.WIDTH_WORD)];
+					Tile teste2=Mundo.tiles[x+xi+((y+yi+1)*Mundo.WIDTH_WORD)];
 					if(teste instanceof WallTile || teste2 instanceof WallTile) continue;
 					
 				}else if(i==2) {
-					Tile teste=Mundo.tiles[x+xi+1+((y+yi)*Mundo.WIDTH_WORD)];
-					Tile teste2=Mundo.tiles[x+xi+((y+yi)*Mundo.WIDTH_WORD)];
+					Tile teste=Mundo.tiles[x+xi-1+((y+yi)*Mundo.WIDTH_WORD)];
+					Tile teste2=Mundo.tiles[x+xi+((y+yi+1)*Mundo.WIDTH_WORD)];
 					if(teste instanceof WallTile || teste2 instanceof WallTile) continue;
 				}else if(i==6) {
 					Tile teste=Mundo.tiles[x+xi+((y+yi-1)*Mundo.WIDTH_WORD)];

@@ -1,6 +1,7 @@
 package com.matheus.entidades;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class InimigoMorte extends Inimigo {
 			if (caminho.size() > 0) {
 				Vector2i target = caminho.get(caminho.size() - 1).tile;
 
-				if (x < target.x * 16) {
+				if (x < target.x * 16 ) {
 					x += speed;
 					movendo = true;
 					direcao = dir_right;
@@ -125,6 +126,23 @@ public class InimigoMorte extends Inimigo {
 				}
 			}
 		}
+	}
+	
+	public boolean estaColidindo(int xnext, int ynext) {
+		Rectangle inimigoAtual = new Rectangle(xnext + maskX, ynext + maskX, maskW, maskH);
+		for (int i = 0; i < Jogo.inimigo.size(); i++) {
+			Inimigo inimigo = Jogo.inimigo.get(i);
+			if (inimigo == this) {
+				// verifica se ele é ele proprio exemplo um aliem semore vai estar colidindo com
+				// ele mesmo
+				continue;
+			}
+			Rectangle inimigoTeste = new Rectangle(inimigo.getX() + maskX, inimigo.getY() + maskY, maskW, maskH);
+			if (inimigoTeste.intersects(inimigoAtual)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
