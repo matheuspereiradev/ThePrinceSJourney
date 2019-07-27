@@ -3,6 +3,7 @@ package com.matheus.entidades;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Comparator;
 import com.matheus.game.Jogo;
 import com.matheus.mundo.Camera;
 
@@ -26,6 +27,21 @@ public class Entidade {
 	protected int width, height;
 	protected double x, y;
 	protected BufferedImage sprite;
+	
+	public static Comparator<Entidade> entidadeSorter = new Comparator<Entidade>() {
+		@Override
+		public int compare(Entidade n0, Entidade n1) {
+			if (n1.depth < n0.depth)
+				return +1;
+
+			if (n1.depth > n0.depth)
+				return -1;
+
+			return 0;
+		}
+	};
+	
+	public int depth;
 
 	protected int maskX, maskY, maskW, maskH;
 	// A mascara X e Y dizem o quanto a mascara deve ser movida para baixo e lado

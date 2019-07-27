@@ -21,7 +21,7 @@ public class InimigoMorte extends Inimigo {
 	public InimigoMorte(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, sprite, vida);
 		super.speed = 1;
-		this.power=15;
+		this.power = 15;
 		inimigoMorteLeft = new BufferedImage[3];
 		inimigoMorteRight = new BufferedImage[3];
 		inimigoMorteUp = new BufferedImage[3];
@@ -48,7 +48,9 @@ public class InimigoMorte extends Inimigo {
 				Vector2i end = new Vector2i((int) (Jogo.jogador.x / 16), (int) (Jogo.jogador.y / 16));
 				caminho = AStar.acharCaminho(Jogo.mundo, start, end);
 			}
+
 			this.findPath(caminho);
+			
 		} else {
 			testarAtaqueNoPlayer();
 		}
@@ -98,7 +100,7 @@ public class InimigoMorte extends Inimigo {
 			if (caminho.size() > 0) {
 				Vector2i target = caminho.get(caminho.size() - 1).tile;
 
-				if (x < target.x * 16 ) {
+				if (x < target.x * 16) {
 					x += speed;
 					movendo = true;
 					direcao = dir_right;
@@ -127,7 +129,7 @@ public class InimigoMorte extends Inimigo {
 			}
 		}
 	}
-	
+
 	public boolean estaColidindo(int xnext, int ynext) {
 		Rectangle inimigoAtual = new Rectangle(xnext + maskX, ynext + maskX, maskW, maskH);
 		for (int i = 0; i < Jogo.inimigo.size(); i++) {

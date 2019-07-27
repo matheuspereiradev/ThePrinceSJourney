@@ -17,9 +17,9 @@ import java.awt.image.DataBufferInt;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import com.matheus.entidades.*;
@@ -29,9 +29,8 @@ import com.matheus.mundo.*;
 
 public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener {
 
-	
 	public static Font fontCelticMd;
-	
+
 	private static final long serialVersionUID = 1L;
 	public static final int tamanho = 16;
 	private Thread thread;
@@ -52,18 +51,20 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static Jogador jogador;
 	public static Mundo mundo;
 	public static Random rand;
-	public static int fase = 1, maxFases = 5;
+	public static int fase = 1, maxFases = 6;
 	public static String status = "MENU";
 	public boolean exibirMensagemGameOver = false;
 	private int framesGameOver = 0, maxGameOver = 20;
 	private boolean restartJogo = false;
 	public static boolean mute = true;
-	public boolean saveGame=false;
+	public boolean saveGame = false;
 	public Menu menu;
 	public UI ui;
-	public int [] pixels, luzPixels;
+	public int[] pixels, luzPixels;
 	public BufferedImage luz;
-	
+	public static BufferedImage minimapa;
+	public static boolean exibirMiniMap = false;
+	public static int[] minimapapixels;
 
 	public Jogo() {
 		if (!mute) {
@@ -74,26 +75,28 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		addMouseListener(this);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
-		InputStream steam=ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/dragoncaps.ttf");
+		InputStream steam = ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/coolpbl.ttf");
 		iniciarFont(steam);
 		ui = new UI();
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
-		
-		//luz
+
+		// luz
 		try {
-			luz=ImageIO.read(getClass().getResource("/luz.png"));
+			luz = ImageIO.read(getClass().getResource("/luz.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		luzPixels=new int[luz.getWidth()*luz.getHeight()];
-		luz.getRGB(0, 0, luz.getWidth(),luz.getHeight(), luzPixels,0,luz.getWidth());
-		
-		//fim da luz
-		
-		pixels=((DataBufferInt)background.getRaster().getDataBuffer()).getData();
+		luzPixels = new int[luz.getWidth() * luz.getHeight()];
+		luz.getRGB(0, 0, luz.getWidth(), luz.getHeight(), luzPixels, 0, luz.getWidth());
+
+		// fim da luz
+
+		pixels = ((DataBufferInt) background.getRaster().getDataBuffer()).getData();
 		iniciarJogo();
 		menu = new Menu("/Banner.png");
-		
+		// iniciando minimapa
+		minimapa = new BufferedImage(Mundo.WIDTH_WORD, Mundo.HEIGHT_WORD, BufferedImage.TYPE_INT_RGB);
+		minimapapixels = ((DataBufferInt) minimapa.getRaster().getDataBuffer()).getData();
 	}
 
 	public static void main(String[] args) {
@@ -103,24 +106,24 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public void iniciarFont(InputStream inputsteam) {
 		try {
-			fontCelticMd=Font.createFont(Font.TRUETYPE_FONT, inputsteam).deriveFont(20f);
+			fontCelticMd = Font.createFont(Font.TRUETYPE_FONT, inputsteam).deriveFont(30f);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void iniciarJogo() {
-		
+
 		entidades = new ArrayList<Entidade>();
 		inimigo = new ArrayList<Inimigo>();
 		lifePack = new ArrayList<CoracaoDeVida>();
 		municao = new ArrayList<Municao>();
 		arma = new ArrayList<Arma>();
 		balas = new ArrayList<AtirarMunicao>();
-		lava=new ArrayList<BlocoDeDano>();
-		morte=new ArrayList<InimigoMorte>();
+		lava = new ArrayList<BlocoDeDano>();
+		morte = new ArrayList<InimigoMorte>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
@@ -140,15 +143,15 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public void atualizar() {
 		if (status.equals("NORMAL")) {
-			
-			if(this.saveGame) {
-				this.saveGame=false;
-				String [] opt1= {"level","vida"};
-				int []opt2= {fase,(int)jogador.vida};
+
+			if (this.saveGame) {
+				this.saveGame = false;
+				String[] opt1 = { "level", "vida" };
+				int[] opt2 = { fase, (int) jogador.vida };
 				Salvar.salvarJogo(opt1, opt2, 19);
 				System.out.println("Salvo");
 			}
-			
+
 			restartJogo = false;
 			for (int i = 0; i < entidades.size(); i++) {
 				Entidade e = entidades.get(i);
@@ -198,6 +201,9 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		/* renderização do jogo */
 		// Graphics2D g2 = (Graphics2D) g;
 		mundo.renderizar(g);
+
+		Collections.sort(entidades, Entidade.entidadeSorter);
+
 		for (int i = 0; i < entidades.size(); i++) {
 			Entidade e = entidades.get(i);
 			e.renderizar(g);
@@ -210,20 +216,25 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		g.setFont(new Font("Arial", Font.PLAIN, 10));
 		g.drawString(String.valueOf(fpsJogo), 225, 10);
 
-		//aplicarLuz();
-		
+		// aplicarLuz();
+
 		ui.renderizar(g);
 
 		g.dispose();// limpar dados da imagem que nao foram usados
 		g = bs.getDrawGraphics();
-		//desenharRetangulo(40,40);
-		
+		// desenharRetangulo(40,40);
+
 		g.drawImage(background, 0, 0, WIDITH * SCALE, HEIGHT * SCALE, null);
 		// aqui para ficar em cima da imagem de background
 		g.setFont(new Font("Arial", Font.BOLD, 25));
 		g.setColor(Color.WHITE);
 		g.drawString("Munição: " + Jogo.jogador.numeroDeBalas, 36, 72);
 		g.drawString("Vida:" + (int) Jogo.jogador.vida + "/" + Jogador.MAX_LIFE, 200, 72);
+		if (exibirMiniMap) {
+			Mundo.rederizarMiniMap();
+			g.drawImage(minimapa, ((WIDITH * SCALE) - (Mundo.WIDTH_WORD * 5) - 30), 27, Mundo.WIDTH_WORD * 5,
+					Mundo.HEIGHT_WORD * 5, null);
+		}
 		if (status == "GAME_OVER") {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(new Color(0, 0, 0, 100));
@@ -238,25 +249,27 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		} else if (status.equals("MENU")) {
 			menu.renderizar(g);
 		}
+
 		bs.show();
 	}
-	public void desenharRetangulo(int xOff,int yOff) {
-		for(int xx=0;xx<32;xx++) {
-			for(int yy=0;yy<32;yy++) {
-				int offX=xx+xOff;
-				int offY=yy+yOff;
-				if(offX<0||offY<0||offX>WIDITH||offY>HEIGHT)
+
+	public void desenharRetangulo(int xOff, int yOff) {
+		for (int xx = 0; xx < 32; xx++) {
+			for (int yy = 0; yy < 32; yy++) {
+				int offX = xx + xOff;
+				int offY = yy + yOff;
+				if (offX < 0 || offY < 0 || offX > WIDITH || offY > HEIGHT)
 					continue;
-				pixels[offX+(offY*WIDITH)]=0xFFFF0000;
+				pixels[offX + (offY * WIDITH)] = 0xFFFF0000;
 			}
 		}
 	}
-	
+
 	public void aplicarLuz() {
-		for(int xx=0;xx<Jogo.WIDITH;xx++) {
-			for(int yy=0;yy<Jogo.HEIGHT;yy++) {
-				if(luzPixels[xx+(yy*WIDITH)]==0xFFFFFFFF) {
-					pixels[xx+(yy*WIDITH)]=0xFF000000;
+		for (int xx = 0; xx < Jogo.WIDITH; xx++) {
+			for (int yy = 0; yy < Jogo.HEIGHT; yy++) {
+				if (luzPixels[xx + (yy * WIDITH)] == 0xFFFFFFFF) {
+					pixels[xx + (yy * WIDITH)] = 0xFF000000;
 				}
 			}
 		}
@@ -340,7 +353,6 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		if (e.getKeyCode() == KeyEvent.VK_R) {
 			restartJogo = true;
 		}
-		
 
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			menu.enter = true;
@@ -349,9 +361,13 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			Menu.pausa = true;
 			status = "MENU";
 		}
-		if(e.getKeyCode()==KeyEvent.VK_Z) {
-			if(status=="NORMAL")
-			this.saveGame=true;
+		if (e.getKeyCode() == KeyEvent.VK_Z) {
+			if (status == "NORMAL")
+				this.saveGame = true;
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_J) {
+			exibirMiniMap = !exibirMiniMap;
 		}
 	}
 
@@ -378,30 +394,30 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		menu.clickDoMouse=true;
-		menu.mouseX=e.getX();
-		menu.mouseY=e.getY();
-		
+		menu.clickDoMouse = true;
+		menu.mouseX = e.getX();
+		menu.mouseY = e.getY();
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 	}
 
 }

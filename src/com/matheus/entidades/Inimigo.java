@@ -22,6 +22,7 @@ public class Inimigo extends Entidade {
 	public Inimigo(double x, double y, int width, int height, BufferedImage sprite, int vida) {
 		super(x, y, width, height, sprite);
 		this.vida = vida;
+		depth=0;
 	}
 
 	public void findPath(List<Node> caminho) {

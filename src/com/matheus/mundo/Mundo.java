@@ -28,14 +28,12 @@ public class Mundo {
 				for (int yy = 0; yy < HEIGHT_WORD; yy++) {
 					int atual = xx + (yy * WIDTH_WORD);
 
-					if (Jogo.rand.nextInt(10) < 4) {
+					if (Jogo.rand.nextInt(10) < 5) {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_2);
 					} else {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
 					}
 					// padrão é ser grama
-
-					
 
 					if (pixels[atual] == 0xFF000000) {
 						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
@@ -58,14 +56,13 @@ public class Mundo {
 						// areia
 					}
 
-					else if(pixels[atual] == 0xFFFF6A00) {
-						InimigoMorte morte=new InimigoMorte(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+					else if (pixels[atual] == 0xFFFF6A00) {
+						InimigoMorte morte = new InimigoMorte(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
 								Jogo.tamanho, Entidade.inimigoMorte, 9);
 						Jogo.entidades.add(morte);
 						Jogo.inimigo.add(morte);
-						//inimigo morte
-					}
-					else if (pixels[atual] == 0xFF00FF21) {
+						// inimigo morte
+					} else if (pixels[atual] == 0xFF00FF21) {
 						InimigoCaveira caveira = new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
 								Jogo.tamanho, Entidade.inimigoCaveira, 3);
 						Jogo.entidades.add(caveira);
@@ -143,9 +140,9 @@ public class Mundo {
 		Jogo.municao = new ArrayList<Municao>();
 		Jogo.arma = new ArrayList<Arma>();
 		Jogo.balas = new ArrayList<AtirarMunicao>();
-		Jogo.lava=new ArrayList<BlocoDeDano>();
-		Jogo.morte=new ArrayList<InimigoMorte>();
-		
+		Jogo.lava = new ArrayList<BlocoDeDano>();
+		Jogo.morte = new ArrayList<InimigoMorte>();
+
 		Jogo.spritesheet = new Spritesheet("/Spritesheet.png");
 		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho,
 				Jogo.spritesheet.getSprite(0, 0, Jogo.tamanho, Jogo.tamanho));
@@ -171,5 +168,32 @@ public class Mundo {
 			}
 		}
 	}
-
+	
+	public static void rederizarMiniMap() {
+		for(int i=0;i<Jogo.minimapapixels.length;i++) {
+			
+			//preenche com chão
+			Jogo.minimapapixels[i]=0x4CD93A;
+		}
+		
+		
+		for(int xx = 0; xx < WIDTH_WORD; xx++) {
+			for(int yy=0;yy<HEIGHT_WORD;yy++) {
+				if(tiles[xx + (yy * WIDTH_WORD)]instanceof WallTile) {
+					Jogo.minimapapixels[xx + (yy * WIDTH_WORD)]=0x28721E;
+				}
+			}
+		}
+		
+		int xPlayer=Jogo.jogador.getX()/16;
+		int yPlayer=Jogo.jogador.getY()/16;
+		Jogo.minimapapixels[xPlayer + (yPlayer * WIDTH_WORD)]=0x0000ff;
+		
+		for(int e=0;e<Jogo.inimigo.size();e++) {
+			int xEnt=Jogo.inimigo.get(e).getX()/16;
+			int yEnt=Jogo.inimigo.get(e).getY()/16;
+			
+			Jogo.minimapapixels[xEnt + (yEnt * WIDTH_WORD)]=0xff0000;
+		}
+	}
 }

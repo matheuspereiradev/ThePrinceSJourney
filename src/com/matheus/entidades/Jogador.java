@@ -33,6 +33,8 @@ public class Jogador extends Entidade {
 
 	public Jogador(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
+		depth=1;
+		
 		rightplayer = new BufferedImage[3];
 		leftplayer = new BufferedImage[3];
 		upplayer = new BufferedImage[3];
