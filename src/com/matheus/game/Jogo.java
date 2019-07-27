@@ -2,11 +2,15 @@ package com.matheus.game;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -136,6 +140,18 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
+		Image imageIcon=null;
+		try {
+			imageIcon=ImageIO.read(getClass().getResource("/icone.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		frame.setIconImage(imageIcon);
+		Toolkit toolkit=Toolkit.getDefaultToolkit();
+		Image imagem=toolkit.getImage(getClass().getResource("/seta.png"));
+		Cursor c=toolkit.createCustomCursor(imagem, new Point(0,0), "img");
+		frame.setCursor(c);
+		
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
