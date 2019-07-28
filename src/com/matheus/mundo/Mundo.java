@@ -75,6 +75,11 @@ public class Mundo {
 							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_CENTRAL);
 							// areia
 						}
+						else if (pixels[atual] == 0xFF3A2B7F) {
+							
+							Jogo.entidades.add(new NPC(xx*16, yy*16, Jogo.tamanho, Jogo.tamanho, Entidade.arma));
+							// inimigo morte
+						} 
 
 						else if (pixels[atual] == 0xFFFF6A00) {
 							InimigoMorte morte = new InimigoMorte(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
@@ -134,14 +139,14 @@ public class Mundo {
 		int x1 = xprox / Jogo.tamanho;
 		int y1 = yprox / Jogo.tamanho;
 
-		int x2 = (xprox + Jogo.tamanho - 1) / Jogo.tamanho;
+		int x2 = (xprox + Jogo.tamanho - 2) / Jogo.tamanho;
 		int y2 = yprox / Jogo.tamanho;
 
 		int x3 = xprox / Jogo.tamanho;
-		int y3 = (yprox + Jogo.tamanho - 1) / Jogo.tamanho;
+		int y3 = (yprox + Jogo.tamanho - 2) / Jogo.tamanho;
 
-		int x4 = (xprox + Jogo.tamanho - 1) / Jogo.tamanho;
-		int y4 = (yprox + Jogo.tamanho - 1) / Jogo.tamanho;
+		int x4 = (xprox + Jogo.tamanho - 2) / Jogo.tamanho;
+		int y4 = (yprox + Jogo.tamanho - 2) / Jogo.tamanho;
 
 		return !((tiles[x1 + (y1 * Mundo.WIDTH_WORD)] instanceof WallTile)
 				|| (tiles[x2 + y2 * Mundo.WIDTH_WORD] instanceof WallTile)

@@ -44,6 +44,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	private int fpsJogo = 0;
 	private BufferedImage background;
 	public static List<Entidade> entidades;
+	public static List<NPC> npc;
 	public static List<Inimigo> inimigo;
 	public static List<CoracaoDeVida> lifePack;
 	public static List<Municao> municao;
@@ -120,6 +121,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public static void iniciarJogo() {
 
+		npc=new ArrayList<NPC>();
 		entidades = new ArrayList<Entidade>();
 		inimigo = new ArrayList<Inimigo>();
 		lifePack = new ArrayList<CoracaoDeVida>();
@@ -129,7 +131,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		lava = new ArrayList<BlocoDeDano>();
 		morte = new ArrayList<InimigoMorte>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
-		jogador = new Jogador(35, 29, tamanho, tamanho, spritesheet.getSprite(0, 0, tamanho, tamanho));
+		jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
 		mundo = new Mundo("/nivel1.png");
 
@@ -171,6 +173,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			restartJogo = false;
 			for (int i = 0; i < entidades.size(); i++) {
 				Entidade e = entidades.get(i);
+				e.atualizar();
+			}
+			for (int i = 0; i < npc.size(); i++) {
+				NPC e = npc.get(i);
 				e.atualizar();
 			}
 			ui.atualizar();
@@ -223,6 +229,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		for (int i = 0; i < entidades.size(); i++) {
 			Entidade e = entidades.get(i);
 			e.renderizar(g);
+		}
+		for (int i = 0; i < npc.size(); i++) {
+			NPC n = npc.get(i);
+			n.renderizar(g);
 		}
 		for (int i = 0; i < balas.size(); i++) {
 			balas.get(i).renderizar(g);
