@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.imageio.ImageIO;
 import com.matheus.entidades.*;
 import com.matheus.game.Jogo;
@@ -13,9 +15,12 @@ import com.matheus.graficos.Spritesheet;
 public class Mundo {
 
 	public static Tile[] tiles;
+	public static List<Objetos> objetos;
+
 	public static int WIDTH_WORD, HEIGHT_WORD;
 
 	public Mundo(String path) {
+		objetos = new ArrayList<Objetos>();
 		try {
 			BufferedImage mapa = ImageIO.read(getClass().getResource(path));
 			WIDTH_WORD = mapa.getWidth();
@@ -23,78 +28,102 @@ public class Mundo {
 			int[] pixels = new int[WIDTH_WORD * HEIGHT_WORD];
 
 			tiles = new Tile[WIDTH_WORD * HEIGHT_WORD];
+
 			mapa.getRGB(0, 0, WIDTH_WORD, HEIGHT_WORD, pixels, 0, WIDTH_WORD);
 			for (int xx = 0; xx < WIDTH_WORD; xx++) {
 				for (int yy = 0; yy < HEIGHT_WORD; yy++) {
 					int atual = xx + (yy * WIDTH_WORD);
 
-					if (Jogo.rand.nextInt(10) < 5) {
-						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_2);
-					} else {
-						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
-					}
-					// padrão é ser grama
+					if (tiles[atual] == null) {
 
-					if (pixels[atual] == 0xFF000000) {
-						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
-						// chao
-					} else if (pixels[atual] == 0xFFFFFFFF) {
-						tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
-						// parede
-					} else if (pixels[atual] == 0xFF004A7F) {
-						BlocoDeDano lavaBloco = new BlocoDeDano(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_LAVA);
-						tiles[atual] = lavaBloco;
-						Jogo.lava.add(lavaBloco);
-						// lava
-					} else if (pixels[atual] == 0xFF2A00FF) {
-						Jogo.jogador.setX(xx * Jogo.tamanho);
-						Jogo.jogador.setY(yy * Jogo.tamanho);
-						// Jogo.jogador.setMask(1, 1, 15, 15);
-						// Jogador
-					} else if (pixels[atual] == 0xFFBC7BF2) {
-						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA);
-						// areia
-					}
+						if (Jogo.rand.nextInt(10) < 5) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_2);
+						} else {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
+						}
+						// padrão é ser grama
 
-					else if (pixels[atual] == 0xFFFF6A00) {
-						InimigoMorte morte = new InimigoMorte(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.inimigoMorte, 9);
-						Jogo.entidades.add(morte);
-						Jogo.inimigo.add(morte);
-						// inimigo morte
-					} else if (pixels[atual] == 0xFF00FF21) {
-						InimigoCaveira caveira = new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.inimigoCaveira, 3);
-						Jogo.entidades.add(caveira);
-						Jogo.inimigo.add(caveira);
-						// inimigo caveira
-					} else if (pixels[atual] == 0xFF89FFFD) {
-						InimigoAlien alien = new InimigoAlien(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.inimigoAlien, 6);
-						Jogo.entidades.add(alien);
-						Jogo.inimigo.add(alien);
-					} else if (pixels[atual] == 0xFFFF0000) {
-						CoracaoDeVida pack = new CoracaoDeVida(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-								Jogo.tamanho, Entidade.coracaoVida);
-						// pack.setMask(maskX, maskY, maskW, maskH); SE QUISER COLOCAR MASCARA
-						Jogo.entidades.add(pack);
-						Jogo.lifePack.add(pack);
-						// vida
-					} else if (pixels[atual] == 0xFFFFD800) {
-						Arma arma = new Arma(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho,
-								Entidade.arma);
-						Jogo.entidades.add(arma);
-						Jogo.arma.add(arma);
-						// arma
-					} else if (pixels[atual] == 0xFFFF00DC) {
-						Municao balas = new Municao(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho, Jogo.tamanho,
-								Entidade.municaoBalas);
-						Jogo.entidades.add(balas);
-						Jogo.municao.add(balas);
-						// munição
+						if (pixels[atual] == 0xFF000000) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
+							// chao
+						}else if(pixels[atual]==0xFFA85A91) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_SUPERIOR_CENTRAL);
+						}else if(pixels[atual]==0xFFFF91E7) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_INFERIOR_CENTRAL);
+						}else if(pixels[atual]==0xFF7C5C74) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_VERTICAL_ESQUERDA);
+						}else if(pixels[atual]==0xFF7A3D69) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_VERTICAL_DIREITA);
+						}else if(pixels[atual]==0xFF5C6277) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_ESQUINA_SUPERIOR_DIREITA);
+						}
+						else if (pixels[atual] == 0xFFFFFFFF) {
+							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
+							// parede
+						} else if (pixels[atual] == 0xFF004A7F) {
+							BlocoDeDano lavaBloco = new BlocoDeDano(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									Tile.TILE_LAVA);
+							tiles[atual] = lavaBloco;
+							Jogo.lava.add(lavaBloco);
+							// lava
+						} else if (pixels[atual] == 0xFF2A00FF) {
+							Jogo.jogador.setX(xx * Jogo.tamanho);
+							Jogo.jogador.setY(yy * Jogo.tamanho);
+							// Jogo.jogador.setMask(1, 1, 15, 15);
+							// Jogador
+						} else if (pixels[atual] == 0xFFBC7BF2) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_CENTRAL);
+							// areia
+						}
+
+						else if (pixels[atual] == 0xFFFF6A00) {
+							InimigoMorte morte = new InimigoMorte(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+									Jogo.tamanho, Entidade.inimigoMorte, 9);
+							Jogo.entidades.add(morte);
+							Jogo.inimigo.add(morte);
+							// inimigo morte
+						} else if (pixels[atual] == 0xFF00FF21) {
+							InimigoCaveira caveira = new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									Jogo.tamanho, Jogo.tamanho, Entidade.inimigoCaveira, 3);
+							Jogo.entidades.add(caveira);
+							Jogo.inimigo.add(caveira);
+							// inimigo caveira
+						} else if (pixels[atual] == 0xFF89FFFD) {
+							InimigoAlien alien = new InimigoAlien(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+									Jogo.tamanho, Entidade.inimigoAlien, 6);
+							Jogo.entidades.add(alien);
+							Jogo.inimigo.add(alien);
+						} else if (pixels[atual] == 0xFFFF0000) {
+							CoracaoDeVida pack = new CoracaoDeVida(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+									Jogo.tamanho, Entidade.coracaoVida);
+							// pack.setMask(maskX, maskY, maskW, maskH); SE QUISER COLOCAR MASCARA
+							Jogo.entidades.add(pack);
+							Jogo.lifePack.add(pack);
+							// vida
+						} else if (pixels[atual] == 0xFFFFD800) {
+							Arma arma = new Arma(xx * Jogo.tamanho, yy * Jogo.tamanho, 16, 16, Entidade.arma);
+							Jogo.entidades.add(arma);
+							Jogo.arma.add(arma);
+							// arma
+						} else if (pixels[atual] == 0xFFFF00DC) {
+							Municao balas = new Municao(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+									Jogo.tamanho, Entidade.municaoBalas);
+							Jogo.entidades.add(balas);
+							Jogo.municao.add(balas);
+							// munição
+						} else if (pixels[atual] == 0xFF008048) {
+							criarTilesEmbaixoDaCasa(xx, yy, 2, 2);
+							objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.casa_32X32));
+						} else if (pixels[atual] == 0xFF7F3F76) {
+							criarTilesEmbaixoDaCasa(xx, yy, 4, 3);
+							if (Jogo.rand.nextInt(100) < 50) {
+								objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.casa_64X48_1));
+							} else {
+								objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.casa_64X48_2));
+							}
+						}
 					}
 				}
-
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -133,7 +162,7 @@ public class Mundo {
 		Jogo.balas.clear();
 		Jogo.lava.clear();
 		Jogo.morte.clear();
-		
+
 		Jogo.entidades = new ArrayList<Entidade>();
 		Jogo.inimigo = new ArrayList<Inimigo>();
 		Jogo.lifePack = new ArrayList<CoracaoDeVida>();
@@ -167,33 +196,49 @@ public class Mundo {
 				tile.renderizar(g);
 			}
 		}
+
+		renderizarObjetos(g);
 	}
-	
+
 	public static void rederizarMiniMap() {
-		for(int i=0;i<Jogo.minimapapixels.length;i++) {
-			
-			//preenche com chão
-			Jogo.minimapapixels[i]=0x4CD93A;
+		for (int i = 0; i < Jogo.minimapapixels.length; i++) {
+
+			// preenche com chão
+			Jogo.minimapapixels[i] = 0x4CD93A;
 		}
-		
-		
-		for(int xx = 0; xx < WIDTH_WORD; xx++) {
-			for(int yy=0;yy<HEIGHT_WORD;yy++) {
-				if(tiles[xx + (yy * WIDTH_WORD)]instanceof WallTile) {
-					Jogo.minimapapixels[xx + (yy * WIDTH_WORD)]=0x28721E;
+
+		for (int xx = 0; xx < WIDTH_WORD; xx++) {
+			for (int yy = 0; yy < HEIGHT_WORD; yy++) {
+				if (tiles[xx + (yy * WIDTH_WORD)] instanceof WallTile) {
+					Jogo.minimapapixels[xx + (yy * WIDTH_WORD)] = 0x28721E;
 				}
 			}
 		}
-		
-		int xPlayer=Jogo.jogador.getX()/16;
-		int yPlayer=Jogo.jogador.getY()/16;
-		Jogo.minimapapixels[xPlayer + (yPlayer * WIDTH_WORD)]=0x0000ff;
-		
-		for(int e=0;e<Jogo.inimigo.size();e++) {
-			int xEnt=Jogo.inimigo.get(e).getX()/16;
-			int yEnt=Jogo.inimigo.get(e).getY()/16;
-			
-			Jogo.minimapapixels[xEnt + (yEnt * WIDTH_WORD)]=0xff0000;
+
+		int xPlayer = Jogo.jogador.getX() / 16;
+		int yPlayer = Jogo.jogador.getY() / 16;
+		Jogo.minimapapixels[xPlayer + (yPlayer * WIDTH_WORD)] = 0x0000ff;
+
+		for (int e = 0; e < Jogo.inimigo.size(); e++) {
+			int xEnt = Jogo.inimigo.get(e).getX() / 16;
+			int yEnt = Jogo.inimigo.get(e).getY() / 16;
+
+			Jogo.minimapapixels[xEnt + (yEnt * WIDTH_WORD)] = 0xff0000;
+		}
+
+	}
+
+	public void criarTilesEmbaixoDaCasa(int xInic, int yInic, int xTm, int yTm) {
+		for (int x = xInic; x < xInic + xTm; x++) {
+			for (int y = yInic; y < yInic + yTm; y++) {
+				tiles[x + (y * WIDTH_WORD)] = new WallTile(x * Jogo.tamanho, y * Jogo.tamanho, Tile.TILE_FLOOR);
+			}
+		}
+	}
+
+	public void renderizarObjetos(Graphics g) {
+		for (int i = 0; i < objetos.size(); i++) {
+			objetos.get(i).renderizar(g);
 		}
 	}
 }
