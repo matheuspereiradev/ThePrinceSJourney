@@ -70,6 +70,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static BufferedImage minimapa;
 	public static boolean exibirMiniMap = false;
 	public static int[] minimapapixels;
+	public static boolean fullScreen = false;//eu defino se quero o jogo full screan ou nao
 
 	public Jogo() {
 		if (!mute) {
@@ -78,7 +79,11 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		rand = new Random();
 		addKeyListener(this);
 		addMouseListener(this);
-		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
+		if (fullScreen) {
+			setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
+		} else {
+			setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
+		}
 		iniciarFrame();
 		InputStream steam = ClassLoader.getSystemClassLoader().getResourceAsStream("fonts/coolpbl.ttf");
 		iniciarFont(steam);
@@ -121,7 +126,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public static void iniciarJogo() {
 
-		npc=new ArrayList<NPC>();
+		npc = new ArrayList<NPC>();
 		entidades = new ArrayList<Entidade>();
 		inimigo = new ArrayList<Inimigo>();
 		lifePack = new ArrayList<CoracaoDeVida>();
@@ -140,20 +145,23 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public void iniciarFrame() {
 		frame = new JFrame("The Prince's Journey v.2.0 by matheuslimadev.com");
 		frame.add(this);
+		if (fullScreen) {
+			frame.setUndecorated(true);// tela cheia para tirar os botões e barra supeior
+		}
 		frame.setResizable(false);
 		frame.pack();
-		Image imageIcon=null;
+		Image imageIcon = null;
 		try {
-			imageIcon=ImageIO.read(getClass().getResource("/icone.png"));
-		}catch(IOException e){
+			imageIcon = ImageIO.read(getClass().getResource("/icone.png"));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		frame.setIconImage(imageIcon);
-		Toolkit toolkit=Toolkit.getDefaultToolkit();
-		Image imagem=toolkit.getImage(getClass().getResource("/seta.png"));
-		Cursor c=toolkit.createCustomCursor(imagem, new Point(0,0), "img");
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image imagem = toolkit.getImage(getClass().getResource("/seta.png"));
+		Cursor c = toolkit.createCustomCursor(imagem, new Point(0, 0), "img");
 		frame.setCursor(c);
-		
+
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -250,7 +258,13 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		g = bs.getDrawGraphics();
 		// desenharRetangulo(40,40);
 
-		g.drawImage(background, 0, 0, WIDITH * SCALE, HEIGHT * SCALE, null);
+		if (fullScreen) {
+			g.drawImage(background, 0, 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+					(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight(), null);
+		} else {
+			g.drawImage(background, 0, 0, WIDITH * SCALE, HEIGHT * SCALE, null);
+			// TELA COMUM
+		}
 		// aqui para ficar em cima da imagem de background
 		g.setFont(new Font("Arial", Font.BOLD, 25));
 		g.setColor(Color.WHITE);
@@ -395,6 +409,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		if (e.getKeyCode() == KeyEvent.VK_J) {
 			exibirMiniMap = !exibirMiniMap;
 		}
+		
 	}
 
 	@Override

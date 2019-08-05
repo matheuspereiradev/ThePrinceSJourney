@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class Menu {
 						Salvar.applySave(saver);
 					} else {
 						if (!Jogo.mute)
-						Sons.naoPodeSong.play();
+							Sons.naoPodeSong.play();
 					}
 				} else if (mouseY > 320 && mouseY < 360) {
 					Jogo.mute = !Jogo.mute;
@@ -106,7 +107,7 @@ public class Menu {
 					Salvar.applySave(saver);
 				} else {
 					if (!Jogo.mute)
-					Sons.naoPodeSong.play();
+						Sons.naoPodeSong.play();
 				}
 				enter = false;
 			} else if (opcoes[currentOpcao] == "Sons") {
@@ -125,11 +126,21 @@ public class Menu {
 
 	public void renderizar(Graphics g) {
 		if (!pausa)
-			g.drawImage(banner, 0, 0, Jogo.WIDITH * Jogo.SCALE, Jogo.HEIGHT * Jogo.SCALE, null);
+			if (Jogo.fullScreen) {
+				g.drawImage(banner, 0, 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+						(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight(), null);
+			} else {
+				g.drawImage(banner, 0, 0, Jogo.WIDITH * Jogo.SCALE, Jogo.HEIGHT * Jogo.SCALE, null);
+			}
 		else {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(new Color(0, 0, 0, 200));
-			g.fillRect(0, 0, Jogo.WIDITH * Jogo.SCALE, Jogo.HEIGHT * Jogo.SCALE);
+			if(Jogo.fullScreen) {
+			g.fillRect(0, 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+					(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+			}else {
+				g.fillRect(0, 0, Jogo.WIDITH * Jogo.SCALE, Jogo.HEIGHT * Jogo.SCALE);
+			}
 		}
 
 		// opcoes do menu
@@ -160,7 +171,7 @@ public class Menu {
 		}
 
 		g.drawString("Sair", 410, 400);
-		
+
 		g.setFont(new Font("arial", Font.BOLD, 30));
 
 		if (opcoes[currentOpcao] == "Novo jogo") {
