@@ -58,7 +58,7 @@ public class Mundo {
 							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_ESQUINA_SUPERIOR_DIREITA);
 						}
 						else if (pixels[atual] == 0xFFFFFFFF) {
-							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
+							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_ARVORE);
 							// parede
 						} else if (pixels[atual] == 0xFF004A7F) {
 							BlocoDeDano lavaBloco = new BlocoDeDano(xx * Jogo.tamanho, yy * Jogo.tamanho,
