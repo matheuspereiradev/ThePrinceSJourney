@@ -8,15 +8,24 @@ import com.matheus.mundo.Camera;
 
 public class NPC extends Entidade {
 
-	public static BufferedImage npc_pirata[];
+	public static BufferedImage npc_pirata_1=Jogo.spritesheet.getSprite(64, 128, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_pirata_2=Jogo.spritesheet.getSprite(80, 128, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_agente_1=Jogo.spritesheet.getSprite(64, 144, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_agente_2=Jogo.spritesheet.getSprite(80, 144, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_cabecao_1=Jogo.spritesheet.getSprite(64, 160, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_cabecao_2=Jogo.spritesheet.getSprite(80, 160, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_colorido_1=Jogo.spritesheet.getSprite(64, 176, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_colorido_2=Jogo.spritesheet.getSprite(80, 176, Jogo.tamanho, Jogo.tamanho);
+	
+	public static BufferedImage npc[];
 	int frames = 0, index = 0;
 
-	public NPC(double x, double y, int width, int height, BufferedImage sprite) {
-		super(x, y, width, height, sprite);
+	public NPC(double x, double y, int width, int height, BufferedImage sprite, BufferedImage[] sprites) {
+		super(x, y, width, height, null);
 		this.depth = 3;
-		npc_pirata = new BufferedImage[3];
-		npc_pirata[0] = Jogo.spritesheet.getSprite(64, 128, 16, 16);
-		npc_pirata[1] = Jogo.spritesheet.getSprite(80, 128, 16, 16);
+		npc = new BufferedImage[2];
+		npc[0] = sprites[0];
+		npc[1] = sprites[1];
 	}
 
 	public void atualizar() {
@@ -33,6 +42,6 @@ public class NPC extends Entidade {
 	}
 
 	public void renderizar(Graphics g) {
-		g.drawImage(npc_pirata[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		g.drawImage(npc[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

@@ -77,8 +77,24 @@ public class Mundo {
 						}
 						else if (pixels[atual] == 0xFF3A2B7F) {
 							
-							Jogo.entidades.add(new NPC(xx*16, yy*16, Jogo.tamanho, Jogo.tamanho, Entidade.arma));
-							// inimigo morte
+							BufferedImage[] sprites=new BufferedImage[2];
+							int rand=Jogo.rand.nextInt(100);
+							if(rand<25) {
+								sprites[0]=NPC.npc_pirata_1;
+								sprites[1]=NPC.npc_pirata_2;
+							}else if(rand<50) {
+								sprites[0]=NPC.npc_agente_1;
+								sprites[1]=NPC.npc_agente_2;
+							}else if(rand<75) {
+								sprites[0]=NPC.npc_cabecao_1;
+								sprites[1]=NPC.npc_cabecao_2;
+							}else if(rand<100) {
+								sprites[0]=NPC.npc_colorido_1;
+								sprites[1]=NPC.npc_colorido_2;
+							}
+							
+							Jogo.entidades.add(new NPC(xx*16, yy*16, Jogo.tamanho, Jogo.tamanho, null,sprites));
+							
 						} 
 
 						else if (pixels[atual] == 0xFFFF6A00) {
