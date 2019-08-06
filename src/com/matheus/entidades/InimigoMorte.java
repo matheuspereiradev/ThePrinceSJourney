@@ -18,10 +18,11 @@ public class InimigoMorte extends Inimigo {
 	private int dir_up = 1, dir_right = 0, dir_down = 2, dir_left = 3;
 	private int direcao = dir_down;
 
-	public InimigoMorte(double x, double y, int width, int height, BufferedImage sprite, int vida) {
-		super(x, y, width, height, sprite, vida);
+	public InimigoMorte(double x, double y, int width, int height, BufferedImage sprite) {
+		super(x, y, width, height, sprite);
 		super.speed = 1;
 		this.power = 15;
+		this.vida=12;
 		inimigoMorteLeft = new BufferedImage[3];
 		inimigoMorteRight = new BufferedImage[3];
 		inimigoMorteUp = new BufferedImage[3];

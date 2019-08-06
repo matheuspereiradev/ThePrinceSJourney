@@ -52,6 +52,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static List<AtirarMunicao> balas;
 	public static List<BlocoDeDano> lava;
 	public static List<InimigoMorte> morte;
+	public static List<InimigoGiganteDeAco> gigantes;
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
@@ -135,6 +136,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		balas = new ArrayList<AtirarMunicao>();
 		lava = new ArrayList<BlocoDeDano>();
 		morte = new ArrayList<InimigoMorte>();
+		gigantes=new ArrayList<InimigoGiganteDeAco>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);

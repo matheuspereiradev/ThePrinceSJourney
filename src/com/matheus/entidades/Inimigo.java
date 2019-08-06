@@ -19,9 +19,9 @@ public class Inimigo extends Entidade {
 	protected List<Node> caminho;
 	protected int power;
 	
-	public Inimigo(double x, double y, int width, int height, BufferedImage sprite, int vida) {
+	public Inimigo(double x, double y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
-		this.vida = vida;
+		
 		depth=0;
 	}
 

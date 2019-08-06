@@ -95,23 +95,27 @@ public class Mundo {
 							
 							Jogo.entidades.add(new NPC(xx*16, yy*16, Jogo.tamanho, Jogo.tamanho, null,sprites));
 							
-						} 
-
+						}else if(pixels[atual]==0xFF2D3F00) {
+							InimigoGiganteDeAco gigante=new InimigoGiganteDeAco(xx * Jogo.tamanho, yy * Jogo.tamanho, 32, 32, null);
+							Jogo.entidades.add(gigante);
+							Jogo.inimigo.add(gigante);
+							Jogo.gigantes.add(gigante);
+						}
 						else if (pixels[atual] == 0xFFFF6A00) {
 							InimigoMorte morte = new InimigoMorte(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-									Jogo.tamanho, Entidade.inimigoMorte, 9);
+									Jogo.tamanho, null);
 							Jogo.entidades.add(morte);
 							Jogo.inimigo.add(morte);
 							// inimigo morte
 						} else if (pixels[atual] == 0xFF00FF21) {
 							InimigoCaveira caveira = new InimigoCaveira(xx * Jogo.tamanho, yy * Jogo.tamanho,
-									Jogo.tamanho, Jogo.tamanho, Entidade.inimigoCaveira, 3);
+									Jogo.tamanho, Jogo.tamanho, null);
 							Jogo.entidades.add(caveira);
 							Jogo.inimigo.add(caveira);
 							// inimigo caveira
 						} else if (pixels[atual] == 0xFF89FFFD) {
 							InimigoAlien alien = new InimigoAlien(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-									Jogo.tamanho, Entidade.inimigoAlien, 6);
+									Jogo.tamanho, null);
 							Jogo.entidades.add(alien);
 							Jogo.inimigo.add(alien);
 						} else if (pixels[atual] == 0xFFFF0000) {
@@ -168,7 +172,6 @@ public class Mundo {
 				|| (tiles[x2 + y2 * Mundo.WIDTH_WORD] instanceof WallTile)
 				|| (tiles[x3 + y3 * Mundo.WIDTH_WORD] instanceof WallTile)
 				|| (tiles[x4 + y4 * Mundo.WIDTH_WORD] instanceof WallTile));
-
 	}
 
 	public static void carregarFase(int level) {
@@ -183,6 +186,7 @@ public class Mundo {
 		Jogo.balas.clear();
 		Jogo.lava.clear();
 		Jogo.morte.clear();
+		Jogo.gigantes.clear();
 
 		Jogo.entidades = new ArrayList<Entidade>();
 		Jogo.inimigo = new ArrayList<Inimigo>();
@@ -192,6 +196,7 @@ public class Mundo {
 		Jogo.balas = new ArrayList<AtirarMunicao>();
 		Jogo.lava = new ArrayList<BlocoDeDano>();
 		Jogo.morte = new ArrayList<InimigoMorte>();
+		Jogo.gigantes=new ArrayList<InimigoGiganteDeAco>();
 
 		Jogo.spritesheet = new Spritesheet("/Spritesheet.png");
 		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho,

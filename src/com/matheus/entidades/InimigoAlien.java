@@ -26,9 +26,10 @@ public class InimigoAlien extends Inimigo {
 	private BufferedImage[] upAlien;
 	private BufferedImage[] downAlien;
 
-	public InimigoAlien(double x, double y, int width, int height, BufferedImage sprite, int vida) {
-		super(x, y, width, height, sprite, vida);
+	public InimigoAlien(double x, double y, int width, int height, BufferedImage sprite) {
+		super(x, y, width, height, sprite);
 		this.power=10;
+		this.vida=6;
 		rightAlien = new BufferedImage[tamanhoArray];
 		leftAlien = new BufferedImage[tamanhoArray];
 		upAlien = new BufferedImage[tamanhoArray];
