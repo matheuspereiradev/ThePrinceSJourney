@@ -16,8 +16,8 @@ public class Jogador extends Entidade {
 	private BufferedImage[] leftplayer;
 	private BufferedImage[] upplayer;
 	private BufferedImage[] downplayer;
-	private int index = 0, frames = 0, maxFrames = 10, maxIndex = 2;
-	private boolean movimentando;
+	public int index = 0, frames = 0, maxFrames = 10, maxIndex = 2;
+	public boolean movimentando;
 	private BufferedImage jogadorAtingido;
 	public boolean sofrendoDano = false;
 	public int sofrendoDanoFrames = 0;

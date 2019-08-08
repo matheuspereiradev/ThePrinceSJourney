@@ -14,8 +14,8 @@ public class NPC extends Entidade {
 	public static BufferedImage npc_agente_2=Jogo.spritesheet.getSprite(80, 144, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage npc_cabecao_1=Jogo.spritesheet.getSprite(64, 160, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage npc_cabecao_2=Jogo.spritesheet.getSprite(80, 160, Jogo.tamanho, Jogo.tamanho);
-	public static BufferedImage npc_colorido_1=Jogo.spritesheet.getSprite(64, 176, Jogo.tamanho, Jogo.tamanho);
-	public static BufferedImage npc_colorido_2=Jogo.spritesheet.getSprite(80, 176, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_colorido_1=Jogo.spritesheet.getSprite(0, 128, Jogo.tamanho, Jogo.tamanho);
+	public static BufferedImage npc_colorido_2=Jogo.spritesheet.getSprite(16, 128, Jogo.tamanho, Jogo.tamanho);
 	
 	public static BufferedImage npc[];
 	int frames = 0, index = 0;

@@ -46,18 +46,22 @@ public class Mundo {
 						if (pixels[atual] == 0xFF000000) {
 							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
 							// chao
-						}else if(pixels[atual]==0xFFA85A91) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_SUPERIOR_CENTRAL);
-						}else if(pixels[atual]==0xFFFF91E7) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_INFERIOR_CENTRAL);
-						}else if(pixels[atual]==0xFF7C5C74) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_VERTICAL_ESQUERDA);
-						}else if(pixels[atual]==0xFF7A3D69) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_VERTICAL_DIREITA);
-						}else if(pixels[atual]==0xFF5C6277) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_ESQUINA_SUPERIOR_DIREITA);
-						}
-						else if (pixels[atual] == 0xFFFFFFFF) {
+						} else if (pixels[atual] == 0xFFA85A91) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									Tile.TILE_FLOOR_TERRA_SUPERIOR_CENTRAL);
+						} else if (pixels[atual] == 0xFFFF91E7) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									Tile.TILE_FLOOR_TERRA_INFERIOR_CENTRAL);
+						} else if (pixels[atual] == 0xFF7C5C74) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									Tile.TILE_FLOOR_TERRA_VERTICAL_ESQUERDA);
+						} else if (pixels[atual] == 0xFF7A3D69) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									Tile.TILE_FLOOR_TERRA_VERTICAL_DIREITA);
+						} else if (pixels[atual] == 0xFF5C6277) {
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									Tile.TILE_FLOOR_TERRA_ESQUINA_SUPERIOR_DIREITA);
+						} else if (pixels[atual] == 0xFFFFFFFF) {
 							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_ARVORE);
 							// parede
 						} else if (pixels[atual] == 0xFF004A7F) {
@@ -72,36 +76,32 @@ public class Mundo {
 							// Jogo.jogador.setMask(1, 1, 15, 15);
 							// Jogador
 						} else if (pixels[atual] == 0xFFBC7BF2) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_TERRA_CENTRAL);
+							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									Tile.TILE_FLOOR_TERRA_CENTRAL);
 							// areia
-						}
-						else if (pixels[atual] == 0xFF3A2B7F) {
-							
-							BufferedImage[] sprites=new BufferedImage[2];
-							int rand=Jogo.rand.nextInt(100);
-							if(rand<25) {
-								sprites[0]=NPC.npc_pirata_1;
-								sprites[1]=NPC.npc_pirata_2;
-							}else if(rand<50) {
-								sprites[0]=NPC.npc_agente_1;
-								sprites[1]=NPC.npc_agente_2;
-							}else if(rand<75) {
-								sprites[0]=NPC.npc_cabecao_1;
-								sprites[1]=NPC.npc_cabecao_2;
-							}else if(rand<100) {
-								sprites[0]=NPC.npc_colorido_1;
-								sprites[1]=NPC.npc_colorido_2;
+						} else if (pixels[atual] == 0xFF3A2B7F) {
+							int rand = Jogo.rand.nextInt(3);
+							if (rand == 0) {
+								BufferedImage sprites[] = { NPC.npc_agente_1, NPC.npc_agente_2 };
+								Jogo.entidades
+										.add(new NPC(xx * 16, yy * 16, Jogo.tamanho, Jogo.tamanho, null, sprites));
+							} else if (rand == 1) {
+								BufferedImage sprites[] = { NPC.npc_cabecao_1, NPC.npc_cabecao_2 };
+								Jogo.entidades
+										.add(new NPC(xx * 16, yy * 16, Jogo.tamanho, Jogo.tamanho, null, sprites));
 							}
-							
-							Jogo.entidades.add(new NPC(xx*16, yy*16, Jogo.tamanho, Jogo.tamanho, null,sprites));
-							
-						}else if(pixels[atual]==0xFF2D3F00) {
-							InimigoGiganteDeAco gigante=new InimigoGiganteDeAco(xx * Jogo.tamanho, yy * Jogo.tamanho, 32, 32, null);
+							else if (rand == 2) {
+								BufferedImage sprites[] = { NPC.npc_pirata_1, NPC.npc_pirata_2 };
+								Jogo.entidades
+										.add(new NPC(xx * 16, yy * 16, Jogo.tamanho, Jogo.tamanho, null, sprites));
+							}
+						} else if (pixels[atual] == 0xFF2D3F00) {
+							InimigoGiganteDeAco gigante = new InimigoGiganteDeAco(xx * Jogo.tamanho, yy * Jogo.tamanho,
+									32, 32, null);
 							Jogo.entidades.add(gigante);
 							Jogo.inimigo.add(gigante);
 							Jogo.gigantes.add(gigante);
-						}
-						else if (pixels[atual] == 0xFFFF6A00) {
+						} else if (pixels[atual] == 0xFFFF6A00) {
 							InimigoMorte morte = new InimigoMorte(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
 									Jogo.tamanho, null);
 							Jogo.entidades.add(morte);
@@ -196,7 +196,7 @@ public class Mundo {
 		Jogo.balas = new ArrayList<AtirarMunicao>();
 		Jogo.lava = new ArrayList<BlocoDeDano>();
 		Jogo.morte = new ArrayList<InimigoMorte>();
-		Jogo.gigantes=new ArrayList<InimigoGiganteDeAco>();
+		Jogo.gigantes = new ArrayList<InimigoGiganteDeAco>();
 
 		Jogo.spritesheet = new Spritesheet("/Spritesheet.png");
 		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho,

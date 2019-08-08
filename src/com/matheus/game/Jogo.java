@@ -71,7 +71,13 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static BufferedImage minimapa;
 	public static boolean exibirMiniMap = false;
 	public static int[] minimapapixels;
-	public static boolean fullScreen = false;//eu defino se quero o jogo full screan ou nao
+	public static boolean fullScreen = false;// eu defino se quero o jogo full screan ou nao
+	// cutscene
+	public static boolean pularCena;
+	public static int entrada = 1;
+	public static int comecar = 2;
+	public static int jogando = 3;
+	public static int estado_cena = entrada;
 
 	public Jogo() {
 		if (!mute) {
@@ -136,7 +142,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		balas = new ArrayList<AtirarMunicao>();
 		lava = new ArrayList<BlocoDeDano>();
 		morte = new ArrayList<InimigoMorte>();
-		gigantes=new ArrayList<InimigoGiganteDeAco>();
+		gigantes = new ArrayList<InimigoGiganteDeAco>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 0, tamanho, tamanho));
 		entidades.add(jogador);
@@ -181,19 +187,50 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			}
 
 			restartJogo = false;
-			for (int i = 0; i < entidades.size(); i++) {
-				Entidade e = entidades.get(i);
-				e.atualizar();
+
+			if (Jogo.estado_cena == Jogo.jogando) {
+				for (int i = 0; i < entidades.size(); i++) {
+					Entidade e = entidades.get(i);
+					e.atualizar();
+				}
+				for (int i = 0; i < npc.size(); i++) {
+					NPC e = npc.get(i);
+					e.atualizar();
+				}
+			} else {
+				if (Jogo.estado_cena == Jogo.entrada) {
+					if (Jogo.jogador.getX() < 200) {
+						Jogo.jogador.x++;
+						Jogo.jogador.ultimoClicado = Jogo.jogador.right_dir;
+						Jogo.jogador.frames++;
+						if (Jogo.jogador.frames == Jogo.jogador.maxFrames) {
+							Jogo.jogador.frames = 0;
+							Jogo.jogador.index++;
+							if (Jogo.jogador.index > Jogo.jogador.maxIndex) {
+								Jogo.jogador.index = 0;
+							}
+						}
+						Camera.x = Camera.clamp(Jogo.jogador.getX() - (Jogo.WIDITH / 2),
+								Mundo.WIDTH_WORD * Jogo.tamanho - Jogo.WIDITH, 0);
+						Camera.y = Camera.clamp(Jogo.jogador.getY() - (Jogo.HEIGHT / 2),
+								Mundo.HEIGHT_WORD * Jogo.tamanho - Jogo.HEIGHT, 0);
+					} else {
+						Jogo.estado_cena = comecar;
+					}
+				} else if (Jogo.estado_cena == comecar) {
+					
+					if (pularCena) {
+						pularCena=false;
+						Jogo.estado_cena = jogando;
+					}
+				}
 			}
-			for (int i = 0; i < npc.size(); i++) {
-				NPC e = npc.get(i);
-				e.atualizar();
-			}
-			ui.atualizar();
+
 			// renderizar as balas na tela pq elas nao esta em entidades
 			for (int i = 0; i < balas.size(); i++) {
 				balas.get(i).atualizar();
 			}
+			ui.atualizar();
 			if (inimigo.isEmpty()) {
 				fase++;
 				if (fase > maxFases) {
@@ -251,7 +288,11 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		g.setColor(Color.YELLOW);
 		g.setFont(new Font("Arial", Font.PLAIN, 10));
 		g.drawString(String.valueOf(fpsJogo), 225, 10);
-
+		if (Jogo.estado_cena == comecar) {
+			g.setColor(Color.black);
+			g.setFont(new Font("Arial", Font.PLAIN, 20));
+			g.drawString("Clique c para começar", 60, 130);
+		}
 		// aplicarLuz();
 
 		ui.renderizar(g);
@@ -407,11 +448,14 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			if (status == "NORMAL")
 				this.saveGame = true;
 		}
-
+		if (e.getKeyCode() == KeyEvent.VK_C) {
+			if (Jogo.estado_cena == comecar)
+				pularCena = true;
+		}
 		if (e.getKeyCode() == KeyEvent.VK_J) {
 			exibirMiniMap = !exibirMiniMap;
 		}
-		
+
 	}
 
 	@Override

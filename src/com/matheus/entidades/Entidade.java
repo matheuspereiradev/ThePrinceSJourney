@@ -25,7 +25,7 @@ public class Entidade {
 	
 	
 	protected int width, height;
-	protected double x, y;
+	public double x, y;
 	protected BufferedImage sprite;
 	
 	public static Comparator<Entidade> entidadeSorter = new Comparator<Entidade>() {
