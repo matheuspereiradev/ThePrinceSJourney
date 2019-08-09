@@ -139,7 +139,10 @@ public class Mundo {
 						} else if (pixels[atual] == 0xFF008048) {
 							criarTilesEmbaixoDaCasa(xx, yy, 2, 2);
 							objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.casa_32X32));
-						} else if (pixels[atual] == 0xFF7F3F76) {
+						}else if (pixels[atual] == 0xFFFF63CD) {
+							criarTilesEmbaixoDaCasa(xx, yy, 5, 4);
+							objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.bar));
+						}else if (pixels[atual] == 0xFF7F3F76) {
 							criarTilesEmbaixoDaCasa(xx, yy, 4, 3);
 							if (Jogo.rand.nextInt(100) < 50) {
 								objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.casa_64X48_1));
