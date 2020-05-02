@@ -80,21 +80,8 @@ public class Mundo {
 									Tile.TILE_FLOOR_TERRA_CENTRAL);
 							// areia
 						} else if (pixels[atual] == 0xFF3A2B7F) {
-							int rand = Jogo.rand.nextInt(3);
-							if (rand == 0) {
-								BufferedImage sprites[] = { NPC.npc_agente_1, NPC.npc_agente_2 };
-								Jogo.entidades
-										.add(new NPC(xx * 16, yy * 16, Jogo.tamanho, Jogo.tamanho, null, sprites));
-							} else if (rand == 1) {
-								BufferedImage sprites[] = { NPC.npc_cabecao_1, NPC.npc_cabecao_2 };
-								Jogo.entidades
-										.add(new NPC(xx * 16, yy * 16, Jogo.tamanho, Jogo.tamanho, null, sprites));
-							}
-							else if (rand == 2) {
-								BufferedImage sprites[] = { NPC.npc_pirata_1, NPC.npc_pirata_2 };
-								Jogo.entidades
-										.add(new NPC(xx * 16, yy * 16, Jogo.tamanho, Jogo.tamanho, null, sprites));
-							}
+							Jogo.entidades.add(new NPC(xx * 16, yy * 16, Jogo.tamanho, Jogo.tamanho, NPC.npc_pirata_1));
+							
 						} else if (pixels[atual] == 0xFF2D3F00) {
 							InimigoGiganteDeAco gigante = new InimigoGiganteDeAco(xx * Jogo.tamanho, yy * Jogo.tamanho,
 									32, 32, null);

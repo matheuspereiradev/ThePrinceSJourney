@@ -1,5 +1,6 @@
 package com.matheus.entidades;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -17,31 +18,39 @@ public class NPC extends Entidade {
 	public static BufferedImage npc_colorido_1=Jogo.spritesheet.getSprite(0, 128, Jogo.tamanho, Jogo.tamanho);
 	public static BufferedImage npc_colorido_2=Jogo.spritesheet.getSprite(16, 128, Jogo.tamanho, Jogo.tamanho);
 	
-	public static BufferedImage npc[];
+	
+	public boolean exibirDialogo=false;
+	public boolean exibindo=false;
+	public String frases[];
 	int frames = 0, index = 0;
 
-	public NPC(double x, double y, int width, int height, BufferedImage sprite, BufferedImage[] sprites) {
-		super(x, y, width, height, null);
+	public NPC(double x, double y, int width, int height, BufferedImage sprite) {
+		super(x, y, width, height, sprite);
 		this.depth = 3;
-		npc = new BufferedImage[2];
-		npc[0] = sprites[0];
-		npc[1] = sprites[1];
+		frases=new String[5];
+		frases[0]="Oi eu sou goku";
 	}
 
 	public void atualizar() {
-		frames++;
-		if (frames == 80) {
-			frames = 0;
-			index++;
-			if (index == 2) {
-				index = 0;
-			}
-
+		
+		if (calcularDistancia(Jogo.jogador.getX(), this.getX(), Jogo.jogador.getY(), this.getY())<8) {
+			if (!exibindo) {
+				exibirDialogo=true;
+				exibindo=true;
+				}
+		}else {
+			exibirDialogo=false;
+			exibindo=false;
 		}
 
 	}
 
 	public void renderizar(Graphics g) {
-		g.drawImage(npc[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		super.renderizar(g);
+		if (exibirDialogo) {
+			g.setColor(Color.yellow);
+			g.drawString(frases[0], 80, 80);
+			
+		}
 	}
 }

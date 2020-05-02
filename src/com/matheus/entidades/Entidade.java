@@ -150,5 +150,9 @@ public class Entidade {
 	public void renderizar(Graphics g) {
 		g.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
+	
+	public double calcularDistancia(int x1,int x2,int y1,int y2) {
+		return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+	}
 
 }
